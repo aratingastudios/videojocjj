@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
 	string[] player_buttons;
 	
 	GameObject triangle;
+	public float triangle_offset;
 	
 	bool bAudio = true;
 	bool bAudioOld = true;
@@ -77,7 +78,7 @@ public class GameManager : MonoBehaviour
 		if(m_players[iPlayerActive])
 		{
 			Vector3 pos = m_players[iPlayerActive].transform.position;
-			triangle.transform.position = new Vector3(pos.x, pos.y+2.5f, pos.z);
+			triangle.transform.position = new Vector3(pos.x, pos.y+triangle_offset, pos.z);
 		}
 	}
 	

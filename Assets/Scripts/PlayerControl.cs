@@ -113,8 +113,8 @@ public class PlayerControl : MonoBehaviour
 		if(Mathf.Abs(horiz)>0.1f)
 			transform.forward = Vector3.Normalize(new Vector3(horiz, 0.0f, 0.0f));
 		//face to camera when idle
-		else
-			transform.forward = Vector3.Normalize(new Vector3(0.0f, 0.0f, -1.0f));
+		//else
+		//	transform.forward = Vector3.Normalize(new Vector3(0.0f, 0.0f, -1.0f));
 
         if(controller.isGrounded)
 		{
