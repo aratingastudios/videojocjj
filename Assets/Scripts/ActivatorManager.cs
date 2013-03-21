@@ -3,21 +3,43 @@ using System.Collections;
 
 public class ActivatorManager : MonoBehaviour
 {
-	public bool bActivate=false;
 	public Transform[] targets;
-	bool bActivated=false;
+	string state = "idle";
+	Vector3 targetPosition;
+	float smoothTime = 0.3f;
+	Vector3 velocity = Vector3.zero;
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+	
+	void Awake()
+	{
+		targetPosition = new Vector3(transform.position.x, transform.position.y-0.5f, transform.position.z);
+	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
 	void Update()
 	{
-		if(bActivate && !bActivated)
+		if(state == "move")
+		{
+			transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
+			if(Vector3.Distance(transform.position, targetPosition) < 0.1f)
+				state="activate";
+		}
+		
+		if(state=="activate")
 		{
 			foreach(Transform t in targets)
 				t.SendMessage("Activate");
 			
-			bActivate=false;
-			bActivated=true;
+			state="end";
 		}
+	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	void Activate()
+	{
+		state = "move";
 	}
 }
