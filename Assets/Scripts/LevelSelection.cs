@@ -6,6 +6,7 @@ public class LevelSelection : MonoBehaviour
 	public int num_levels;
 	int selGridInt = -1;
     string[] selStrings;
+	public GUISkin m_skin;
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -25,7 +26,9 @@ public class LevelSelection : MonoBehaviour
 	
 	void OnGUI()
 	{
-		selGridInt = GUI.SelectionGrid(new Rect(50, 50, Screen.width-100, 300), selGridInt, selStrings, 6);
+		GUI.skin = m_skin;
+		
+		selGridInt = GUI.SelectionGrid(new Rect(50, 50, Screen.width-100, 300), selGridInt, selStrings, 6, "sel_grid");
 		
 		if(selGridInt>-1)
 		{
