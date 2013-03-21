@@ -11,10 +11,10 @@ FBXHeaderExtension:  {
 		Year: 2013
 		Month: 3
 		Day: 21
-		Hour: 9
-		Minute: 58
-		Second: 5
-		Millisecond: 629
+		Hour: 10
+		Minute: 23
+		Second: 25
+		Millisecond: 125
 	}
 	Creator: "FBX SDK/FBX Plugins version 2013.1"
 	SceneInfo: "SceneInfo::GlobalInfo", "UserData" {
@@ -36,13 +36,13 @@ FBXHeaderExtension:  {
 			P: "Original|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "Original|ApplicationName", "KString", "", "", "Maya"
 			P: "Original|ApplicationVersion", "KString", "", "", "2013"
-			P: "Original|DateTime_GMT", "DateTime", "", "", "21/03/2013 08:58:05.628"
+			P: "Original|DateTime_GMT", "DateTime", "", "", "21/03/2013 09:23:25.124"
 			P: "Original|FileName", "KString", "", "", "D:/PROJECTS/Unity/videojocjj/Assets/Geometry/Level_01/Level_01_Plat_01.fbx"
 			P: "LastSaved", "Compound", "", ""
 			P: "LastSaved|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "LastSaved|ApplicationName", "KString", "", "", "Maya"
 			P: "LastSaved|ApplicationVersion", "KString", "", "", "2013"
-			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "21/03/2013 08:58:05.628"
+			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "21/03/2013 09:23:25.124"
 		}
 	}
 }
@@ -73,7 +73,7 @@ GlobalSettings:  {
 
 Documents:  {
 	Count: 1
-	Document: 1001123776, "", "Scene" {
+	Document: 1023288448, "", "Scene" {
 		Properties70:  {
 			P: "SourceObject", "object", "", ""
 			P: "ActiveAnimStackName", "KString", "", "", "Take 001"
@@ -301,15 +301,15 @@ Definitions:  {
 ;------------------------------------------------------------------
 
 Objects:  {
-	NodeAttribute: 1081975152, "NodeAttribute::", "Null" {
+	NodeAttribute: 1023666464, "NodeAttribute::", "Null" {
 		Properties70:  {
 			P: "Look", "enum", "", "",0
 		}
 		TypeFlags: "Null"
 	}
-	Geometry: 1002638336, "Geometry::", "Mesh" {
+	Geometry: 1024161760, "Geometry::", "Mesh" {
 		Vertices: *24 {
-			a: 1.21447587013245,-7.24713277816772,-4.47071647644043,5.61601209640503,-7.24713277816772,-4.47071647644043,1.21447587013245,-6.24713277816772,-4.47071647644043,5.61601209640503,-6.24713277816772,-4.47071647644043,1.21447587013245,-7.24713277816772,-5.7723560333252,1.21447587013245,-6.24713277816772,-5.7723560333252,5.61601209640503,-7.24713277816772,-5.7723560333252,5.61601209640503,-6.24713277816772,-5.7723560333252
+			a: 1.21447587013245,-7.00801277160645,-4.47071647644043,5.61601209640503,-7.00801277160645,-4.47071647644043,1.21447587013245,-6.24713277816772,-4.47071647644043,5.61601209640503,-6.24713277816772,-4.47071647644043,1.21447587013245,-7.00801277160645,-5.7723560333252,1.21447587013245,-6.24713277816772,-5.7723560333252,5.61601209640503,-7.00801277160645,-5.7723560333252,5.61601209640503,-6.24713277816772,-5.7723560333252
 		} 
 		PolygonVertexIndex: *16 {
 			a: 0,1,3,-3,0,2,5,-5,3,1,6,-8,2,3,7,-6
@@ -364,7 +364,7 @@ Objects:  {
 			}
 		}
 	}
-	Model: 1329664096, "Model::Level_01", "Null" {
+	Model: 911857616, "Model::Level_01", "Null" {
 		Version: 232
 		Properties70:  {
 			P: "RotationActive", "bool", "", "",1
@@ -375,7 +375,7 @@ Objects:  {
 		Shading: Y
 		Culling: "CullingOff"
 	}
-	Model: 1329679440, "Model::Level_01_Plat_01", "Mesh" {
+	Model: 344177216, "Model::Level_01_Plat_01", "Mesh" {
 		Version: 232
 		Properties70:  {
 			P: "RotationPivot", "Vector3D", "Vector", "",0,-1.69602261626998,0
@@ -389,7 +389,7 @@ Objects:  {
 		Shading: T
 		Culling: "CullingOff"
 	}
-	Material: 1002522032, "Material::MAT_Plataformes", "" {
+	Material: 1021873904, "Material::MAT_Plataformes", "" {
 		Version: 102
 		ShadingModel: "lambert"
 		MultiLayer: 0
@@ -404,7 +404,7 @@ Objects:  {
 			P: "Opacity", "double", "Number", "",1
 		}
 	}
-	Video: 1169753184, "Video::file39", "Clip" {
+	Video: 1016522400, "Video::file39", "Clip" {
 		Type: "Clip"
 		Properties70:  {
 			P: "Path", "KString", "XRefUrl", "", "D:/PROJECTS/ZBRUSH/VideoGame/Maya/Saurio/sourceimages/Plataformes.png"
@@ -413,7 +413,7 @@ Objects:  {
 		Filename: "D:/PROJECTS/ZBRUSH/VideoGame/Maya/Saurio/sourceimages/Plataformes.png"
 		RelativeFilename: "..\..\..\..\..\ZBRUSH\VideoGame\Maya\Saurio\sourceimages\Plataformes.png"
 	}
-	Texture: 1160846432, "Texture::file39", "" {
+	Texture: 907912800, "Texture::file39", "" {
 		Type: "TextureVideoClip"
 		Version: 202
 		TextureName: "Texture::file39"
@@ -438,29 +438,29 @@ Objects:  {
 Connections:  {
 	
 	;Model::Level_01, Model::RootNode
-	C: "OO",1329664096,0
+	C: "OO",911857616,0
 	
 	;AnimLayer::BaseLayer, AnimStack::Take 001
-	C: "OO",995310160,1172973888
+	C: "OO",910081072,1024500784
 	
 	;NodeAttribute::, Model::Level_01
-	C: "OO",1081975152,1329664096
+	C: "OO",1023666464,911857616
 	
 	;Model::Level_01_Plat_01, Model::Level_01
-	C: "OO",1329679440,1329664096
+	C: "OO",344177216,911857616
 	
 	;Texture::file39, Material::MAT_Plataformes
-	C: "OP",1160846432,1002522032, "DiffuseColor"
+	C: "OP",907912800,1021873904, "DiffuseColor"
 	
 	;Texture::file39, Material::MAT_Plataformes
-	C: "OP",1160846432,1002522032, "TransparentColor"
+	C: "OP",907912800,1021873904, "TransparentColor"
 	
 	;Video::file39, Texture::file39
-	C: "OO",1169753184,1160846432
+	C: "OO",1016522400,907912800
 	
 	;Geometry::, Model::Level_01_Plat_01
-	C: "OO",1002638336,1329679440
+	C: "OO",1024161760,344177216
 	
 	;Material::MAT_Plataformes, Model::Level_01_Plat_01
-	C: "OO",1002522032,1329679440
+	C: "OO",1021873904,344177216
 }
