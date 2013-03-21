@@ -12,9 +12,9 @@ FBXHeaderExtension:  {
 		Month: 3
 		Day: 21
 		Hour: 9
-		Minute: 25
-		Second: 49
-		Millisecond: 648
+		Minute: 57
+		Second: 54
+		Millisecond: 141
 	}
 	Creator: "FBX SDK/FBX Plugins version 2013.1"
 	SceneInfo: "SceneInfo::GlobalInfo", "UserData" {
@@ -36,13 +36,13 @@ FBXHeaderExtension:  {
 			P: "Original|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "Original|ApplicationName", "KString", "", "", "Maya"
 			P: "Original|ApplicationVersion", "KString", "", "", "2013"
-			P: "Original|DateTime_GMT", "DateTime", "", "", "21/03/2013 08:25:49.647"
+			P: "Original|DateTime_GMT", "DateTime", "", "", "21/03/2013 08:57:54.140"
 			P: "Original|FileName", "KString", "", "", "D:/PROJECTS/Unity/videojocjj/Assets/Geometry/Level_01/Level_01_Icon_Plat_01.fbx"
 			P: "LastSaved", "Compound", "", ""
 			P: "LastSaved|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "LastSaved|ApplicationName", "KString", "", "", "Maya"
 			P: "LastSaved|ApplicationVersion", "KString", "", "", "2013"
-			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "21/03/2013 08:25:49.647"
+			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "21/03/2013 08:57:54.140"
 		}
 	}
 }
@@ -73,7 +73,7 @@ GlobalSettings:  {
 
 Documents:  {
 	Count: 1
-	Document: 1069036752, "", "Scene" {
+	Document: 1069060192, "", "Scene" {
 		Properties70:  {
 			P: "SourceObject", "object", "", ""
 			P: "ActiveAnimStackName", "KString", "", "", "Take 001"
@@ -301,13 +301,13 @@ Definitions:  {
 ;------------------------------------------------------------------
 
 Objects:  {
-	NodeAttribute: 1081984848, "NodeAttribute::", "Null" {
+	NodeAttribute: 997396864, "NodeAttribute::", "Null" {
 		Properties70:  {
 			P: "Look", "enum", "", "",0
 		}
 		TypeFlags: "Null"
 	}
-	Geometry: 1067304768, "Geometry::", "Mesh" {
+	Geometry: 1002628480, "Geometry::", "Mesh" {
 		Vertices: *24 {
 			a: 9.7802791595459,-1.41261982917786,-4.55912113189697,11.0934295654297,-1.41261982917786,-4.55912113189697,9.7802791595459,-0.412619531154633,-4.55912113189697,11.0934295654297,-0.412619531154633,-4.55912113189697,9.7802791595459,-1.41261982917786,-5.72747039794922,9.7802791595459,-0.412619531154633,-5.72747039794922,11.0934295654297,-1.41261982917786,-5.72747039794922,11.0934295654297,-0.412619531154633,-5.72747039794922
 		} 
@@ -333,7 +333,7 @@ Objects:  {
 			MappingInformationType: "ByPolygonVertex"
 			ReferenceInformationType: "IndexToDirect"
 			UV: *32 {
-				a: 0.00548740522935987,0.603189527988434,0.116516500711441,0.603189527988434,0.00548740522935987,0.670467734336853,0.116516500711441,0.670467734336853,0.00233291834592819,0.598281919956207,0.0107098817825317,0.598281919956207,0.0107098817825317,0.60665887594223,0.00233291834592819,0.60665887594223,0.00233291834592819,0.598281919956207,0.0107098817825317,0.598281919956207,0.0107098817825317,0.60665887594223,0.00233291834592819,0.60665887594223,0.00233291834592819,0.598281919956207,0.0107098817825317,0.598281919956207,0.0107098817825317,0.60665887594223,0.00233291834592819,0.60665887594223
+				a: 0.00548740522935987,0.603189527988434,0.116516500711441,0.603189527988434,0.00548740522935987,0.669136881828308,0.116516500711441,0.669136881828308,0.00233291834592819,0.598281919956207,0.0107098817825317,0.598281919956207,0.0107098817825317,0.60665887594223,0.00233291834592819,0.60665887594223,0.00233291834592819,0.598281919956207,0.0107098817825317,0.598281919956207,0.0107098817825317,0.60665887594223,0.00233291834592819,0.60665887594223,0.00233291834592819,0.598281919956207,0.0107098817825317,0.598281919956207,0.0107098817825317,0.60665887594223,0.00233291834592819,0.60665887594223
 			} 
 			UVIndex: *16 {
 				a: 0,1,3,2,4,5,6,7,8,9,10,11,12,13,14,15
@@ -364,7 +364,7 @@ Objects:  {
 			}
 		}
 	}
-	Model: 1069657168, "Model::Level_01", "Null" {
+	Model: 1069540576, "Model::Level_01", "Null" {
 		Version: 232
 		Properties70:  {
 			P: "RotationActive", "bool", "", "",1
@@ -375,7 +375,7 @@ Objects:  {
 		Shading: Y
 		Culling: "CullingOff"
 	}
-	Model: 1069654976, "Model::Level_01_Icon_Plat_01", "Mesh" {
+	Model: 1069551536, "Model::Level_01_Icon_Plat_01", "Mesh" {
 		Version: 232
 		Properties70:  {
 			P: "RotationPivot", "Vector3D", "Vector", "",10.4368543891317,-0.912619703354575,-4.55912129287734
@@ -388,7 +388,7 @@ Objects:  {
 		Shading: T
 		Culling: "CullingOff"
 	}
-	Material: 1175008048, "Material::MAT_Plataformes", "" {
+	Material: 1175007728, "Material::MAT_Plataformes", "" {
 		Version: 102
 		ShadingModel: "lambert"
 		MultiLayer: 0
@@ -403,7 +403,7 @@ Objects:  {
 			P: "Opacity", "double", "Number", "",1
 		}
 	}
-	Video: 1169777984, "Video::file39", "Clip" {
+	Video: 1169747584, "Video::file39", "Clip" {
 		Type: "Clip"
 		Properties70:  {
 			P: "Path", "KString", "XRefUrl", "", "D:/PROJECTS/ZBRUSH/VideoGame/Maya/Saurio/sourceimages/Plataformes.png"
@@ -412,7 +412,7 @@ Objects:  {
 		Filename: "D:/PROJECTS/ZBRUSH/VideoGame/Maya/Saurio/sourceimages/Plataformes.png"
 		RelativeFilename: "..\..\..\..\..\ZBRUSH\VideoGame\Maya\Saurio\sourceimages\Plataformes.png"
 	}
-	Texture: 1168423024, "Texture::file39", "" {
+	Texture: 993920096, "Texture::file39", "" {
 		Type: "TextureVideoClip"
 		Version: 202
 		TextureName: "Texture::file39"
@@ -437,29 +437,29 @@ Objects:  {
 Connections:  {
 	
 	;Model::Level_01, Model::RootNode
-	C: "OO",1069657168,0
+	C: "OO",1069540576,0
 	
 	;AnimLayer::BaseLayer, AnimStack::Take 001
-	C: "OO",995295152,1330052064
+	C: "OO",995305008,1329765088
 	
 	;NodeAttribute::, Model::Level_01
-	C: "OO",1081984848,1069657168
+	C: "OO",997396864,1069540576
 	
 	;Model::Level_01_Icon_Plat_01, Model::Level_01
-	C: "OO",1069654976,1069657168
+	C: "OO",1069551536,1069540576
 	
 	;Texture::file39, Material::MAT_Plataformes
-	C: "OP",1168423024,1175008048, "DiffuseColor"
+	C: "OP",993920096,1175007728, "DiffuseColor"
 	
 	;Texture::file39, Material::MAT_Plataformes
-	C: "OP",1168423024,1175008048, "TransparentColor"
+	C: "OP",993920096,1175007728, "TransparentColor"
 	
 	;Video::file39, Texture::file39
-	C: "OO",1169777984,1168423024
+	C: "OO",1169747584,993920096
 	
 	;Geometry::, Model::Level_01_Icon_Plat_01
-	C: "OO",1067304768,1069654976
+	C: "OO",1002628480,1069551536
 	
 	;Material::MAT_Plataformes, Model::Level_01_Icon_Plat_01
-	C: "OO",1175008048,1069654976
+	C: "OO",1175007728,1069551536
 }
