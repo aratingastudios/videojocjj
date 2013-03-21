@@ -175,7 +175,7 @@ public class PlayerControl : MonoBehaviour
 		if(hit.gameObject.name.Contains("Activator"))
 		{
 			activatorManager = hit.gameObject.GetComponent<ActivatorManager>();
-			activatorManager.bActivate=true;
+			activatorManager.SendMessage("Activate");
 		}
 	}
 }
