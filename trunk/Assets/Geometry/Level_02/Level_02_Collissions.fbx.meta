@@ -1,27 +1,22 @@
 fileFormatVersion: 2
-guid: 53e5e6a6fac171a40ab844a836531714
+guid: 8e40658072c0205459a2eed98e245a25
 ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
-    100000: Level_02_Plat_02
+    100000: Level_02_Collissions
     100002: //RootNode
-    100004: Level_02_Icon_Plat_02
-    400000: Level_02_Plat_02
+    400000: Level_02_Collissions
     400002: //RootNode
-    400004: Level_02_Icon_Plat_02
-    2300000: Level_02_Plat_02
-    2300002: Level_02_Icon_Plat_02
-    3300000: Level_02_Plat_02
-    3300002: Level_02_Icon_Plat_02
-    4300000: Level_02_Plat_02
-    4300002: Level_02_Icon_Plat_02
-    11100000: //RootNode
+    2300000: Level_02_Collissions
+    3300000: Level_02_Collissions
+    4300000: Level_02_Collissions
+    9500000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0
     materialSearch: 1
   animations:
-    legacyGenerateAnimations: 3
+    legacyGenerateAnimations: 4
     bakeSimulation: 0
     animationCompression: 1
     animationRotationError: .5
@@ -66,5 +61,5 @@ ModelImporter:
     rootMotionBoneName: 
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   additionalBone: 1
-  animationType: 1
+  animationType: 2
   userData: 

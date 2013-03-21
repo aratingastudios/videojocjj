@@ -10,11 +10,11 @@ FBXHeaderExtension:  {
 		Version: 1000
 		Year: 2013
 		Month: 3
-		Day: 20
-		Hour: 9
-		Minute: 12
-		Second: 26
-		Millisecond: 832
+		Day: 21
+		Hour: 10
+		Minute: 26
+		Second: 44
+		Millisecond: 843
 	}
 	Creator: "FBX SDK/FBX Plugins version 2013.1"
 	SceneInfo: "SceneInfo::GlobalInfo", "UserData" {
@@ -30,19 +30,19 @@ FBXHeaderExtension:  {
 			Comment: ""
 		}
 		Properties70:  {
-			P: "DocumentUrl", "KString", "Url", "", "D:\PROJECTS\Unity\Videogame\Assets\Geometry\Level_02\Level_02_Icon_Plat_01.fbx"
-			P: "SrcDocumentUrl", "KString", "Url", "", "D:\PROJECTS\Unity\Videogame\Assets\Geometry\Level_02\Level_02_Icon_Plat_01.fbx"
+			P: "DocumentUrl", "KString", "Url", "", "D:\PROJECTS\Unity\videojocjj\Assets\Geometry\Level_02\Level_02_Icon_Plat_01.fbx"
+			P: "SrcDocumentUrl", "KString", "Url", "", "D:\PROJECTS\Unity\videojocjj\Assets\Geometry\Level_02\Level_02_Icon_Plat_01.fbx"
 			P: "Original", "Compound", "", ""
 			P: "Original|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "Original|ApplicationName", "KString", "", "", "Maya"
 			P: "Original|ApplicationVersion", "KString", "", "", "2013"
-			P: "Original|DateTime_GMT", "DateTime", "", "", "20/03/2013 08:12:26.831"
-			P: "Original|FileName", "KString", "", "", "D:/PROJECTS/Unity/Videogame/Assets/Geometry/Level_02/Level_02_Icon_Plat_01.fbx"
+			P: "Original|DateTime_GMT", "DateTime", "", "", "21/03/2013 09:26:44.842"
+			P: "Original|FileName", "KString", "", "", "D:/PROJECTS/Unity/videojocjj/Assets/Geometry/Level_02/Level_02_Icon_Plat_01.fbx"
 			P: "LastSaved", "Compound", "", ""
 			P: "LastSaved|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "LastSaved|ApplicationName", "KString", "", "", "Maya"
 			P: "LastSaved|ApplicationVersion", "KString", "", "", "2013"
-			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "20/03/2013 08:12:26.831"
+			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "21/03/2013 09:26:44.842"
 		}
 	}
 }
@@ -73,7 +73,7 @@ GlobalSettings:  {
 
 Documents:  {
 	Count: 1
-	Document: 1128820720, "", "Scene" {
+	Document: 914694832, "", "Scene" {
 		Properties70:  {
 			P: "SourceObject", "object", "", ""
 			P: "ActiveAnimStackName", "KString", "", "", "Take 001"
@@ -301,30 +301,30 @@ Definitions:  {
 ;------------------------------------------------------------------
 
 Objects:  {
-	NodeAttribute: 1114363840, "NodeAttribute::", "Null" {
+	NodeAttribute: 1023686816, "NodeAttribute::", "Null" {
 		Properties70:  {
 			P: "Look", "enum", "", "",0
 		}
 		TypeFlags: "Null"
 	}
-	Geometry: 652236064, "Geometry::", "Mesh" {
-		Vertices: *12 {
-			a: 74.5277633666992,0.497418403625488,-4.64119720458984,75.8409118652344,0.497418403625488,-4.64119720458984,74.5277633666992,1.49741840362549,-4.64119720458984,75.8409118652344,1.49741840362549,-4.64119720458984
+	Geometry: 954806016, "Geometry::", "Mesh" {
+		Vertices: *24 {
+			a: 66.6067733764648,-5.27596473693848,-4.52181243896484,67.919921875,-5.27596473693848,-4.52181243896484,66.6067733764648,-4.27596426010132,-4.52181243896484,67.919921875,-4.27596426010132,-4.52181243896484,66.6067733764648,-5.27596473693848,-5.69016170501709,66.6067733764648,-4.27596426010132,-5.69016170501709,67.919921875,-5.27596473693848,-5.69016170501709,67.919921875,-4.27596426010132,-5.69016170501709
 		} 
-		PolygonVertexIndex: *4 {
-			a: 0,1,3,-3
+		PolygonVertexIndex: *16 {
+			a: 0,1,3,-3,0,2,5,-5,3,1,6,-8,2,3,7,-6
 		} 
-		Edges: *4 {
-			a: 0,3,1,2
+		Edges: *11 {
+			a: 0,3,1,2,7,5,6,9,11,10,14
 		} 
 		GeometryVersion: 124
 		LayerElementNormal: 0 {
 			Version: 101
 			Name: ""
-			MappingInformationType: "ByVertice"
+			MappingInformationType: "ByPolygonVertex"
 			ReferenceInformationType: "Direct"
-			Normals: *12 {
-				a: 0,0,1,0,0,1,0,0,1,0,0,1
+			Normals: *48 {
+				a: 0,0,1,0,0,1,0,0,1,0,0,1,-1,0,0,-1,0,0,-1,0,0,-1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,0,1,0,0,1,0,0,1,0,0,1,0
 			} 
 		}
 		LayerElementUV: 0 {
@@ -332,11 +332,11 @@ Objects:  {
 			Name: "map1"
 			MappingInformationType: "ByPolygonVertex"
 			ReferenceInformationType: "IndexToDirect"
-			UV: *8 {
-				a: 0.00395191181451082,0.603195786476135,0.117528393864632,0.603195786476135,0.00395191181451082,0.670919418334961,0.117528393864632,0.670919418334961
+			UV: *32 {
+				a: 0.00548740522935987,0.603189527988434,0.116516500711441,0.603189527988434,0.00548740522935987,0.669136881828308,0.116516500711441,0.669136881828308,0.00233291834592819,0.598281919956207,0.0107098817825317,0.598281919956207,0.0107098817825317,0.60665887594223,0.00233291834592819,0.60665887594223,0.00233291834592819,0.598281919956207,0.0107098817825317,0.598281919956207,0.0107098817825317,0.60665887594223,0.00233291834592819,0.60665887594223,0.00233291834592819,0.598281919956207,0.0107098817825317,0.598281919956207,0.0107098817825317,0.60665887594223,0.00233291834592819,0.60665887594223
 			} 
-			UVIndex: *4 {
-				a: 0,1,3,2
+			UVIndex: *16 {
+				a: 0,1,3,2,4,5,6,7,8,9,10,11,12,13,14,15
 			} 
 		}
 		LayerElementMaterial: 0 {
@@ -364,7 +364,7 @@ Objects:  {
 			}
 		}
 	}
-	Model: 446317408, "Model::Level_02", "Null" {
+	Model: 911877344, "Model::Level_02", "Null" {
 		Version: 232
 		Properties70:  {
 			P: "RotationActive", "bool", "", "",1
@@ -375,11 +375,11 @@ Objects:  {
 		Shading: Y
 		Culling: "CullingOff"
 	}
-	Model: 446321792, "Model::Level_02_Icon_Plat_02", "Mesh" {
+	Model: 911859808, "Model::Level_02_Icon_Plat_01", "Mesh" {
 		Version: 232
 		Properties70:  {
-			P: "RotationPivot", "Vector3D", "Vector", "",75.1843376159668,0.997418403625488,-4.64119720458984
-			P: "ScalingPivot", "Vector3D", "Vector", "",75.1843376159668,0.997418403625488,-4.64119720458984
+			P: "RotationPivot", "Vector3D", "Vector", "",67.2633476257324,-4.7759644985199,-5.10598707199097
+			P: "ScalingPivot", "Vector3D", "Vector", "",67.2633476257324,-4.7759644985199,-5.10598707199097
 			P: "RotationActive", "bool", "", "",1
 			P: "InheritType", "enum", "", "",1
 			P: "ScalingMax", "Vector3D", "Vector", "",0,0,0
@@ -388,7 +388,7 @@ Objects:  {
 		Shading: T
 		Culling: "CullingOff"
 	}
-	Material: 1125390224, "Material::MAT_Plataformes", "" {
+	Material: 914667504, "Material::MAT_Plataformes", "" {
 		Version: 102
 		ShadingModel: "lambert"
 		MultiLayer: 0
@@ -403,7 +403,7 @@ Objects:  {
 			P: "Opacity", "double", "Number", "",1
 		}
 	}
-	Video: 651931168, "Video::file39", "Clip" {
+	Video: 1019787840, "Video::file39", "Clip" {
 		Type: "Clip"
 		Properties70:  {
 			P: "Path", "KString", "XRefUrl", "", "D:/PROJECTS/ZBRUSH/VideoGame/Maya/Saurio/sourceimages/Plataformes.png"
@@ -412,7 +412,7 @@ Objects:  {
 		Filename: "D:/PROJECTS/ZBRUSH/VideoGame/Maya/Saurio/sourceimages/Plataformes.png"
 		RelativeFilename: "..\..\..\..\..\ZBRUSH\VideoGame\Maya\Saurio\sourceimages\Plataformes.png"
 	}
-	Texture: 640554592, "Texture::file39", "" {
+	Texture: 616274016, "Texture::file39", "" {
 		Type: "TextureVideoClip"
 		Version: 202
 		TextureName: "Texture::file39"
@@ -437,29 +437,29 @@ Objects:  {
 Connections:  {
 	
 	;Model::Level_02, Model::RootNode
-	C: "OO",446317408,0
+	C: "OO",911877344,0
 	
 	;AnimLayer::BaseLayer, AnimStack::Take 001
-	C: "OO",1115489392,1129556720
+	C: "OO",910101232,1030643568
 	
 	;NodeAttribute::, Model::Level_02
-	C: "OO",1114363840,446317408
+	C: "OO",1023686816,911877344
 	
-	;Model::Level_02_Icon_Plat_02, Model::Level_02
-	C: "OO",446321792,446317408
-	
-	;Texture::file39, Material::MAT_Plataformes
-	C: "OP",640554592,1125390224, "DiffuseColor"
+	;Model::Level_02_Icon_Plat_01, Model::Level_02
+	C: "OO",911859808,911877344
 	
 	;Texture::file39, Material::MAT_Plataformes
-	C: "OP",640554592,1125390224, "TransparentColor"
+	C: "OP",616274016,914667504, "DiffuseColor"
+	
+	;Texture::file39, Material::MAT_Plataformes
+	C: "OP",616274016,914667504, "TransparentColor"
 	
 	;Video::file39, Texture::file39
-	C: "OO",651931168,640554592
+	C: "OO",1019787840,616274016
 	
-	;Geometry::, Model::Level_02_Icon_Plat_02
-	C: "OO",652236064,446321792
+	;Geometry::, Model::Level_02_Icon_Plat_01
+	C: "OO",954806016,911859808
 	
-	;Material::MAT_Plataformes, Model::Level_02_Icon_Plat_02
-	C: "OO",1125390224,446321792
+	;Material::MAT_Plataformes, Model::Level_02_Icon_Plat_01
+	C: "OO",914667504,911859808
 }
