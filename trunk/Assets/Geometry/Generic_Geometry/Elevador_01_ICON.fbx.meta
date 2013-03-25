@@ -1,17 +1,13 @@
 fileFormatVersion: 2
-guid: 1fafb96d50139534984d67690dee2a76
+guid: a8771ebdd1d6efb498c9a12f4d9c90a8
 ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
     100000: //RootNode
-    100002: Level_02_WalkLine 1
     400000: //RootNode
-    400002: Level_02_WalkLine 1
     2300000: //RootNode
-    2300002: Level_02_WalkLine 1
     3300000: //RootNode
-    3300002: Level_02_WalkLine 1
-    4300000: Level_02_WalkLine
+    4300000: Plataforma_01_ICON
     9500000: //RootNode
   materials:
     importMaterials: 1
