@@ -11,10 +11,10 @@ FBXHeaderExtension:  {
 		Year: 2013
 		Month: 3
 		Day: 25
-		Hour: 15
-		Minute: 51
-		Second: 15
-		Millisecond: 3
+		Hour: 16
+		Minute: 25
+		Second: 8
+		Millisecond: 519
 	}
 	Creator: "FBX SDK/FBX Plugins version 2013.1"
 	SceneInfo: "SceneInfo::GlobalInfo", "UserData" {
@@ -36,13 +36,13 @@ FBXHeaderExtension:  {
 			P: "Original|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "Original|ApplicationName", "KString", "", "", "Maya"
 			P: "Original|ApplicationVersion", "KString", "", "", "2013"
-			P: "Original|DateTime_GMT", "DateTime", "", "", "25/03/2013 14:51:15.002"
+			P: "Original|DateTime_GMT", "DateTime", "", "", "25/03/2013 15:25:08.518"
 			P: "Original|FileName", "KString", "", "", "D:/PROJECTS/Unity/videojocjj/Assets/Geometry/Generic_Geometry/Plataforma_01_Blau.fbx"
 			P: "LastSaved", "Compound", "", ""
 			P: "LastSaved|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "LastSaved|ApplicationName", "KString", "", "", "Maya"
 			P: "LastSaved|ApplicationVersion", "KString", "", "", "2013"
-			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "25/03/2013 14:51:15.002"
+			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "25/03/2013 15:25:08.518"
 		}
 	}
 }
@@ -60,7 +60,7 @@ GlobalSettings:  {
 		P: "UnitScaleFactor", "double", "Number", "",1
 		P: "OriginalUnitScaleFactor", "double", "Number", "",1
 		P: "AmbientColor", "ColorRGB", "Color", "",0,0,0
-		P: "DefaultCamera", "KString", "", "", "Producer Perspective"
+		P: "DefaultCamera", "KString", "", "", "Producer Front"
 		P: "TimeMode", "enum", "", "",11
 		P: "TimeSpanStart", "KTime", "Time", "",1924423250
 		P: "TimeSpanStop", "KTime", "Time", "",288663487500
@@ -73,7 +73,7 @@ GlobalSettings:  {
 
 Documents:  {
 	Count: 1
-	Document: 1492210096, "", "Scene" {
+	Document: 1374503136, "", "Scene" {
 		Properties70:  {
 			P: "SourceObject", "object", "", ""
 			P: "ActiveAnimStackName", "KString", "", "", "Take 001"
@@ -291,7 +291,7 @@ Definitions:  {
 ;------------------------------------------------------------------
 
 Objects:  {
-	Geometry: 1488235936, "Geometry::", "Mesh" {
+	Geometry: 989671920, "Geometry::", "Mesh" {
 		Vertices: *12 {
 			a: 59.8544158935547,-0.51058167219162,-4.10685348510742,86.2321624755859,-0.51058167219162,-4.10685348510742,59.8544158935547,0.898173630237579,-4.10685348510742,86.2321624755859,0.898173630237579,-4.10685348510742
 		} 
@@ -348,7 +348,7 @@ Objects:  {
 			}
 		}
 	}
-	Model: 862024192, "Model::Plataforma_01_Blau", "Mesh" {
+	Model: 989547344, "Model::Plataforma_01_Blau", "Mesh" {
 		Version: 232
 		Properties70:  {
 			P: "RotationPivot", "Vector3D", "Vector", "",73.0432891845703,0.19379597902298,-4.10685331751207
@@ -357,11 +357,13 @@ Objects:  {
 			P: "InheritType", "enum", "", "",1
 			P: "ScalingMax", "Vector3D", "Vector", "",0,0,0
 			P: "DefaultAttributeIndex", "int", "Integer", "",0
+			P: "Lcl Translation", "Lcl Translation", "", "A",-0.869326657683175,0,0
+			P: "Lcl Scaling", "Lcl Scaling", "", "A",0.917304235958872,1,1
 		}
 		Shading: T
 		Culling: "CullingOff"
 	}
-	Material: 1243384304, "Material::MAT_Plataformes", "" {
+	Material: 1377531728, "Material::MAT_Plataformes", "" {
 		Version: 102
 		ShadingModel: "lambert"
 		MultiLayer: 0
@@ -376,7 +378,7 @@ Objects:  {
 			P: "Opacity", "double", "Number", "",1
 		}
 	}
-	Video: 1171622896, "Video::file31", "Clip" {
+	Video: 1483343136, "Video::file31", "Clip" {
 		Type: "Clip"
 		Properties70:  {
 			P: "Path", "KString", "XRefUrl", "", "D:/PROJECTS/ZBRUSH/VideoGame/Maya/Saurio/sourceimages/Plataformes.png"
@@ -385,7 +387,7 @@ Objects:  {
 		Filename: "D:/PROJECTS/ZBRUSH/VideoGame/Maya/Saurio/sourceimages/Plataformes.png"
 		RelativeFilename: "..\..\..\..\..\ZBRUSH\VideoGame\Maya\Saurio\sourceimages\Plataformes.png"
 	}
-	Texture: 1166895952, "Texture::file31", "" {
+	Texture: 1239904880, "Texture::file31", "" {
 		Type: "TextureVideoClip"
 		Version: 202
 		TextureName: "Texture::file31"
@@ -410,23 +412,23 @@ Objects:  {
 Connections:  {
 	
 	;Model::Plataforma_01_Blau, Model::RootNode
-	C: "OO",862024192,0
+	C: "OO",989547344,0
 	
 	;AnimLayer::BaseLayer, AnimStack::Take 001
-	C: "OO",1179753200,1241095824
+	C: "OO",1007536192,1020002640
 	
 	;Texture::file31, Material::MAT_Plataformes
-	C: "OP",1166895952,1243384304, "DiffuseColor"
+	C: "OP",1239904880,1377531728, "DiffuseColor"
 	
 	;Texture::file31, Material::MAT_Plataformes
-	C: "OP",1166895952,1243384304, "TransparentColor"
+	C: "OP",1239904880,1377531728, "TransparentColor"
 	
 	;Video::file31, Texture::file31
-	C: "OO",1171622896,1166895952
+	C: "OO",1483343136,1239904880
 	
 	;Geometry::, Model::Plataforma_01_Blau
-	C: "OO",1488235936,862024192
+	C: "OO",989671920,989547344
 	
 	;Material::MAT_Plataformes, Model::Plataforma_01_Blau
-	C: "OO",1243384304,862024192
+	C: "OO",1377531728,989547344
 }
