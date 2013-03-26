@@ -1,3 +1,4 @@
+
 using UnityEngine;
 using System.Collections;
 
@@ -11,6 +12,8 @@ public class PlayerControl : MonoBehaviour
 	
 	public bool isActive;
 	public GUISkin m_skin;
+	
+	public AudioClip[] sounds;
 	
     Vector3 moveDirection = Vector3.zero;
 	
@@ -107,6 +110,9 @@ public class PlayerControl : MonoBehaviour
 				else if(touchJump.Contains(pos))
 					vert=1.0f;
 			}
+			
+			//Play sounds
+			PlaySounds();
 		}
 		
 		//rotate character to face direction when move
@@ -144,9 +150,39 @@ public class PlayerControl : MonoBehaviour
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
+	void PlaySounds()
+	{
+		if(controller.isGrounded)
+		{
+			if(Input.GetButton("Jump"))
+				PlaySound(1); //jump
+			
+			else if(Input.GetButton("Horizontal"))
+				PlaySound(0); //run
+		}
+	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			
+	void PlaySound(int id)
+	{
+		if(id==1)
+			audio.Stop();
+		
+		if(sounds[id] && !audio.isPlaying)
+		{
+			audio.clip = sounds[id];
+			audio.Play();
+		}
+	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
 	void SetActive(bool b)
 	{
 		isActive=b;
+		
+		PlaySound(2); //change
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
