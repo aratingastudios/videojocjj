@@ -9,22 +9,25 @@ public class BackgroundManager : MonoBehaviour
 {
 	Transform targetCamera;
 	public float scaleFactor = 0.25F; //this would move the layer for 0.25m for every 1m of camera movement
+	Vector3 ini_cam_pos;
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	void Awake()
 	{
 		targetCamera = GameObject.Find("TargetCamera").transform;
+		ini_cam_pos = targetCamera.position;
 	}
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	void Update ()
 	{
-		foreach(Transform child in transform)
-		{
-			//transform.position = new Vector3(targetCamera.position.x*scaleFactor, transform.position.y, transform.position.z);
-			child.position = new Vector3(targetCamera.position.x*scaleFactor, targetCamera.position.y*scaleFactor, child.position.z);
-		}
+		Vector3 offset = targetCamera.position - ini_cam_pos;
+		Vector3 pos = transform.position;
+		
+		//transform.position = new Vector3(targetCamera.position.x*scaleFactor - offset.x, pos.y, pos.z);
+		
+		transform.position = new Vector3(targetCamera.position.x*scaleFactor, transform.position.y, transform.position.z);
 	}
 }

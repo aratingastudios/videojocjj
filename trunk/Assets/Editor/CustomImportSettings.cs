@@ -15,6 +15,19 @@ public class CustomImportSettings : AssetPostprocessor
 	}
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	void OnPreprocessTexture() 
+	{
+		TextureImporter importer = assetImporter as TextureImporter;
+		
+		if(importer.assetPath.Contains("Textures"))
+		{
+			importer.textureFormat = TextureImporterFormat.AutomaticTruecolor;
+			importer.wrapMode = TextureWrapMode.Clamp;
+		} 
+	}
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/*
 	void OnPreprocessModel() 
 	{
@@ -26,22 +39,6 @@ public class CustomImportSettings : AssetPostprocessor
 		importer.generateSecondaryUV = true;
 		importer.addCollider = true;
     }
-	
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-	void OnPreprocessTexture() 
-	{
-		TextureImporter importer = assetImporter as TextureImporter;
-		
-		if(importer.assetPath.Contains("GUI"))
-		{
-			importer.textureType = TextureImporterType.GUI;
-			importer.textureFormat = TextureImporterFormat.AutomaticTruecolor;
-			importer.npotScale = TextureImporterNPOTScale.None;
-			//importer.textureFormat = TextureImporterFormat.PVRTC_RGBA2;
-			//importer.npotScale = TextureImporterNPOTScale.ToNearest;
-		} 
-	}
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////
 	*/

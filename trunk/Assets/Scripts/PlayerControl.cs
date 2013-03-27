@@ -42,6 +42,8 @@ public class PlayerControl : MonoBehaviour
 	
 	Material mat_child;
 	
+	public bool bConcept = false;
+	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	void Awake()
@@ -50,7 +52,8 @@ public class PlayerControl : MonoBehaviour
 		gameManagerObj = GameObject.Find("_GAMEMANAGER");
 		gameManager = gameManagerObj.GetComponent<GameManager>();
 		
-		mat_child = transform.GetChild(0).renderer.material;
+		if(transform.GetChildCount() > 0)
+			mat_child = transform.GetChild(0).renderer.material;
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -116,7 +119,8 @@ public class PlayerControl : MonoBehaviour
 			}
 			
 			//Play sounds
-			PlaySounds();
+			if(!bConcept)
+				PlaySounds();
 		}
 		
 		//rotate character to face direction when move
@@ -186,12 +190,15 @@ public class PlayerControl : MonoBehaviour
 	{
 		isActive=b;
 		
-		PlaySound(2); //change
+		if(!bConcept)
+		{
+			PlaySound(2); //change
 		
-		if(b)
-			mat_child.color = Color.white;
-		else
-			mat_child.color = Color.grey;
+			if(b)
+				mat_child.color = Color.white;
+			else
+				mat_child.color = Color.grey;
+		}
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

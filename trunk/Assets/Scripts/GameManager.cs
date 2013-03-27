@@ -38,12 +38,23 @@ public class GameManager : MonoBehaviour
 	
 	void Awake()
 	{
+		m_players = new GameObject[2];
+		
+		if(GameObject.Find("PLAYER0"))
+			m_players[0] = GameObject.Find("PLAYER0");
+		else
+			m_players[0] = GameObject.Find("PLAYER0_concept");
+		
+		if(GameObject.Find("PLAYER1"))
+			m_players[1] = GameObject.Find("PLAYER1");
+		else
+			m_players[1] = GameObject.Find("PLAYER1_concept");
+		
 		targetCameraManager = GameObject.Find("TargetCamera");
-		m_players = new GameObject[2]{GameObject.Find("PLAYER0"), GameObject.Find("PLAYER1")};
 		num_levels = PlayerPrefs.GetInt("num_levels");
 		player_buttons = new string[]{"player0_button", "player1_button"};
-		//triangle = (GameObject)Instantiate(Resources.Load("triangle", typeof(GameObject)));
 		gui_state="in_game";
+		//triangle = (GameObject)Instantiate(Resources.Load("triangle", typeof(GameObject)));
 	}
 		
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
