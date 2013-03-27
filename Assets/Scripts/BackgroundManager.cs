@@ -21,7 +21,10 @@ public class BackgroundManager : MonoBehaviour
 	
 	void Update ()
 	{
-		transform.position = new Vector3(targetCamera.position.x*scaleFactor, transform.position.y, transform.position.z);
-		//transform.position = new Vector3(targetCamera.position.x*scaleFactor, targetCamera.position.y*scaleFactor, transform.position.z);
+		foreach(Transform child in transform)
+		{
+			//transform.position = new Vector3(targetCamera.position.x*scaleFactor, transform.position.y, transform.position.z);
+			child.position = new Vector3(targetCamera.position.x*scaleFactor, targetCamera.position.y*scaleFactor, child.position.z);
+		}
 	}
 }

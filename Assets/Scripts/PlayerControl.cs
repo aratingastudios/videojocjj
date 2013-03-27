@@ -40,6 +40,8 @@ public class PlayerControl : MonoBehaviour
 	Vector3 activeLocalPlatformPoint;
 	Vector3 activeGlobalPlatformPoint;
 	
+	Material mat_child;
+	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	void Awake()
@@ -47,6 +49,8 @@ public class PlayerControl : MonoBehaviour
 		controller = GetComponent<CharacterController>();
 		gameManagerObj = GameObject.Find("_GAMEMANAGER");
 		gameManager = gameManagerObj.GetComponent<GameManager>();
+		
+		mat_child = transform.GetChild(0).renderer.material;
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -183,6 +187,11 @@ public class PlayerControl : MonoBehaviour
 		isActive=b;
 		
 		PlaySound(2); //change
+		
+		if(b)
+			mat_child.color = Color.white;
+		else
+			mat_child.color = Color.grey;
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

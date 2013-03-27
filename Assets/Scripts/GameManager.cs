@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
 		m_players = new GameObject[2]{GameObject.Find("PLAYER0"), GameObject.Find("PLAYER1")};
 		num_levels = PlayerPrefs.GetInt("num_levels");
 		player_buttons = new string[]{"player0_button", "player1_button"};
-		triangle = (GameObject)Instantiate(Resources.Load("triangle", typeof(GameObject)));
+		//triangle = (GameObject)Instantiate(Resources.Load("triangle", typeof(GameObject)));
 		gui_state="in_game";
 	}
 		
@@ -57,6 +57,7 @@ public class GameManager : MonoBehaviour
 		buttonSize3 = (int)(buttonSize*1.5f);
 		
 		m_players[0].SendMessage("SetActive", true);
+		m_players[1].SendMessage("SetActive", false);
 		
 		bAudio = (PlayerPrefs.GetInt("music") == 1);
 		if(bAudio) audio.Play();
@@ -66,7 +67,7 @@ public class GameManager : MonoBehaviour
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	void Update()
-	{	
+	{
 		//Keyboard reset level
 		if(Input.GetKeyDown(KeyCode.R))
 			ResetLevel();
@@ -74,12 +75,13 @@ public class GameManager : MonoBehaviour
 		//Keyboard change player
 		if(Input.GetKeyDown(KeyCode.Q))
 			ChangePlayer();
-
+		/*
 		if(m_players[iPlayerActive])
 		{
 			Vector3 pos = m_players[iPlayerActive].transform.position;
 			triangle.transform.position = new Vector3(pos.x, pos.y+triangle_offset, pos.z);
 		}
+		*/
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

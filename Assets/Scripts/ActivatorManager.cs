@@ -34,6 +34,9 @@ public class ActivatorManager : MonoBehaviour
 				t.SendMessage("Activate");
 			
 			state="end";
+			
+			if(audio && !audio.isPlaying)
+				audio.Play();
 		}
 	}
 	
@@ -41,6 +44,7 @@ public class ActivatorManager : MonoBehaviour
 	
 	void Activate()
 	{
-		state = "move";
+		if(state=="idle")
+			state = "move";
 	}
 }
