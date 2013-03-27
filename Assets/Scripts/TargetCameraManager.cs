@@ -31,8 +31,16 @@ public class TargetCameraManager : MonoBehaviour
 	void Awake()
 	{
 		m_players = new Transform[2];
-		m_players[0] = GameObject.Find("PLAYER0").transform;
-		m_players[1] = GameObject.Find("PLAYER1").transform;
+
+		if(GameObject.Find("PLAYER0"))
+			m_players[0] = GameObject.Find("PLAYER0").transform;
+		else
+			m_players[0] = GameObject.Find("PLAYER0_concept").transform;
+		
+		if(GameObject.Find("PLAYER1"))
+			m_players[1] = GameObject.Find("PLAYER1").transform;
+		else
+			m_players[1] = GameObject.Find("PLAYER1_concept").transform;
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
