@@ -34,6 +34,8 @@ public class GameManager : MonoBehaviour
 	bool bAudio = true;
 	bool bAudioOld = true;
 	
+	float margin = 20;
+	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	void Awake()
@@ -148,11 +150,11 @@ public class GameManager : MonoBehaviour
 		if(gui_state=="in_game")
 		{
 			//Menu button
-			if(GUI.Button(new Rect(Screen.width-5-buttonSize,5,buttonSize,buttonSize), "MENU"))
+			if(GUI.Button(new Rect(Screen.width-5-buttonSize,5,buttonSize,buttonSize), "", "pause"))
 				gui_state="show_menu";
 			
 			//Reset level button
-			if(GUI.Button(new Rect(Screen.width-10-buttonSize*2,5,buttonSize,buttonSize), "RESET"))
+			if(GUI.Button(new Rect(Screen.width-10-buttonSize*2,5,buttonSize,buttonSize), "", "reset"))
 				ResetLevel();
 			
 			//Change player button
@@ -197,25 +199,37 @@ public class GameManager : MonoBehaviour
 	{
 		GUI.Box(new Rect(0,0,Screen.width,Screen.height), "");
 		
-		if(GUI.Button(new Rect(Screen.width/2-buttonSize3/2-buttonSize3-20,Screen.height/2-buttonSize3/2,buttonSize3,buttonSize3), "CONTINUE"))
+		GUI.BeginGroup(new Rect(Screen.width/2-buttonSize3-buttonSize3/2-margin,Screen.height/2-buttonSize3/2,buttonSize3*3+margin*2,buttonSize3));
+		
+		if(GUI.Button(new Rect(0,0,buttonSize3,buttonSize3), "", "continue"))
 			gui_state = "in_game";
 			
-		if(GUI.Button(new Rect(Screen.width/2-buttonSize3/2,Screen.height/2-buttonSize3/2,buttonSize3,buttonSize3), "LEVELS"))
+		if(GUI.Button(new Rect(buttonSize3+margin,0,buttonSize3,buttonSize3), "", "levels"))
 			Application.LoadLevel("LEVEL_SELECT");
 			
-		if(GUI.Button(new Rect(Screen.width/2+buttonSize3/2+20,Screen.height/2-buttonSize3/2,buttonSize3,buttonSize3), "OPTIONS"))
+		if(GUI.Button(new Rect(buttonSize3*2+margin*2,0,buttonSize3,buttonSize3), "", "options"))
 			gui_state = "show_options";
+		
+		GUI.EndGroup();
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	void OnGUIShowOptions()
-	{
+	{	
 		GUI.Box(new Rect(0,0,Screen.width,Screen.height), "");
 		
-		if(GUI.Button(new Rect(Screen.width/2+buttonSize3/2+20,Screen.height/2-buttonSize3/2,buttonSize3,buttonSize3), "BACK"))
+		GUI.BeginGroup(new Rect(Screen.width/2-buttonSize3-margin,Screen.height/2-buttonSize3-margin,buttonSize3*2+margin,buttonSize3*2+margin));
+        GUI.Button(new Rect(0,0,buttonSize3, buttonSize3), "", "fx");
+		GUI.Button(new Rect(buttonSize3+margin,0,buttonSize3, buttonSize3), "", "music");
+		GUI.Button(new Rect(0,buttonSize3+margin,buttonSize3, buttonSize3), "", "help");
+		GUI.Button(new Rect(buttonSize3+margin,buttonSize3+margin,buttonSize3, buttonSize3), "", "info");
+		GUI.EndGroup();
+		
+		if(GUI.Button(new Rect(20,Screen.height-buttonSize-20,buttonSize, buttonSize), "", "arrow_left"))
 			gui_state = "show_menu";
 		
+		/*
 		bAudio = GUI.Toggle(new Rect(Screen.width/2-buttonSize3/2-buttonSize3-20,Screen.height/2-buttonSize3/2,buttonSize3,buttonSize3), bAudio, "audio");
 		
 		if(bAudio != bAudioOld)
@@ -225,6 +239,7 @@ public class GameManager : MonoBehaviour
 			bAudioOld = bAudio;
 			PlayerPrefs.SetInt("music", bAudio ? 1 : 0);
 		}
+		*/
 	}
 }
 
