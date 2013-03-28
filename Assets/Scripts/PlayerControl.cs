@@ -77,9 +77,9 @@ public class PlayerControl : MonoBehaviour
 		{
 			if(isActive)
 			{
-				GUI.Box(touchLeft, "", "left_arrow");
-				GUI.Box(touchRight, "RIGHT");
-				GUI.Box(touchJump, "JUMP");
+				GUI.Box(touchLeft, "", "arrow_left");
+				GUI.Box(touchRight, "", "arrow_right");
+				GUI.Box(touchJump, "", "arrow_up");
 			}
 		}
 	}
@@ -99,28 +99,42 @@ public class PlayerControl : MonoBehaviour
 		activePlatform = null;
 		
 		if(isActive)
-		{
-			//PC controls
-			horiz = Input.GetAxis("Horizontal");
-			if(Input.GetButton("Jump"))
-				vert=1.0f;
-			
+		{	
 			//Mobile controls
-			foreach(Touch touch in Input.touches)
+			if(Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer)
 			{
-	            Vector2 pos = new Vector2(touch.position.x, Screen.height-touch.position.y);
-				
-				if(touchLeft.Contains(pos))
-					horiz=-1.0f;
-				else if(touchRight.Contains(pos))
-					horiz=1.0f;
-				else if(touchJump.Contains(pos))
-					vert=1.0f;
+				foreach(Touch touch in Input.touches)
+				{
+					Vector2 pos = new Vector2(touch.position.x, Screen.height-touch.position.y);
+					
+					if(touchLeft.Contains(pos))
+					{
+						horiz=-1.0f;
+						PlaySounds("run");
+					}
+					else if(touchRight.Contains(pos))
+					{
+						horiz=1.0f;
+						PlaySounds("run");
+					}
+					else if(touchJump.Contains(pos))
+					{
+						vert=1.0f;
+						PlaySounds("jump");
+					}
+				}
 			}
-			
-			//Play sounds
-			if(!bConcept)
-				PlaySounds();
+			//PC controls
+			else
+			{
+				horiz = Input.GetAxis("Horizontal");
+				if(Input.GetButton("Jump"))
+					vert=1.0f;
+				
+				//Play sounds
+				if(!bConcept)
+					PlaySounds("");
+			}
 		}
 		
 		//rotate character to face direction when move
@@ -158,14 +172,14 @@ public class PlayerControl : MonoBehaviour
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	void PlaySounds()
+	void PlaySounds(string sInputMobile)
 	{
 		if(controller.isGrounded)
 		{
-			if(Input.GetButton("Jump"))
+			if(Input.GetButton("Jump") || sInputMobile=="jump")
 				PlaySound(1); //jump
 			
-			else if(Input.GetButton("Horizontal"))
+			else if(Input.GetButton("Horizontal") || sInputMobile=="run")
 				PlaySound(0); //run
 		}
 	}
