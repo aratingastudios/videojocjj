@@ -24,7 +24,13 @@ public class CustomImportSettings : AssetPostprocessor
 		{
 			importer.textureFormat = TextureImporterFormat.AutomaticTruecolor;
 			importer.wrapMode = TextureWrapMode.Clamp;
-		} 
+		}
+		
+		else if(importer.assetPath.Contains("GUITextureAndSkins"))
+		{
+			importer.textureType = TextureImporterType.GUI;
+			importer.textureFormat = TextureImporterFormat.AutomaticTruecolor;
+		}
 	}
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -77,7 +77,7 @@ public class PlayerControl : MonoBehaviour
 		{
 			if(isActive)
 			{
-				GUI.Box(touchLeft, "LEFT");
+				GUI.Box(touchLeft, "", "left_arrow");
 				GUI.Box(touchRight, "RIGHT");
 				GUI.Box(touchJump, "JUMP");
 			}
