@@ -34,6 +34,9 @@ public class GameManager : MonoBehaviour
 	bool bAudio = true;
 	bool bAudioOld = true;
 	
+	bool bAudioFx = true;
+	bool bAudioFxOld = true;
+	
 	float margin = 20;
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -75,6 +78,9 @@ public class GameManager : MonoBehaviour
 		bAudio = (PlayerPrefs.GetInt("music") == 1);
 		if(bAudio) audio.Play();
 		bAudioOld = bAudio;
+		
+		bAudioFx = (PlayerPrefs.GetInt("musicFx") == 1);
+		bAudioFxOld = bAudioFx;
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -220,17 +226,14 @@ public class GameManager : MonoBehaviour
 		GUI.Box(new Rect(0,0,Screen.width,Screen.height), "");
 		
 		GUI.BeginGroup(new Rect(Screen.width/2-buttonSize3-margin,Screen.height/2-buttonSize3-margin,buttonSize3*2+margin,buttonSize3*2+margin));
-        GUI.Button(new Rect(0,0,buttonSize3, buttonSize3), "", "fx");
-		GUI.Button(new Rect(buttonSize3+margin,0,buttonSize3, buttonSize3), "", "music");
+		bAudioFx = GUI.Toggle(new Rect(0,0,buttonSize3,buttonSize3), bAudioFx, "", "fx");
+		bAudio   = GUI.Toggle(new Rect(buttonSize3+margin,0,buttonSize3,buttonSize3), bAudio, "", "music");
 		GUI.Button(new Rect(0,buttonSize3+margin,buttonSize3, buttonSize3), "", "help");
 		GUI.Button(new Rect(buttonSize3+margin,buttonSize3+margin,buttonSize3, buttonSize3), "", "info");
 		GUI.EndGroup();
 		
-		if(GUI.Button(new Rect(20,Screen.height-buttonSize-20,buttonSize, buttonSize), "", "arrow_left"))
+		if(GUI.Button(new Rect(20,Screen.height-buttonSize-20,buttonSize, buttonSize), "", "back"))
 			gui_state = "show_menu";
-		
-		/*
-		bAudio = GUI.Toggle(new Rect(Screen.width/2-buttonSize3/2-buttonSize3-20,Screen.height/2-buttonSize3/2,buttonSize3,buttonSize3), bAudio, "audio");
 		
 		if(bAudio != bAudioOld)
 		{
@@ -239,7 +242,12 @@ public class GameManager : MonoBehaviour
 			bAudioOld = bAudio;
 			PlayerPrefs.SetInt("music", bAudio ? 1 : 0);
 		}
-		*/
+		
+		if(bAudioFx != bAudioFxOld)
+		{
+			bAudioFxOld = bAudioFx;
+			PlayerPrefs.SetInt("musicFx", bAudioFx ? 1 : 0);
+		}
 	}
 }
 
