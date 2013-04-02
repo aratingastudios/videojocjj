@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
 	
 	GameObject triangle;
 	public float triangle_offset;
+	public bool bConcept;
 	
 	bool bAudio = true;
 	bool bAudioOld = true;
@@ -59,7 +60,9 @@ public class GameManager : MonoBehaviour
 		num_levels = PlayerPrefs.GetInt("num_levels");
 		player_buttons = new string[]{"player0_button", "player1_button"};
 		gui_state="in_game";
-		//triangle = (GameObject)Instantiate(Resources.Load("triangle", typeof(GameObject)));
+		
+		if(bConcept)
+			triangle = (GameObject)Instantiate(Resources.Load("triangle", typeof(GameObject)));
 	}
 		
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -94,13 +97,12 @@ public class GameManager : MonoBehaviour
 		//Keyboard change player
 		if(Input.GetKeyDown(KeyCode.Q))
 			ChangePlayer();
-		/*
-		if(m_players[iPlayerActive])
+		
+		if(bConcept && m_players[iPlayerActive])
 		{
 			Vector3 pos = m_players[iPlayerActive].transform.position;
 			triangle.transform.position = new Vector3(pos.x, pos.y+triangle_offset, pos.z);
 		}
-		*/
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -180,6 +182,11 @@ public class GameManager : MonoBehaviour
 			OnGUIShowOptions();
 		}
 		
+		else if(gui_state=="show_help")
+		{
+			OnGUIShowHelp();
+		}
+		
 		else if(gui_state=="level_completed")
 		{
 			if(GUI.Button(new Rect(Screen.width/2-buttonSize3/2, Screen.height/2-buttonSize3/2, buttonSize3, buttonSize3), "NEXT"))
@@ -194,7 +201,7 @@ public class GameManager : MonoBehaviour
 					
 				}
 				else
-					Application.LoadLevel("LEVEL_SELECT");
+					Application.LoadLevel("02_SELECT_LEVELS");
 			}
 		}
 	}
@@ -211,7 +218,7 @@ public class GameManager : MonoBehaviour
 			gui_state = "in_game";
 			
 		if(GUI.Button(new Rect(buttonSize3+margin,0,buttonSize3,buttonSize3), "", "levels"))
-			Application.LoadLevel("LEVEL_SELECT");
+			Application.LoadLevel("02_SELECT_LEVELS");
 			
 		if(GUI.Button(new Rect(buttonSize3*2+margin*2,0,buttonSize3,buttonSize3), "", "options"))
 			gui_state = "show_options";
@@ -228,7 +235,10 @@ public class GameManager : MonoBehaviour
 		GUI.BeginGroup(new Rect(Screen.width/2-buttonSize3-margin,Screen.height/2-buttonSize3-margin,buttonSize3*2+margin,buttonSize3*2+margin));
 		bAudioFx = GUI.Toggle(new Rect(0,0,buttonSize3,buttonSize3), bAudioFx, "", "fx");
 		bAudio   = GUI.Toggle(new Rect(buttonSize3+margin,0,buttonSize3,buttonSize3), bAudio, "", "music");
-		GUI.Button(new Rect(0,buttonSize3+margin,buttonSize3, buttonSize3), "", "help");
+		
+		if(GUI.Button(new Rect(0,buttonSize3+margin,buttonSize3, buttonSize3), "", "help"))
+			gui_state = "show_help";
+		
 		GUI.Button(new Rect(buttonSize3+margin,buttonSize3+margin,buttonSize3, buttonSize3), "", "info");
 		GUI.EndGroup();
 		
@@ -248,6 +258,14 @@ public class GameManager : MonoBehaviour
 			bAudioFxOld = bAudioFx;
 			PlayerPrefs.SetInt("musicFx", bAudioFx ? 1 : 0);
 		}
+	}
+	
+	void OnGUIShowHelp()
+	{
+		GUI.Box(new Rect(0,0,Screen.width,Screen.height), "", "help_screen");
+		
+		if(GUI.Button(new Rect(20,20,buttonSize, buttonSize), "", "back"))
+			gui_state = "show_options";
 	}
 }
 
