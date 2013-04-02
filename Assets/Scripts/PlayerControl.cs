@@ -132,8 +132,7 @@ public class PlayerControl : MonoBehaviour
 					vert=1.0f;
 				
 				//Play sounds
-				if(!bConcept)
-					PlaySounds("");
+				PlaySounds("");
 			}
 		}
 		
@@ -174,13 +173,16 @@ public class PlayerControl : MonoBehaviour
 	
 	void PlaySounds(string sInputMobile)
 	{
-		if(controller.isGrounded)
+		if(!bConcept)
 		{
-			if(Input.GetButton("Jump") || sInputMobile=="jump")
-				PlaySound(1); //jump
-			
-			else if(Input.GetButton("Horizontal") || sInputMobile=="run")
-				PlaySound(0); //run
+			if(controller.isGrounded)
+			{
+				if(Input.GetButton("Jump") || sInputMobile=="jump")
+					PlaySound(1); //jump
+				
+				else if(Input.GetButton("Horizontal") || sInputMobile=="run")
+					PlaySound(0); //run
+			}
 		}
 	}
 	
@@ -191,7 +193,7 @@ public class PlayerControl : MonoBehaviour
 		if(id==1)
 			audio.Stop();
 		
-		if(sounds[id] && !audio.isPlaying)
+		if(sounds.Length>0 && sounds[id] && !audio.isPlaying)
 		{
 			audio.clip = sounds[id];
 			audio.Play();

@@ -7,6 +7,8 @@ public class LevelSelection : MonoBehaviour
 	int selGridInt = -1;
     string[] selStrings;
 	public GUISkin m_skin;
+	int buttonSize;
+	float originalRatio=80.0f/800.0f;
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -20,6 +22,8 @@ public class LevelSelection : MonoBehaviour
 		}
 		
 		PlayerPrefs.SetInt("num_levels", num_levels);
+		
+		buttonSize = (int)(Screen.width * originalRatio);
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -28,7 +32,9 @@ public class LevelSelection : MonoBehaviour
 	{
 		GUI.skin = m_skin;
 		
-		selGridInt = GUI.SelectionGrid(new Rect(50, 50, Screen.width-100, 300), selGridInt, selStrings, 6, "sel_grid");
+		GUI.Box(new Rect(0,0,Screen.width, Screen.height), "", "level_select");
+		
+		selGridInt = GUI.SelectionGrid(new Rect(50, 50, Screen.width-100, 240), selGridInt, selStrings, 6, "sel_grid");
 		
 		if(selGridInt>-1)
 		{
@@ -40,5 +46,14 @@ public class LevelSelection : MonoBehaviour
 			
 			Application.LoadLevel(nom);
 		}
+		
+		if(GUI.Button(new Rect(20,Screen.height-buttonSize-20,buttonSize, buttonSize), "", "back"))
+		{
+			Application.LoadLevel("01 MAIN_MENU");
+		}
 	}
 }
+
+
+
+
