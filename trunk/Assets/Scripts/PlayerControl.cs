@@ -88,85 +88,88 @@ public class PlayerControl : MonoBehaviour
 	
 	void Update()
 	{
-		//Moving platform support
-		if(activePlatform != null)
+		if(gameManager.gui_state == "in_game")
 		{
-			Vector3 newGlobalPlatformPoint = activePlatform.TransformPoint(activeLocalPlatformPoint);
-			Vector3 moveDistance = (newGlobalPlatformPoint - activeGlobalPlatformPoint);
-			transform.position = transform.position + moveDistance;
-		}
-		
-		activePlatform = null;
-		
-		if(isActive)
-		{	
-			//Mobile controls
-			if(Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer)
+			//Moving platform support
+			if(activePlatform != null)
 			{
-				foreach(Touch touch in Input.touches)
+				Vector3 newGlobalPlatformPoint = activePlatform.TransformPoint(activeLocalPlatformPoint);
+				Vector3 moveDistance = (newGlobalPlatformPoint - activeGlobalPlatformPoint);
+				transform.position = transform.position + moveDistance;
+			}
+			
+			activePlatform = null;
+			
+			if(isActive)
+			{	
+				//Mobile controls
+				if(Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer)
 				{
-					Vector2 pos = new Vector2(touch.position.x, Screen.height-touch.position.y);
-					
-					if(touchLeft.Contains(pos))
+					foreach(Touch touch in Input.touches)
 					{
-						horiz=-1.0f;
-						PlaySounds("run");
-					}
-					else if(touchRight.Contains(pos))
-					{
-						horiz=1.0f;
-						PlaySounds("run");
-					}
-					else if(touchJump.Contains(pos))
-					{
-						vert=1.0f;
-						PlaySounds("jump");
+						Vector2 pos = new Vector2(touch.position.x, Screen.height-touch.position.y);
+						
+						if(touchLeft.Contains(pos))
+						{
+							horiz=-1.0f;
+							PlaySounds("run");
+						}
+						else if(touchRight.Contains(pos))
+						{
+							horiz=1.0f;
+							PlaySounds("run");
+						}
+						else if(touchJump.Contains(pos))
+						{
+							vert=1.0f;
+							PlaySounds("jump");
+						}
 					}
 				}
+				//PC controls
+				else
+				{
+					horiz = Input.GetAxis("Horizontal");
+					if(Input.GetButton("Jump"))
+						vert=1.0f;
+					
+					//Play sounds
+					PlaySounds("");
+				}
 			}
-			//PC controls
+			
+			//rotate character to face direction when move
+			if(Mathf.Abs(horiz)>0.1f)
+				transform.forward = Vector3.Normalize(new Vector3(horiz, 0.0f, 0.0f));
+			//face to camera when idle
+			//else
+			//	transform.forward = Vector3.Normalize(new Vector3(0.0f, 0.0f, -1.0f));
+	
+	        if(controller.isGrounded)
+			{
+				moveDirection = new Vector3(horiz, vert*jumpSpeed, 0.0f);
+	            moveDirection *= speed;
+	        }
 			else
 			{
-				horiz = Input.GetAxis("Horizontal");
-				if(Input.GetButton("Jump"))
-					vert=1.0f;
-				
-				//Play sounds
-				PlaySounds("");
+				moveDirection.x = horiz*speed;
 			}
+			
+	        moveDirection.y -= gravity * Time.deltaTime;
+	        controller.Move(moveDirection * Time.deltaTime);
+			
+			horiz=0.0f;
+			vert=0.0f;
+			
+			//Moving platforms support
+			if(activePlatform != null)
+			{
+				activeGlobalPlatformPoint = transform.position;
+				activeLocalPlatformPoint = activePlatform.InverseTransformPoint (transform.position);
+			}
+			
+			transform.position = new Vector3(transform.position.x, transform.position.y, 0.0f);
 		}
-		
-		//rotate character to face direction when move
-		if(Mathf.Abs(horiz)>0.1f)
-			transform.forward = Vector3.Normalize(new Vector3(horiz, 0.0f, 0.0f));
-		//face to camera when idle
-		//else
-		//	transform.forward = Vector3.Normalize(new Vector3(0.0f, 0.0f, -1.0f));
-
-        if(controller.isGrounded)
-		{
-			moveDirection = new Vector3(horiz, vert*jumpSpeed, 0.0f);
-            moveDirection *= speed;
-        }
-		else
-		{
-			moveDirection.x = horiz*speed;
-		}
-		
-        moveDirection.y -= gravity * Time.deltaTime;
-        controller.Move(moveDirection * Time.deltaTime);
-		
-		horiz=0.0f;
-		vert=0.0f;
-		
-		//Moving platforms support
-		if(activePlatform != null)
-		{
-			activeGlobalPlatformPoint = transform.position;
-			activeLocalPlatformPoint = activePlatform.InverseTransformPoint (transform.position);
-		}
-		
-		transform.position = new Vector3(transform.position.x, transform.position.y, 0.0f);
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
