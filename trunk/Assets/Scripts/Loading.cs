@@ -4,13 +4,25 @@ using System.Collections;
 public class Loading : MonoBehaviour
 {
 	public GUISkin m_skin;
+	bool bReady=false;
+	string next_level;
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	void Start()
 	{
-		string next_level = PlayerPrefs.GetString("next_level");
-		Application.LoadLevel(next_level);
+		next_level = PlayerPrefs.GetString("next_level");
+	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	void Update()
+	{
+		if(bReady)
+		{
+			bReady=false;
+			//Application.LoadLevel(next_level);
+		}
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -19,5 +31,6 @@ public class Loading : MonoBehaviour
 	{
 		GUI.skin = m_skin;
 		GUI.Box(new Rect(0,0,Screen.width,Screen.height), "", "loading");
+		bReady=true;
 	}
 }
