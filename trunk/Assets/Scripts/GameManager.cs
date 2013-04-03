@@ -109,7 +109,8 @@ public class GameManager : MonoBehaviour
 	
 	void ResetLevel()
 	{
-		Application.LoadLevel(Application.loadedLevelName);
+		PlayerPrefs.SetString("next_level", Application.loadedLevelName);
+		Application.LoadLevel("LOADING");
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -195,13 +196,19 @@ public class GameManager : MonoBehaviour
 				if(m_level<=num_levels)
 				{
 					string s_level = m_level.ToString();
+					
 					if(m_level<10)
 						s_level = "0"+s_level;
-					Application.LoadLevel("LEVEL_"+s_level);
+					
+					PlayerPrefs.SetString("next_level", "LEVEL_"+s_level);
+					Application.LoadLevel("LOADING");
 					
 				}
 				else
-					Application.LoadLevel("02_SELECT_LEVELS");
+				{
+					PlayerPrefs.SetString("screen_state", "LEVEL_SELECT");
+					Application.LoadLevel("00 SCREEN MANAGER");
+				}
 			}
 		}
 	}
@@ -218,7 +225,10 @@ public class GameManager : MonoBehaviour
 			gui_state = "in_game";
 			
 		if(GUI.Button(new Rect(buttonSize3+margin,0,buttonSize3,buttonSize3), "", "levels"))
-			Application.LoadLevel("02_SELECT_LEVELS");
+		{
+			PlayerPrefs.SetString("screen_state", "LEVEL_SELECT");
+			Application.LoadLevel("00 SCREEN MANAGER");
+		}
 			
 		if(GUI.Button(new Rect(buttonSize3*2+margin*2,0,buttonSize3,buttonSize3), "", "options"))
 			gui_state = "show_options";
@@ -266,6 +276,21 @@ public class GameManager : MonoBehaviour
 		
 		if(GUI.Button(new Rect(20,20,buttonSize, buttonSize), "", "back"))
 			gui_state = "show_options";
+	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	void OnApplicationPause(bool bPause)
+	{
+		if(bPause)
+			PlayerPrefs.SetString("screen_state", "START_SCREEN");
+	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	void OnApplicationQuit()
+	{
+		PlayerPrefs.SetString("screen_state", "START_SCREEN");
 	}
 }
 
