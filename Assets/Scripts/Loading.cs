@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Loading : MonoBehaviour
 {
-	public GUISkin m_skin;
+	public Texture2D m_tex;
 	bool bReady=false;
 	string next_level;
 	
@@ -21,7 +21,7 @@ public class Loading : MonoBehaviour
 		if(bReady)
 		{
 			bReady=false;
-			//Application.LoadLevel(next_level);
+			Application.LoadLevel(next_level);
 		}
 	}
 	
@@ -29,8 +29,7 @@ public class Loading : MonoBehaviour
 	
 	void OnGUI()
 	{
-		GUI.skin = m_skin;
-		GUI.Box(new Rect(0,0,Screen.width,Screen.height), "", "loading");
+		GUI.DrawTexture(new Rect(0,0,Screen.width,Screen.height), m_tex);
 		bReady=true;
 	}
 }

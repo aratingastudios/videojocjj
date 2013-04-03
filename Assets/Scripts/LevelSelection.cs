@@ -3,10 +3,12 @@ using System.Collections;
 
 public class LevelSelection : MonoBehaviour
 {
+	public GUISkin m_skin_level_select;
 	public int num_levels;
+	
 	int selGridInt = -1;
     string[] selStrings;
-	public GUISkin m_skin;
+	
 	int buttonSize;
 	float originalRatio=80.0f/800.0f;
 
@@ -30,7 +32,7 @@ public class LevelSelection : MonoBehaviour
 	
 	void OnGUI()
 	{
-		GUI.skin = m_skin;
+		GUI.skin = m_skin_level_select;
 		
 		GUI.Box(new Rect(0,0,Screen.width, Screen.height), "", "level_select");
 		
@@ -44,12 +46,13 @@ public class LevelSelection : MonoBehaviour
 				nom = nom+"0";
 			nom = nom + (selGridInt+1);
 			
-			Application.LoadLevel(nom);
+			PlayerPrefs.SetString("next_level", nom);
+			Application.LoadLevel("LOADING");
 		}
 		
 		if(GUI.Button(new Rect(20,Screen.height-buttonSize-20,buttonSize, buttonSize), "", "back"))
 		{
-			Application.LoadLevel("01 MAIN_MENU");
+			Application.LoadLevel("02_MAIN_MENU");
 		}
 	}
 }

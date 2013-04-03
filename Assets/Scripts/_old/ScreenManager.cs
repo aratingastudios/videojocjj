@@ -5,7 +5,7 @@ public class ScreenManager : MonoBehaviour
 {
 	public GUISkin m_skin;
 	
-	string screen_state;
+	string screen_state = "START_SCREEN";
 	
 	public float wait_time;
 	float start_time;
@@ -36,10 +36,6 @@ public class ScreenManager : MonoBehaviour
 			selStrings[i] = (i+1).ToString();
 		
 		PlayerPrefs.SetInt("num_levels", num_levels);
-		
-		screen_state = PlayerPrefs.GetString("screen_state");
-		if(screen_state=="")
-			screen_state="START_SCREEN";
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -109,7 +105,6 @@ public class ScreenManager : MonoBehaviour
 				nom = nom+"0";
 			nom = nom + (selGridInt+1);
 			
-			PlayerPrefs.SetString("screen_state", "START_SCREEN");
 			PlayerPrefs.SetString("next_level", nom);
 			Application.LoadLevel("LOADING");
 		}
@@ -117,22 +112,6 @@ public class ScreenManager : MonoBehaviour
 		if(GUI.Button(new Rect(20,Screen.height-buttonSize-20,buttonSize, buttonSize), "", "back"))
 		{
 			screen_state="MAIN_MENU";
-			PlayerPrefs.SetString("screen_state", "START_SCREEN");
 		}
-	}
-	
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-	void OnApplicationPause(bool bPause)
-	{
-		if(bPause)
-			PlayerPrefs.SetString("screen_state", "START_SCREEN");
-	}
-	
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-	void OnApplicationQuit()
-	{
-		PlayerPrefs.SetString("screen_state", "START_SCREEN");
 	}
 }

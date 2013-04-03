@@ -3,7 +3,7 @@ using System.Collections;
 
 public class StartScreen : MonoBehaviour
 {
-	public GUISkin m_skin;
+	public Texture2D m_tex;
 	public float wait_time;
 	float start_time;
 
@@ -22,7 +22,7 @@ public class StartScreen : MonoBehaviour
 		
 		if(elapsed_time > wait_time)
 		{
-			Application.LoadLevel("01 MAIN_MENU");
+			Application.LoadLevel("02_MAIN_MENU");
 		}
 	}
 	
@@ -30,8 +30,6 @@ public class StartScreen : MonoBehaviour
 	
 	void OnGUI()
 	{
-		GUI.skin = m_skin;
-		
-		GUI.Box(new Rect(0,0,Screen.width,Screen.height), "", "start_screen");
+		GUI.DrawTexture(new Rect(0,0,Screen.width,Screen.height), m_tex);
 	}
 }
