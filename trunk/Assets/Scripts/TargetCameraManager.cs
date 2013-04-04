@@ -26,6 +26,9 @@ public class TargetCameraManager : MonoBehaviour
     Vector3 velocity = Vector3.zero;
 	float distThreshold = 0.01f;
 	
+	float smoothTimeP = 0.3F;
+    Vector3 velocityP = Vector3.zero;
+	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	void Awake()
@@ -59,18 +62,21 @@ public class TargetCameraManager : MonoBehaviour
 		//Update camera position
 		if(!levelCompleted)
 		{
+			//change active player
 			if(m_change_player && m_players[m_iPlayer]!=null)
 			{
 				m_target = m_players[m_iPlayer].transform;
 				bChangePos=true;
 			}
+			//follow the player
 			else if(m_current)
-				transform.position = m_current.position;		
+				transform.position = Vector3.SmoothDamp(transform.position, m_current.position, ref velocityP, smoothTimeP);
 				
 			//Player change
 			if(bChangePos)
 				ChangeActivePlayer();
 			
+			//check camera limits
 			if(m_check_bounds)
 				CheckBounds();
 		}
