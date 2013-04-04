@@ -40,6 +40,15 @@ public class GameManager : MonoBehaviour
 	
 	float margin = 20;
 	
+	//FPS
+	float updateInterval = 1.0f;
+	float accum = 0; // FPS accumulated over the interval
+	int frames = 0; // Frames drawn over the interval
+	float timeleft; // Left time for current interval
+	string sFPS;
+	
+	bool bFPS = true;
+	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	void Awake()
@@ -86,6 +95,8 @@ public class GameManager : MonoBehaviour
 		
 		bAudioFx = (PlayerPrefs.GetInt("musicFx") == 1);
 		bAudioFxOld = bAudioFx;
+		
+		timeleft = updateInterval;
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -105,6 +116,9 @@ public class GameManager : MonoBehaviour
 			Vector3 pos = m_players[iPlayerActive].transform.position;
 			triangle.transform.position = new Vector3(pos.x, pos.y+triangle_offset, pos.z);
 		}
+		
+		if(bFPS)
+			showFPS();
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -141,9 +155,8 @@ public class GameManager : MonoBehaviour
 		
 		//Change player
 		if(iGoalsReached<2)
-		{
 			ChangePlayer();
-		}
+
 		//Level completed
 		else
 		{
@@ -170,25 +183,17 @@ public class GameManager : MonoBehaviour
 			
 			//Change player button
 			if(GUI.Button(new Rect(Screen.width-buttonSize2*2-10,Screen.height-buttonSize2-5,buttonSize2,buttonSize2), "", player_buttons[iPlayerActive]))
-			{
 				ChangePlayer();
-			}
 		}
 		
 		else if(gui_state=="show_menu")
-		{
 			OnGUIShowMenu();
-		}
 		
 		else if(gui_state=="show_options")
-		{
 			OnGUIShowOptions();
-		}
 		
 		else if(gui_state=="show_help")
-		{
 			OnGUIShowHelp();
-		}
 		
 		else if(gui_state=="level_completed")
 		{
@@ -212,6 +217,9 @@ public class GameManager : MonoBehaviour
 				}
 			}
 		}
+		
+		if(bFPS)
+			GUI.Label(new Rect(20,20,200,50), sFPS, "fps");
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -270,12 +278,33 @@ public class GameManager : MonoBehaviour
 		}
 	}
 	
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
 	void OnGUIShowHelp()
 	{
 		GUI.Box(new Rect(0,0,Screen.width,Screen.height), "", "help_screen");
 		
 		if(GUI.Button(new Rect(20,20,buttonSize, buttonSize), "", "back"))
 			gui_state = "show_options";
+	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	void showFPS()
+	{
+		timeleft -= Time.deltaTime;
+		accum += Time.timeScale / Time.deltaTime;
+		++frames;
+
+		if (timeleft <= 0.0)
+		{
+			float fps = accum / frames;
+			sFPS = System.String.Format("{0:F2} FPS", fps);
+
+			timeleft = updateInterval;
+			accum = 0.0F;
+			frames = 0;
+		}
 	}
 }
 
