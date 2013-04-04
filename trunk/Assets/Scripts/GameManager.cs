@@ -44,6 +44,8 @@ public class GameManager : MonoBehaviour
 	
 	void Awake()
 	{
+		Application.targetFrameRate = 60;
+		
 		m_players = new GameObject[2];
 		
 		if(GameObject.Find("PLAYER0"))
