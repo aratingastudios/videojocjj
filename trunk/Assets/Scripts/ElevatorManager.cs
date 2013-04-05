@@ -3,13 +3,13 @@ using System.Collections;
 
 public class ElevatorManager : MonoBehaviour
 {
-	public Transform target;
-	bool bElevate=false;
+	public Vector3 targetPos;
+	public float smoothTime = 1.0f;
 	
-	public float smoothTime = 0.3F;
 	float dist;
 	Vector3 velocity = Vector3.zero;
 	float distThreshold = 0.01f;
+	bool bElevate=false;
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -23,13 +23,10 @@ public class ElevatorManager : MonoBehaviour
 	void Update()
 	{
 		if(bElevate)
-		{
-			//float newPosition = Mathf.SmoothDamp(transform.position.y, target.position.y, ref yVelocity, smoothTime);
-        	//transform.position = new Vector3(transform.position.x, newPosition, transform.position.z);
+		{	
+			transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, smoothTime);
 			
-			transform.position = Vector3.SmoothDamp(transform.position, target.position, ref velocity, smoothTime);
-			
-			dist = Vector3.Distance(transform.position, target.position);
+			dist = Vector3.Distance(transform.position, targetPos);
 
 			if(dist < distThreshold)
 			{
