@@ -11,10 +11,15 @@ public class GUIManager : MonoBehaviour
 	int buttonSize2;
 	int buttonSize3;
 	
+	int labelSize;
+	
+	float originalRatioLabel=85.0f/800.0f;
 	float originalRatio=80.0f/800.0f;
 	float originalRatio2=100.0f/800.0f;
 	
-	float margin = 20;
+	int margin = 20;
+	int marginLabel = 20;
+	int marginStars = 10;
 	
 	string[] player_buttons;
 	
@@ -27,6 +32,7 @@ public class GUIManager : MonoBehaviour
 	bool bFPS = true;
 	
 	GameManager gameManager;
+	ScoreManager scoreManager;
 	
 	bool bAudio = true;
 	bool bAudioOld = true;
@@ -44,11 +50,14 @@ public class GUIManager : MonoBehaviour
 		buttonSize2 = (int)(Screen.width * originalRatio2);
 		buttonSize3 = (int)(buttonSize*1.5f);
 		
+		labelSize = (int)(Screen.width * originalRatioLabel);
+		
 		timeleft = updateInterval;
 		
 		player_buttons = new string[]{"player0_button", "player1_button"};
 		
 		gameManager = GetComponent<GameManager>();
+		scoreManager = GetComponent<ScoreManager>();
 	}
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -116,6 +125,25 @@ public class GUIManager : MonoBehaviour
 		GUI.Box(new Rect(0,0,Screen.width,Screen.height), "", "background");
 		GUI.Box(new Rect(Screen.width/2-200,0,400,Screen.height), "", "level_completed");
 		
+		//labels
+		GUI.BeginGroup(new Rect(Screen.width/2-labelSize-labelSize/2-marginLabel,Screen.height/2,labelSize*3+marginLabel*2,labelSize));
+		
+		GUI.Label(new Rect(0,0,labelSize,labelSize), "TIME BONUS", scoreManager.bTimeBonus ? "bonus_text_on" : "bonus_text_off");
+		GUI.Label(new Rect(labelSize+marginLabel,0,labelSize,labelSize), "PLAYER SWAPS", scoreManager.bChangesBonus ? "bonus_text_on" : "bonus_text_off");
+		GUI.Label(new Rect(labelSize*2+marginLabel*2,0,labelSize,labelSize), "SECRET ITEM", scoreManager.bSecretItemBonus ? "bonus_text_on" : "bonus_text_off");
+			
+		GUI.EndGroup();
+		
+		//stars
+		GUI.BeginGroup(new Rect(Screen.width/2-labelSize-labelSize/2-marginStars,Screen.height/2-100,labelSize*3+marginStars*2,labelSize));
+		
+		GUI.Box(new Rect(0,0,labelSize,labelSize), "", scoreManager.bTimeBonus ? "star_on" : "star_off");
+		GUI.Box(new Rect(labelSize+marginStars,0,labelSize,labelSize), "", scoreManager.bChangesBonus ? "star_on" : "star_off");
+		GUI.Box(new Rect(labelSize*2+marginStars*2,0,labelSize,labelSize), "", scoreManager.bSecretItemBonus ? "star_on" : "star_off");
+				
+		GUI.EndGroup();
+		
+		//buttons
 		GUI.BeginGroup(new Rect(Screen.width/2-buttonSize-buttonSize/2-margin,Screen.height-buttonSize-50,buttonSize*3+margin*2,buttonSize));
 		
 		if(GUI.Button(new Rect(0, 0, buttonSize, buttonSize), "", "reset"))
