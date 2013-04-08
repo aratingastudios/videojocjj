@@ -8,22 +8,19 @@ public class ScoreManager : MonoBehaviour
 	
 	bool bTimeBonus = false;
 	bool bChangesBonus = false;
+	bool bSecretItemBonus = false;
 	
+	float totalTime;
 	int nPlayerChanges = 0;
-	
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-	void Start()
-	{
-
-	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	void CheckBonus()
 	{
 		//Check Time Bonus
-		if(Time.timeSinceLevelLoad  <= levelTime)
+		totalTime = Time.timeSinceLevelLoad;
+		
+		if(totalTime  <= levelTime)
 			bTimeBonus = true;
 		
 		//Check Changes Bonus
@@ -36,5 +33,12 @@ public class ScoreManager : MonoBehaviour
 	void PlayerChanged()
 	{
 		nPlayerChanges++;
+	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	void secretItemReached()
+	{
+		bSecretItemBonus = true;
 	}
 }
