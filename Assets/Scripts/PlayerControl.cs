@@ -23,7 +23,8 @@ public class PlayerControl : MonoBehaviour
 	float goalDist;
 	
 	GameObject gameManagerObj;
-	GameManager gameManager;
+	GUIManager guiManager;
+	
 	CharacterController controller;
 	ActivatorManager activatorManager;
 	
@@ -53,7 +54,7 @@ public class PlayerControl : MonoBehaviour
 	{	
 		controller = GetComponent<CharacterController>();
 		gameManagerObj = GameObject.Find("_GAMEMANAGER");
-		gameManager = gameManagerObj.GetComponent<GameManager>();
+		guiManager = gameManagerObj.GetComponent<GUIManager>();
 		
 		if(transform.GetChildCount() > 0)
 			mat_child = transform.GetChild(0).renderer.material;
@@ -76,7 +77,7 @@ public class PlayerControl : MonoBehaviour
 	{
 		GUI.skin=m_skin;
 		
-		if(gameManager.gui_state == "in_game")
+		if(guiManager.gui_state == "in_game")
 		{
 			if(isActive)
 			{
@@ -91,7 +92,7 @@ public class PlayerControl : MonoBehaviour
 	
 	void Update()
 	{
-		if(gameManager.gui_state == "in_game")
+		if(guiManager.gui_state == "in_game")
 		{
 			//Moving platform support
 			if(activePlatform != null)
@@ -228,7 +229,22 @@ public class PlayerControl : MonoBehaviour
 		if(collider.name=="Goal")
 		{
 			gameManagerObj.SendMessage("goalReached", id);
-			Destroy(gameObject);
+		}
+		
+		if(collider.name=="Secret_item")
+		{
+			gameManagerObj.SendMessage("secretItemReached_M");
+			Destroy(collider.gameObject);
+		}
+	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	void OnTriggerExit(Collider collider)
+	{	
+		if(collider.name=="Goal")
+		{
+			gameManagerObj.SendMessage("goalLeft", id);
 		}
 	}
 	
