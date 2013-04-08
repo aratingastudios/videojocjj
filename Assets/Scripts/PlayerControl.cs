@@ -44,6 +44,9 @@ public class PlayerControl : MonoBehaviour
 	
 	public bool bConcept = false;
 	
+	Ray ray;
+	RaycastHit hit;
+	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	void Awake()
@@ -98,7 +101,8 @@ public class PlayerControl : MonoBehaviour
 				transform.position = transform.position + moveDistance;
 			}
 			
-			activePlatform = null;
+			activePlatform = null;	
+			CheckMovingPlatforms();
 			
 			if(isActive)
 			{	
@@ -146,17 +150,14 @@ public class PlayerControl : MonoBehaviour
 			//	transform.forward = Vector3.Normalize(new Vector3(0.0f, 0.0f, -1.0f));
 	
 	        if(controller.isGrounded)
-			{
-				moveDirection = new Vector3(horiz, vert*jumpSpeed, 0.0f);
-	            moveDirection *= speed;
-	        }
+				moveDirection = new Vector3(horiz*speed, vert*jumpSpeed*speed, 0.0f);
 			else
-			{
 				moveDirection.x = horiz*speed;
-			}
 			
-	        moveDirection.y -= gravity * Time.deltaTime;
-	        controller.Move(moveDirection * Time.deltaTime);
+			moveDirection.y -= gravity * Time.deltaTime;
+			controller.Move(moveDirection * Time.deltaTime);
+			
+			//..end of movement..//
 			
 			horiz=0.0f;
 			vert=0.0f;
@@ -165,7 +166,7 @@ public class PlayerControl : MonoBehaviour
 			if(activePlatform != null)
 			{
 				activeGlobalPlatformPoint = transform.position;
-				activeLocalPlatformPoint = activePlatform.InverseTransformPoint (transform.position);
+				activeLocalPlatformPoint = activePlatform.InverseTransformPoint(transform.position);
 			}
 			
 			transform.position = new Vector3(transform.position.x, transform.position.y, 0.0f);
@@ -232,15 +233,33 @@ public class PlayerControl : MonoBehaviour
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//Nos aseguramos de que el player está encima de una plataforma
+	//No lo hacemos en el "OnControllerColliderHit" pq no funciona correctamente
+	void CheckMovingPlatforms()
+	{
+		ray = new Ray(transform.position, Vector3.down);
+    
+        if(Physics.Raycast(ray, out hit, 1.0f))
+			if(hit.collider.name.Contains("Elevator") && hit.normal.y > 0.5)
+				activePlatform = hit.collider.transform;    
+	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	//Esta función se ejecuta cuando se llama al Move del CharacterController
 	void OnControllerColliderHit(ControllerColliderHit hit)
 	{
+		//Mejor lo hacemos con un Raycast, aquí no funciona correctamente
+		/*
 		//Moving platforms support
 		if(hit.gameObject.name.Contains("Elevator") && hit.moveDirection.y < -0.9 && hit.normal.y > 0.5)
-		{
-        	activePlatform = hit.collider.transform;    
-    	}
+			activePlatform = hit.collider.transform;    
+		*/
+		
+		//Comprobar choques por arriba
+		if(hit.moveDirection.y > 0.9 && hit.normal.y < 0.5)
+			if(moveDirection.y > 0.0f)
+				moveDirection.y = 0.0f;
 		
 		//Switch to start the moving platform
 		if(hit.gameObject.name.Contains("Activator"))

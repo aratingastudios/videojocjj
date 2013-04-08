@@ -3,10 +3,13 @@ using System.Collections;
 
 public class Test : MonoBehaviour
 {
+	public GUISkin m_skin;
 	
 	void OnGUI()
 	{
-		if(GUI.Button(new Rect(20,20,150,150), "load"))
-			Application.LoadLevel("LEVEL_01_TEST");
+		GUI.skin = m_skin;
+		
+		GUI.Label(new Rect(Screen.width/2-100,Screen.height/2-50,200,200), "LOADING...", "loading");
+		
 	}
 }

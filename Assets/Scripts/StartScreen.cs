@@ -4,25 +4,33 @@ using System.Collections;
 public class StartScreen : MonoBehaviour
 {
 	public Texture2D m_tex;
-	public float wait_time;
-	float start_time;
+	//public float wait_time;
+	//float start_time;
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	void Start()
 	{
-		start_time = Time.time;
+		//start_time = Time.time;
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	void Update()
 	{
-		float elapsed_time = Time.time - start_time;
+		//float elapsed_time = Time.time - start_time;
+		//if(elapsed_time > wait_time)
+		//	Application.LoadLevel("02_MAIN_MENU");
 		
-		if(elapsed_time > wait_time)
+		if(Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer)
 		{
-			Application.LoadLevel("02_MAIN_MENU");
+			if(Input.touchCount > 0)
+            	Application.LoadLevel("02_MAIN_MENU");
+		}
+		else
+		{
+			if(Input.GetMouseButton(0))
+            	Application.LoadLevel("02_MAIN_MENU");
 		}
 	}
 	

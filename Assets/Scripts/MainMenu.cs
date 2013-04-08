@@ -28,6 +28,7 @@ public class MainMenu : MonoBehaviour
 			Application.LoadLevel("03_LEVEL_SELECT");
 				
 		GUI.Button(new Rect(20, Screen.height-20-buttonSize, buttonSize, buttonSize), "", "options");
+		
 		GUI.Button(new Rect(Screen.width-20-buttonSize, Screen.height-20-buttonSize, buttonSize, buttonSize), "", "social");
 	}
 }

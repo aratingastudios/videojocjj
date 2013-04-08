@@ -4,6 +4,7 @@ using System.Collections;
 public class Loading : MonoBehaviour
 {
 	public Texture2D m_tex;
+	public GUIStyle m_style;
 	bool bReady=false;
 	string next_level;
 	
@@ -30,6 +31,7 @@ public class Loading : MonoBehaviour
 	void OnGUI()
 	{
 		GUI.DrawTexture(new Rect(0,0,Screen.width,Screen.height), m_tex);
+		GUI.Label(new Rect(Screen.width/2-100,Screen.height/2-50,200,200), "LOADING...", m_style);
 		bReady=true;
 	}
 }

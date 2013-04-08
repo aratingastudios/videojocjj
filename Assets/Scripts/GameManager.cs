@@ -49,6 +49,8 @@ public class GameManager : MonoBehaviour
 	
 	bool bFPS = true;
 	
+	ScoreManager scoreManager;
+	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	void Awake()
@@ -74,6 +76,8 @@ public class GameManager : MonoBehaviour
 		
 		if(bConcept)
 			triangle = (GameObject)Instantiate(Resources.Load("triangle", typeof(GameObject)));
+		
+		scoreManager = GetComponent<ScoreManager>();
 	}
 		
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -140,6 +144,7 @@ public class GameManager : MonoBehaviour
 			
 			targetCameraManager.SendMessage("SetPlayerActive", iPlayerActive);
 			targetCameraManager.SendMessage("ChangePlayer");
+			scoreManager.SendMessage("PlayerChanged");
 			
 			m_players[0].SendMessage("SetActive", (iPlayerActive==0));
 			m_players[1].SendMessage("SetActive", (iPlayerActive==1));
@@ -160,8 +165,28 @@ public class GameManager : MonoBehaviour
 		//Level completed
 		else
 		{
-			gui_state="level_completed";
+			gui_state="show_level_completed";
 			targetCameraManager.SendMessage("SetLevelCompleted");
+			scoreManager.SendMessage("CheckBonus");
+		}
+	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	void LoadNextLevel()
+	{
+		m_level+=1;
+		if(m_level<=num_levels)
+		{
+			string s_level = m_level.ToString();
+			if(m_level<10) s_level = "0"+s_level;
+			
+			PlayerPrefs.SetString("next_level", "LEVEL_"+s_level);
+			Application.LoadLevel("LOADING");
+		}
+		else
+		{
+			Application.LoadLevel("02_MAIN_MENU");
 		}
 	}
 	
@@ -195,31 +220,32 @@ public class GameManager : MonoBehaviour
 		else if(gui_state=="show_help")
 			OnGUIShowHelp();
 		
-		else if(gui_state=="level_completed")
-		{
-			if(GUI.Button(new Rect(Screen.width/2-buttonSize3/2, Screen.height/2-buttonSize3/2, buttonSize3, buttonSize3), "NEXT"))
-			{
-				m_level+=1;
-				if(m_level<=num_levels)
-				{
-					string s_level = m_level.ToString();
-					
-					if(m_level<10)
-						s_level = "0"+s_level;
-					
-					PlayerPrefs.SetString("next_level", "LEVEL_"+s_level);
-					Application.LoadLevel("LOADING");
-					
-				}
-				else
-				{
-					Application.LoadLevel("02_MAIN_MENU");
-				}
-			}
-		}
-		
+		else if(gui_state=="show_level_completed")
+			OnGUILevelCompleted();
+			
 		if(bFPS)
 			GUI.Label(new Rect(20,20,200,50), sFPS, "fps");
+	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	void OnGUILevelCompleted()
+	{
+		GUI.Box(new Rect(0,0,Screen.width,Screen.height), "", "background");
+		GUI.Box(new Rect(Screen.width/2-200,0,400,Screen.height), "", "level_completed");
+		
+		GUI.BeginGroup(new Rect(Screen.width/2-buttonSize-buttonSize/2-margin,Screen.height-buttonSize-50,buttonSize*3+margin*2,buttonSize));
+		
+		if(GUI.Button(new Rect(0, 0, buttonSize, buttonSize), "", "reset"))
+			ResetLevel();
+		
+		if(GUI.Button(new Rect(buttonSize+margin, 0, buttonSize, buttonSize), "", "levels"))
+			Application.LoadLevel("03_LEVEL_SELECT");
+				
+		if(GUI.Button(new Rect(buttonSize*2+margin*2, 0, buttonSize, buttonSize), "", "next"))
+			LoadNextLevel();
+		
+		GUI.EndGroup();
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -234,9 +260,7 @@ public class GameManager : MonoBehaviour
 			gui_state = "in_game";
 			
 		if(GUI.Button(new Rect(buttonSize3+margin,0,buttonSize3,buttonSize3), "", "levels"))
-		{
 			Application.LoadLevel("03_LEVEL_SELECT");
-		}
 			
 		if(GUI.Button(new Rect(buttonSize3*2+margin*2,0,buttonSize3,buttonSize3), "", "options"))
 			gui_state = "show_options";
