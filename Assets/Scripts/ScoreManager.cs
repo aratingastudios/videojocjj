@@ -6,9 +6,9 @@ public class ScoreManager : MonoBehaviour
 	public float levelTime;
 	public int numChanges;
 	
-	bool bTimeBonus = false;
-	bool bChangesBonus = false;
-	bool bSecretItemBonus = false;
+	public bool bTimeBonus = false;
+	public bool bChangesBonus = false;
+	public bool bSecretItemBonus = false;
 	
 	float totalTime;
 	int nPlayerChanges = 0;
