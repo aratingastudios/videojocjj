@@ -20,8 +20,6 @@ public class TargetCameraManager : MonoBehaviour
 	bool bChangePos=false;
 	Vector3 newPos;
 	
-	bool levelCompleted=false;
-	
 	float smoothTime = 0.3F;
     Vector3 velocity = Vector3.zero;
 	float distThreshold = 0.01f;
@@ -52,34 +50,29 @@ public class TargetCameraManager : MonoBehaviour
 	{
 		m_current = m_players[0].transform;
 		transform.position = m_current.position;
-		levelCompleted=false;
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	void Update()
 	{
-		//Update camera position
-		if(!levelCompleted)
+		//change active player
+		if(m_change_player && m_players[m_iPlayer]!=null)
 		{
-			//change active player
-			if(m_change_player && m_players[m_iPlayer]!=null)
-			{
-				m_target = m_players[m_iPlayer].transform;
-				bChangePos=true;
-			}
-			//follow the player
-			else if(m_current)
-				transform.position = Vector3.SmoothDamp(transform.position, m_current.position, ref velocityP, smoothTimeP);
-				
-			//Player change
-			if(bChangePos)
-				ChangeActivePlayer();
-			
-			//check camera limits
-			if(m_check_bounds)
-				CheckBounds();
+			m_target = m_players[m_iPlayer].transform;
+			bChangePos=true;
 		}
+		//follow the player
+		else if(m_current)
+			transform.position = Vector3.SmoothDamp(transform.position, m_current.position, ref velocityP, smoothTimeP);
+			
+		//Player change
+		if(bChangePos)
+			ChangeActivePlayer();
+		
+		//check camera limits
+		if(m_check_bounds)
+			CheckBounds();
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -95,13 +88,6 @@ public class TargetCameraManager : MonoBehaviour
 	{
 		m_iPlayer = id;
 	}
-	
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-	void SetLevelCompleted()
-	{
-		levelCompleted=true;
-	} 
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	

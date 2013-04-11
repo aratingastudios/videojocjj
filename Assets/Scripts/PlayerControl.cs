@@ -230,12 +230,6 @@ public class PlayerControl : MonoBehaviour
 		{
 			gameManagerObj.SendMessage("goalReached", id);
 		}
-		
-		if(collider.name=="Secret_item")
-		{
-			gameManagerObj.SendMessage("secretItemReached_M");
-			Destroy(collider.gameObject);
-		}
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

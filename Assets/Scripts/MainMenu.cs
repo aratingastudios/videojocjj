@@ -27,8 +27,12 @@ public class MainMenu : MonoBehaviour
 		if(GUI.Button(new Rect(Screen.width/2-buttonSize3/2, Screen.height/2-buttonSize3/2, buttonSize3, buttonSize3), "", "continue"))
 			Application.LoadLevel("03_LEVEL_SELECT");
 				
-		GUI.Button(new Rect(20, Screen.height-20-buttonSize, buttonSize, buttonSize), "", "options");
-		
+		if(GUI.Button(new Rect(20, Screen.height-20-buttonSize, buttonSize, buttonSize), "", "options"))
+		{
+			PlayerPrefs.DeleteAll();
+			Debug.Log("All PlayerPrefs deleted");
+		}
+	
 		GUI.Button(new Rect(Screen.width-20-buttonSize, Screen.height-20-buttonSize, buttonSize, buttonSize), "", "social");
 	}
 }
