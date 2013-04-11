@@ -7,27 +7,30 @@ public class GUIManager : MonoBehaviour
 	public string gui_state;
 	
 	//Mobile->Tamaño de pantalla de referencia: 800x480
+	float screen_width = 800.0f;
+	//float screen_height = 480.0f;
+	
 	int buttonSize;
 	int buttonSize2;
 	int buttonSize3;
 	
 	int labelSize;
+	int marginTitle;
+	int marginButton;
+	int marginLabel;
+	int marginStars;
 	
-	float originalRatioLabel=85.0f/800.0f;
-	float originalRatio=80.0f/800.0f;
-	float originalRatio2=100.0f/800.0f;
-	
-	int margin = 20;
-	int marginLabel = 20;
-	int marginStars = 10;
+	int black_width;
+	int completed_width;
+	int completed_height;
 	
 	string[] player_buttons;
 	
 	//FPS
 	float updateInterval = 1.0f;
 	float accum = 0; // FPS accumulated over the interval
-	int frames = 0; // Frames drawn over the interval
-	float timeleft; // Left time for current interval
+	int frames = 0;  // Frames drawn over the interval
+	float timeleft;  // Left time for current interval
 	string sFPS;
 	bool bFPS = true;
 	
@@ -46,11 +49,19 @@ public class GUIManager : MonoBehaviour
 	{
 		gui_state="in_game";
 		
-		buttonSize = (int)(Screen.width * originalRatio);
-		buttonSize2 = (int)(Screen.width * originalRatio2);
-		buttonSize3 = (int)(buttonSize*1.5f);
+		buttonSize  = (int)(Screen.width * (80.0f/screen_width));
+		buttonSize2 = (int)(Screen.width * (100.0f/screen_width));
+		buttonSize3 = (int)(Screen.width * (120.0f/screen_width));
 		
-		labelSize = (int)(Screen.width * originalRatioLabel);
+		labelSize    = (int)(Screen.width * (85.0f/screen_width));
+		marginLabel  = (int)(Screen.width * (20.0f/screen_width));
+		marginTitle  = (int)(Screen.width * (200.0f/screen_width));
+		marginButton = (int)(Screen.width * (50.0f/screen_width));
+		marginStars  = (int)(Screen.width * (20.0f/screen_width));
+		
+		black_width  = (int)(Screen.width * (400.0f/screen_width));
+		completed_width  = (int)(Screen.width * (300.0f/screen_width));
+		completed_height = (int)(Screen.width * (37.5f/screen_width));
 		
 		timeleft = updateInterval;
 		
@@ -82,7 +93,8 @@ public class GUIManager : MonoBehaviour
 	}
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
+	//No usamos el escalado de GUI con GUI.matrix porque estira los controles entre 16/9 y 4/3.
+	//Tendriamos que poner el mismo escalado en X-Y y para eso mejor lo hacemos manualmente.
 	void OnGUI()
 	{
 		GUI.skin = m_skin;
@@ -122,11 +134,12 @@ public class GUIManager : MonoBehaviour
 	
 	void OnGUILevelCompleted()
 	{
-		GUI.Box(new Rect(0,0,Screen.width,Screen.height), "", "background");
-		GUI.Box(new Rect(Screen.width/2-200,0,400,Screen.height), "", "level_completed");
+		//GUI.Box(new Rect(0,0,Screen.width,Screen.height), "", "background");
+		GUI.Box(new Rect(Screen.width/2-black_width/2,0,black_width,Screen.height), "", "black");
+		GUI.Box(new Rect(Screen.width/2-completed_width/2, Screen.height/2-marginTitle,completed_width,completed_height), "", "level_completed");
 		
 		//labels
-		GUI.BeginGroup(new Rect(Screen.width/2-labelSize-labelSize/2-marginLabel,Screen.height/2,labelSize*3+marginLabel*2,labelSize));
+		GUI.BeginGroup(new Rect(Screen.width/2-labelSize-labelSize/2-marginLabel,Screen.height/2-20,labelSize*3+marginLabel*2,labelSize));
 		
 		GUI.Label(new Rect(0,0,labelSize,labelSize), "TIME BONUS", scoreManager.bTimeBonus ? "bonus_text_on" : "bonus_text_off");
 		GUI.Label(new Rect(labelSize+marginLabel,0,labelSize,labelSize), "PLAYER SWAPS", scoreManager.bChangesBonus ? "bonus_text_on" : "bonus_text_off");
@@ -144,15 +157,15 @@ public class GUIManager : MonoBehaviour
 		GUI.EndGroup();
 		
 		//buttons
-		GUI.BeginGroup(new Rect(Screen.width/2-buttonSize-buttonSize/2-margin,Screen.height-buttonSize-50,buttonSize*3+margin*2,buttonSize));
+		GUI.BeginGroup(new Rect(Screen.width/2-buttonSize-buttonSize/2-marginButton,Screen.height-buttonSize-marginButton,buttonSize*3+marginButton*2,buttonSize));
 		
 		if(GUI.Button(new Rect(0, 0, buttonSize, buttonSize), "", "reset"))
 			gameManager.SendMessage("ResetLevel");
 		
-		if(GUI.Button(new Rect(buttonSize+margin, 0, buttonSize, buttonSize), "", "levels"))
+		if(GUI.Button(new Rect(buttonSize+marginButton, 0, buttonSize, buttonSize), "", "levels"))
 			Application.LoadLevel("03_LEVEL_SELECT");
 				
-		if(GUI.Button(new Rect(buttonSize*2+margin*2, 0, buttonSize, buttonSize), "", "next"))
+		if(GUI.Button(new Rect(buttonSize*2+marginButton*2, 0, buttonSize, buttonSize), "", "next"))
 			gameManager.SendMessage("LoadNextLevel");
 		
 		GUI.EndGroup();
@@ -164,15 +177,15 @@ public class GUIManager : MonoBehaviour
 	{
 		GUI.Box(new Rect(0,0,Screen.width,Screen.height), "");
 		
-		GUI.BeginGroup(new Rect(Screen.width/2-buttonSize3-buttonSize3/2-margin,Screen.height/2-buttonSize3/2,buttonSize3*3+margin*2,buttonSize3));
+		GUI.BeginGroup(new Rect(Screen.width/2-buttonSize3-buttonSize3/2-marginButton,Screen.height/2-buttonSize3/2,buttonSize3*3+marginButton*2,buttonSize3));
 		
 		if(GUI.Button(new Rect(0,0,buttonSize3,buttonSize3), "", "continue"))
 			gui_state = "in_game";
 			
-		if(GUI.Button(new Rect(buttonSize3+margin,0,buttonSize3,buttonSize3), "", "levels"))
+		if(GUI.Button(new Rect(buttonSize3+marginButton,0,buttonSize3,buttonSize3), "", "levels"))
 			Application.LoadLevel("03_LEVEL_SELECT");
 			
-		if(GUI.Button(new Rect(buttonSize3*2+margin*2,0,buttonSize3,buttonSize3), "", "options"))
+		if(GUI.Button(new Rect(buttonSize3*2+marginButton*2,0,buttonSize3,buttonSize3), "", "options"))
 			gui_state = "show_options";
 		
 		GUI.EndGroup();
@@ -184,14 +197,16 @@ public class GUIManager : MonoBehaviour
 	{	
 		GUI.Box(new Rect(0,0,Screen.width,Screen.height), "");
 		
-		GUI.BeginGroup(new Rect(Screen.width/2-buttonSize3-margin,Screen.height/2-buttonSize3-margin,buttonSize3*2+margin,buttonSize3*2+margin));
-		bAudioFx = GUI.Toggle(new Rect(0,0,buttonSize3,buttonSize3), bAudioFx, "", "fx");
-		bAudio   = GUI.Toggle(new Rect(buttonSize3+margin,0,buttonSize3,buttonSize3), bAudio, "", "music");
+		GUI.BeginGroup(new Rect(Screen.width/2-buttonSize3-marginButton,Screen.height/2-buttonSize3-marginButton,buttonSize3*2+marginButton,buttonSize3*2+marginButton));
 		
-		if(GUI.Button(new Rect(0,buttonSize3+margin,buttonSize3, buttonSize3), "", "help"))
+		bAudioFx = GUI.Toggle(new Rect(0,0,buttonSize3,buttonSize3), bAudioFx, "", "fx");
+		bAudio   = GUI.Toggle(new Rect(buttonSize3+marginButton,0,buttonSize3,buttonSize3), bAudio, "", "music");
+		
+		if(GUI.Button(new Rect(0,buttonSize3+marginButton,buttonSize3, buttonSize3), "", "help"))
 			gui_state = "show_help";
 		
-		GUI.Button(new Rect(buttonSize3+margin,buttonSize3+margin,buttonSize3, buttonSize3), "", "info");
+		GUI.Button(new Rect(buttonSize3+marginButton,buttonSize3+marginButton,buttonSize3, buttonSize3), "", "info");
+		
 		GUI.EndGroup();
 		
 		if(GUI.Button(new Rect(20,Screen.height-buttonSize-20,buttonSize, buttonSize), "", "back"))
