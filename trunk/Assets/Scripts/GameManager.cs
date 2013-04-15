@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
 	
 	GUIManager guiManager;
 	ScoreManager scoreManager;
+	GameObject goAudioManager;
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -48,12 +49,17 @@ public class GameManager : MonoBehaviour
 		
 		guiManager = GetComponent<GUIManager>();
 		scoreManager = GetComponent<ScoreManager>();
+		
+		goAudioManager = GameObject.Find("goAudioManager");
 	}
 		
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	void Start()
 	{
+		if(goAudioManager && goAudioManager.audio.isPlaying)
+			goAudioManager.audio.Stop();
+			
 		bGoalsReached = new bool[]{false, false};
 		
 		m_players[0].SendMessage("SetActive", true);
