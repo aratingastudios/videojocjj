@@ -20,17 +20,24 @@ public class LevelSelection : MonoBehaviour
 	int nRows = 3;
 	int nCols = 5;
 	
+	GameObject goAudioManager;
+	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	void Awake()
 	{
 		PlayerPrefs.SetInt("num_levels", num_levels);
+		
+		goAudioManager = GameObject.Find("goAudioManager");
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//Inicializamos las medidas en función del tamaño de pantalla actual
 	void Start()
 	{
+		if(goAudioManager && !goAudioManager.audio.isPlaying)
+			goAudioManager.audio.Play();
+		
 		buttonSize = (int)(Screen.width * (60.0f/screen_width));
 		marginH = (int)(Screen.width * (100.0f/screen_width));
 		marginV = (int)(Screen.height * (30.0f/screen_height));

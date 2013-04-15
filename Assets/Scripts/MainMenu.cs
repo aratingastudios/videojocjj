@@ -7,6 +7,8 @@ public class MainMenu : MonoBehaviour
 	int buttonSize;
 	int buttonSize3;
 	float originalRatio=80.0f/800.0f;
+	
+	bool bShowOptions;
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -29,10 +31,22 @@ public class MainMenu : MonoBehaviour
 				
 		if(GUI.Button(new Rect(20, Screen.height-20-buttonSize, buttonSize, buttonSize), "", "options"))
 		{
-			PlayerPrefs.DeleteAll();
-			Debug.Log("All PlayerPrefs deleted");
+			//PlayerPrefs.DeleteAll();
+			bShowOptions=!bShowOptions;
 		}
 	
 		GUI.Button(new Rect(Screen.width-20-buttonSize, Screen.height-20-buttonSize, buttonSize, buttonSize), "", "social");
+		
+		if(bShowOptions)
+			OnGUIOptions();
+	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	void OnGUIOptions()
+	{
+		if(GUI.Button(new Rect(20, Screen.height-40-buttonSize*2, buttonSize, buttonSize), "", "music"))
+		{
+		}
 	}
 }
