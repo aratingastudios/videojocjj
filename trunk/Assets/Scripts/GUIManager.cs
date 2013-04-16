@@ -177,8 +177,10 @@ public class GUIManager : MonoBehaviour
 		
 		GUI.EndGroup();
 		
-		int minutes = Time.timeSinceLevelLoad;
-		GUI.Label(new Rect(20,20,100,50), "TIME: " + minutes.ToString());
+		string minutes = Mathf.Floor(Time.timeSinceLevelLoad/60.0f).ToString("00");
+		string seconds = (Time.timeSinceLevelLoad % 60).ToString("00");
+		
+		GUI.Label(new Rect(20,20,100,50), "TIME: " + minutes + ":" + seconds);
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
