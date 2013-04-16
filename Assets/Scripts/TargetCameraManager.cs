@@ -14,7 +14,9 @@ public class TargetCameraManager : MonoBehaviour
 	
 	public float minX;
 	public float maxX;
-	public float minY;
+	public float minY_16_9;
+	public float minY_4_3;
+	float minY;
 	public float maxY;
 	
 	bool bChangePos=false;
@@ -26,6 +28,10 @@ public class TargetCameraManager : MonoBehaviour
 	
 	float smoothTimeP = 0.3F;
     Vector3 velocityP = Vector3.zero;
+	
+	float ratio_16_9 = 16.0f/9.0f;
+	float ratio_4_3 = 4.0f/3.0f;
+	float ratio;
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -42,6 +48,11 @@ public class TargetCameraManager : MonoBehaviour
 			m_players[1] = GameObject.Find("PLAYER1").transform;
 		else
 			m_players[1] = GameObject.Find("PLAYER1_concept").transform;
+		
+		//Calulamos el minY adecuado en función del ratio actual
+		ratio = (float)Screen.width/(float)Screen.height;
+		float f = Mathf.InverseLerp(ratio_16_9, ratio_4_3, ratio);
+		minY = Mathf.Lerp(minY_16_9, minY_4_3, f);
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -109,7 +120,7 @@ public class TargetCameraManager : MonoBehaviour
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
+
 	void CheckBounds()
 	{
 		//Check level bounds
@@ -119,3 +130,15 @@ public class TargetCameraManager : MonoBehaviour
 		transform.position = new Vector3(newX, newY, transform.position.z);
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
