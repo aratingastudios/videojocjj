@@ -37,10 +37,7 @@ public class GUIManager : MonoBehaviour
 	GameManager gameManager;
 	ScoreManager scoreManager;
 	
-	bool bAudio = true;
-	bool bAudioOld = true;
-	
-	bool bAudioFx = true;
+	public bool bAudioFx = true;
 	bool bAudioFxOld = true;
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -69,16 +66,6 @@ public class GUIManager : MonoBehaviour
 		
 		gameManager = GetComponent<GameManager>();
 		scoreManager = GetComponent<ScoreManager>();
-	}
-	
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-	void Start()
-	{
-		bAudio = (PlayerPrefs.GetInt("music") == 1);
-		if(bAudio)
-			audio.Play();
-		bAudioOld = bAudio;
 		
 		bAudioFx = (PlayerPrefs.GetInt("musicFx") == 1);
 		bAudioFxOld = bAudioFx;
@@ -197,34 +184,26 @@ public class GUIManager : MonoBehaviour
 	{	
 		GUI.Box(new Rect(0,0,Screen.width,Screen.height), "");
 		
-		GUI.BeginGroup(new Rect(Screen.width/2-buttonSize3-marginButton,Screen.height/2-buttonSize3-marginButton,buttonSize3*2+marginButton,buttonSize3*2+marginButton));
+		GUI.BeginGroup(new Rect(Screen.width/2-buttonSize3-buttonSize3/2-marginButton,Screen.height/2-buttonSize3/2,buttonSize3*3+marginButton*2,buttonSize3));
 		
 		bAudioFx = GUI.Toggle(new Rect(0,0,buttonSize3,buttonSize3), bAudioFx, "", "fx");
-		bAudio   = GUI.Toggle(new Rect(buttonSize3+marginButton,0,buttonSize3,buttonSize3), bAudio, "", "music");
 		
-		if(GUI.Button(new Rect(0,buttonSize3+marginButton,buttonSize3, buttonSize3), "", "help"))
+		if(GUI.Button(new Rect(buttonSize3+marginButton,0,buttonSize3, buttonSize3), "", "help"))
 			gui_state = "show_help";
 		
-		GUI.Button(new Rect(buttonSize3+marginButton,buttonSize3+marginButton,buttonSize3, buttonSize3), "", "info");
+		GUI.Button(new Rect(buttonSize3*2+marginButton*2,0,buttonSize3, buttonSize3), "", "info");
 		
 		GUI.EndGroup();
 		
 		if(GUI.Button(new Rect(20,Screen.height-buttonSize-20,buttonSize, buttonSize), "", "back"))
 			gui_state = "show_menu";
 		
-		if(bAudio != bAudioOld)
-		{
-			audio.enabled = bAudio;
-			if(audio.enabled)
-				audio.Play();
-			bAudioOld = bAudio;
-			PlayerPrefs.SetInt("music", bAudio ? 1 : 0);
-		}
-		
 		if(bAudioFx != bAudioFxOld)
 		{
 			bAudioFxOld = bAudioFx;
 			PlayerPrefs.SetInt("musicFx", bAudioFx ? 1 : 0);
+			
+			gameManager.SendMessage("SetAudioFx", bAudioFx);
 		}
 	}
 	

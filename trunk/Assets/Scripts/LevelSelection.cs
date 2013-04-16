@@ -35,7 +35,8 @@ public class LevelSelection : MonoBehaviour
 	//Inicializamos las medidas en función del tamaño de pantalla actual
 	void Start()
 	{
-		if(goAudioManager && !goAudioManager.audio.isPlaying)
+		int iAudio = PlayerPrefs.GetInt("music");
+		if(iAudio==1 && goAudioManager && !goAudioManager.audio.isPlaying)
 			goAudioManager.audio.Play();
 		
 		buttonSize = (int)(Screen.width * (60.0f/screen_width));
@@ -94,7 +95,9 @@ public class LevelSelection : MonoBehaviour
 		GUI.EndGroup();
 		
 		if(GUI.Button(new Rect(20,Screen.height-buttonSize-20,buttonSize, buttonSize), "", "back"))
+		{	
 			Application.LoadLevel("02_MAIN_MENU");
+		}
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

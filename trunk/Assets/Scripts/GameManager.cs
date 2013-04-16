@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
 	GameObject triangle;
 	public float triangle_offset;
 	public bool bConcept;
-	
+		
 	GUIManager guiManager;
 	ScoreManager scoreManager;
 	GameObject goAudioManager;
@@ -57,7 +57,10 @@ public class GameManager : MonoBehaviour
 	
 	void Start()
 	{
-		if(goAudioManager && goAudioManager.audio.isPlaying)
+		if(guiManager.bAudioFx)
+			audio.Play();
+		
+		if(goAudioManager && goAudioManager.audio)
 			goAudioManager.audio.Stop();
 			
 		bGoalsReached = new bool[]{false, false};
@@ -83,6 +86,17 @@ public class GameManager : MonoBehaviour
 			Vector3 pos = m_players[iPlayerActive].transform.position;
 			triangle.transform.position = new Vector3(pos.x, pos.y+triangle_offset, pos.z);
 		}
+	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	void SetAudioFx(bool bPlay)
+	{
+		if(audio && audio.isPlaying && !bPlay)
+			audio.Stop();
+		
+		if(audio && !audio.isPlaying && bPlay)
+			audio.Play();
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
