@@ -114,7 +114,7 @@ public class GUIManager : MonoBehaviour
 			OnGUILevelCompleted();
 			
 		if(bFPS)
-			GUI.Label(new Rect(20,20,200,50), sFPS, "fps");
+			GUI.Label(new Rect(20,50,200,50), sFPS, "fps");
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -176,6 +176,9 @@ public class GUIManager : MonoBehaviour
 			gui_state = "show_options";
 		
 		GUI.EndGroup();
+		
+		int minutes = Time.timeSinceLevelLoad;
+		GUI.Label(new Rect(20,20,100,50), "TIME: " + minutes.ToString());
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
