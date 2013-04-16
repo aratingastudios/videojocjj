@@ -4,9 +4,13 @@ ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
     100000: //RootNode
+    100002: Level_01_Terra
     400000: //RootNode
+    400002: Level_01_Terra
     2300000: //RootNode
+    2300002: Level_01_Terra
     3300000: //RootNode
+    3300002: Level_01_Terra
     4300000: Level_01_Terra
     9500000: //RootNode
   materials:
