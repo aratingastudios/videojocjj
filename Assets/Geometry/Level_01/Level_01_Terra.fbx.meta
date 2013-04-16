@@ -12,6 +12,7 @@ ModelImporter:
     3300000: //RootNode
     3300002: Level_01_Terra
     4300000: Level_01_Terra
+    6400000: Level_01_Terra
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -31,7 +32,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
