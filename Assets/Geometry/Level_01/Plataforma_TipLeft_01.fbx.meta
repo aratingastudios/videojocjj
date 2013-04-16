@@ -4,11 +4,16 @@ ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
     100000: //RootNode
+    100002: Plataforma_TipLeft_01
     400000: //RootNode
+    400002: Plataforma_TipLeft_01
     2300000: //RootNode
+    2300002: Plataforma_TipLeft_01
     3300000: //RootNode
+    3300002: Plataforma_TipLeft_01
     4300000: Plataforma_TipLeft_01
     6400000: //RootNode
+    6400002: Plataforma_TipLeft_01
     9500000: //RootNode
   materials:
     importMaterials: 1

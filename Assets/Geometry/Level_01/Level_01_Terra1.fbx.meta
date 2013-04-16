@@ -1,19 +1,15 @@
 fileFormatVersion: 2
-guid: 1bd71810160de2345a5db6b2748d1634
+guid: 1cf720055e7c92d4f82062da3a2951d4
 ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
-    100000: //RootNode
-    100002: Plataforma_TipRight_01
-    400000: //RootNode
-    400002: Plataforma_TipRight_01
-    2300000: //RootNode
-    2300002: Plataforma_TipRight_01
-    3300000: //RootNode
-    3300002: Plataforma_TipRight_01
-    4300000: Plataforma_TipRight_01
-    6400000: //RootNode
-    6400002: Plataforma_TipRight_01
+    100000: Level_01_Terra1
+    100002: //RootNode
+    400000: Level_01_Terra1
+    400002: //RootNode
+    2300000: Level_01_Terra1
+    3300000: Level_01_Terra1
+    4300000: Level_01_Terra1
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -31,9 +27,9 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: .00999999978
     meshCompression: 0
-    addColliders: 1
+    addColliders: 0
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0

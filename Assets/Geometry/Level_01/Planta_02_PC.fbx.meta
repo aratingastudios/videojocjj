@@ -1,19 +1,15 @@
 fileFormatVersion: 2
-guid: 1bd71810160de2345a5db6b2748d1634
+guid: 3bcde98ed72f20642922760b09910b87
 ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
-    100000: //RootNode
-    100002: Plataforma_TipRight_01
-    400000: //RootNode
-    400002: Plataforma_TipRight_01
-    2300000: //RootNode
-    2300002: Plataforma_TipRight_01
-    3300000: //RootNode
-    3300002: Plataforma_TipRight_01
-    4300000: Plataforma_TipRight_01
-    6400000: //RootNode
-    6400002: Plataforma_TipRight_01
+    100000: MASTER_Planta_02
+    100002: //RootNode
+    400000: MASTER_Planta_02
+    400002: //RootNode
+    2300000: MASTER_Planta_02
+    3300000: MASTER_Planta_02
+    4300000: MASTER_Planta_02
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -33,7 +29,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 1
+    addColliders: 0
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
