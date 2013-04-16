@@ -6,13 +6,13 @@ public class CameraManager : MonoBehaviour
 	float ratio;
 	float size;
 	
-	float ratio1 = 4.0f/3.0f;
-	float ratio2 = 16.0f/9.0f;
+	float ratio1 = 16.0f/9.0f;
+	float ratio2 = 4.0f/3.0f;
 	
 	float size1 = 7.5f;
-	float size2 = 9.0f;
+	float size2 = 9.5f;
 	
-	void Awake()
+	void Update()
 	{
 		ratio = (float)Screen.width/(float)Screen.height;
 		//Debug.Log("ratio: " + ratio);
