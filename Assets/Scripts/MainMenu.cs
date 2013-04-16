@@ -9,6 +9,10 @@ public class MainMenu : MonoBehaviour
 	float originalRatio=80.0f/800.0f;
 	
 	bool bShowOptions;
+	
+	GameObject goAudioManager;
+	bool bAudio = true;
+	bool bAudioOld = true;
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -16,6 +20,13 @@ public class MainMenu : MonoBehaviour
 	{
 		buttonSize  = (int)(Screen.width * originalRatio);
 		buttonSize3 = (int)(buttonSize*1.5f);
+		
+		bAudio = (PlayerPrefs.GetInt("music") == 1);
+		bAudioOld = bAudio;
+		
+		goAudioManager = GameObject.Find("goAudioManager");
+		if(goAudioManager && !goAudioManager.audio.isPlaying && bAudio)
+			goAudioManager.audio.Play();
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -45,8 +56,24 @@ public class MainMenu : MonoBehaviour
 	
 	void OnGUIOptions()
 	{
-		if(GUI.Button(new Rect(20, Screen.height-40-buttonSize*2, buttonSize, buttonSize), "", "music"))
+		bAudio = GUI.Toggle(new Rect(20, Screen.height-40-buttonSize*2, buttonSize, buttonSize), bAudio, "", "music");
+		
+		if(bAudio != bAudioOld)
 		{
+			if(bAudio)
+				goAudioManager.audio.Play();
+			else
+				goAudioManager.audio.Stop();
+			
+			bAudioOld = bAudio;
+			PlayerPrefs.SetInt("music", bAudio ? 1 : 0);
 		}
 	}
 }
+
+
+
+
+
+
+

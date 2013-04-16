@@ -170,7 +170,10 @@ public class PlayerControl : MonoBehaviour
 				activeLocalPlatformPoint = activePlatform.InverseTransformPoint(transform.position);
 			}
 			
-			transform.position = new Vector3(transform.position.x, transform.position.y, 0.0f);
+			if(isActive)
+				transform.position = new Vector3(transform.position.x, transform.position.y, -0.7f);
+			else
+				transform.position = new Vector3(transform.position.x, transform.position.y, 0.7f);
 		}
 	}
 	
@@ -220,6 +223,11 @@ public class PlayerControl : MonoBehaviour
 			else
 				mat_child.color = Color.grey;
 		}
+		
+		if(b)
+			transform.position = new Vector3(transform.position.x, transform.position.y, -0.7f);
+		else
+			transform.position = new Vector3(transform.position.x, transform.position.y, 0.7f);
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
