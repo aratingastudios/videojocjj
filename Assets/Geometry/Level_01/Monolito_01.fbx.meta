@@ -4,11 +4,18 @@ ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
     100000: //RootNode
+    100002: Monolito_01
+    100004: Monolito_01 1
     400000: //RootNode
+    400002: Monolito_01
+    400004: Monolito_01 1
     2300000: //RootNode
+    2300002: Monolito_01 1
     3300000: //RootNode
+    3300002: Monolito_01 1
     4300000: Monolito_01
     6400000: //RootNode
+    6400002: Monolito_01 1
     9500000: //RootNode
   materials:
     importMaterials: 1
