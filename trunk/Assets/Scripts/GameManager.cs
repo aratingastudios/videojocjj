@@ -4,6 +4,20 @@
 using UnityEngine;
 using System.Collections;
 
+public class SetActiveOptions
+{
+	public bool bSetActive;
+	public bool bPlayAudio;
+	
+	public SetActiveOptions(bool _bSetActive, bool _bPlayAudio)
+	{
+		bSetActive = _bSetActive;
+		bPlayAudio = _bPlayAudio;
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 public class GameManager : MonoBehaviour
 {
 	GameObject[] m_players;
@@ -65,8 +79,8 @@ public class GameManager : MonoBehaviour
 			
 		bGoalsReached = new bool[]{false, false};
 		
-		m_players[0].SendMessage("SetActive", true);
-		m_players[1].SendMessage("SetActive", false);
+		m_players[0].SendMessage("SetActivePlayer", new SetActiveOptions(true, false));
+		m_players[1].SendMessage("SetActivePlayer", new SetActiveOptions(false, false));
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -120,8 +134,8 @@ public class GameManager : MonoBehaviour
 		if(scoreManager!=null)
 			scoreManager.SendMessage("PlayerChanged");
 		
-		m_players[0].SendMessage("SetActive", (iPlayerActive==0));
-		m_players[1].SendMessage("SetActive", (iPlayerActive==1));
+		m_players[0].SendMessage("SetActivePlayer", new SetActiveOptions(iPlayerActive==0, true));
+		m_players[1].SendMessage("SetActivePlayer", new SetActiveOptions(iPlayerActive==1, true));
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

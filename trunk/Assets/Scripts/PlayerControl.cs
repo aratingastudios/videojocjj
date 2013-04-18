@@ -210,21 +210,22 @@ public class PlayerControl : MonoBehaviour
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	void SetActive(bool b)
+	void SetActivePlayer(SetActiveOptions options)
 	{
-		isActive=b;
+		isActive = options.bSetActive;
 		
 		if(!bConcept)
 		{
-			PlaySound(2); //change
+			if(options.bPlayAudio)
+				PlaySound(2);
 		
-			if(b)
+			if(isActive)
 				mat_child.color = Color.white;
 			else
 				mat_child.color = Color.grey;
 		}
 		
-		if(b)
+		if(isActive)
 			transform.position = new Vector3(transform.position.x, transform.position.y, -0.7f);
 		else
 			transform.position = new Vector3(transform.position.x, transform.position.y, 0.7f);
