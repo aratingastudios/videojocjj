@@ -26,10 +26,15 @@ public class CustomImportSettings : AssetPostprocessor
 			importer.wrapMode = TextureWrapMode.Clamp;
 		}
 		
-		else if(importer.assetPath.Contains("GUITextureAndSkins"))
+		if(importer.assetPath.Contains("GUITextureAndSkins"))
 		{
 			importer.textureType = TextureImporterType.GUI;
 			importer.textureFormat = TextureImporterFormat.AutomaticTruecolor;
+		}
+		
+		if(importer.assetPath.Contains("Buttons"))
+		{
+			importer.maxTextureSize = 128;
 		}
 	}
 	

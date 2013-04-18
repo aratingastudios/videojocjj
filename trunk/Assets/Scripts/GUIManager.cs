@@ -10,6 +10,8 @@ public class GUIManager : MonoBehaviour
 	float screen_width = 800.0f;
 	//float screen_height = 480.0f;
 	
+	float screen_ratio;
+	
 	int buttonSize;
 	int buttonSize2;
 	int buttonSize3;
@@ -32,7 +34,7 @@ public class GUIManager : MonoBehaviour
 	int frames = 0;  // Frames drawn over the interval
 	float timeleft;  // Left time for current interval
 	string sFPS;
-	bool bFPS = true;
+	public bool bFPS = true;
 	
 	GameManager gameManager;
 	ScoreManager scoreManager;
@@ -40,25 +42,33 @@ public class GUIManager : MonoBehaviour
 	public bool bAudioFx = true;
 	bool bAudioFxOld = true;
 	
+	public Texture2D m_tex_help;
+	float ratio;
+	float ratio_4_3 = 4.0f/3.0f;
+	float height;
+	float offset;
+	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	void Awake()
 	{
 		gui_state="in_game";
 		
-		buttonSize  = (int)(Screen.width * (80.0f/screen_width));
-		buttonSize2 = (int)(Screen.width * (100.0f/screen_width));
-		buttonSize3 = (int)(Screen.width * (120.0f/screen_width));
+		screen_ratio = Screen.width / screen_width;
 		
-		labelSize    = (int)(Screen.width * (85.0f/screen_width));
-		marginLabel  = (int)(Screen.width * (20.0f/screen_width));
-		marginTitle  = (int)(Screen.width * (200.0f/screen_width));
-		marginButton = (int)(Screen.width * (50.0f/screen_width));
-		marginStars  = (int)(Screen.width * (20.0f/screen_width));
+		buttonSize  = (int)(80.0f * screen_ratio);
+		buttonSize2 = (int)(100.0f * screen_ratio);
+		buttonSize3 = (int)(120.0f * screen_ratio);
 		
-		black_width  = (int)(Screen.width * (400.0f/screen_width));
-		completed_width  = (int)(Screen.width * (300.0f/screen_width));
-		completed_height = (int)(Screen.width * (37.5f/screen_width));
+		labelSize    = (int)(85.0f * screen_ratio);
+		marginLabel  = (int)(20.0f * screen_ratio);
+		marginTitle  = (int)(200.0f * screen_ratio);
+		marginButton = (int)(50.0f * screen_ratio);
+		marginStars  = (int)(20.0f * screen_ratio);
+		
+		black_width  = (int)(400.0f * screen_ratio);
+		completed_width  = (int)(300.0f * screen_ratio);
+		completed_height = (int)(37.5f * screen_ratio);
 		
 		timeleft = updateInterval;
 		
@@ -69,6 +79,8 @@ public class GUIManager : MonoBehaviour
 		
 		bAudioFx = (PlayerPrefs.GetInt("musicFx") == 1);
 		bAudioFxOld = bAudioFx;
+		
+		ratio = (float)Screen.width/(float)Screen.height;
 	}
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -76,7 +88,7 @@ public class GUIManager : MonoBehaviour
 	void Update()
 	{
 		if(bFPS)
-			showFPS();
+			ShowFPS();
 	}
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -90,7 +102,10 @@ public class GUIManager : MonoBehaviour
 		{
 			//Menu button
 			if(GUI.Button(new Rect(Screen.width-5-buttonSize,5,buttonSize,buttonSize), "", "pause"))
+			{
 				gui_state="show_menu";
+				scoreManager.SendMessage("SetInPause", true);
+			}
 			
 			//Reset level button
 			if(GUI.Button(new Rect(Screen.width-10-buttonSize*2,5,buttonSize,buttonSize), "", "reset"))
@@ -167,7 +182,10 @@ public class GUIManager : MonoBehaviour
 		GUI.BeginGroup(new Rect(Screen.width/2-buttonSize3-buttonSize3/2-marginButton,Screen.height/2-buttonSize3/2,buttonSize3*3+marginButton*2,buttonSize3));
 		
 		if(GUI.Button(new Rect(0,0,buttonSize3,buttonSize3), "", "continue"))
+		{
 			gui_state = "in_game";
+			scoreManager.SendMessage("SetInPause", false);
+		}
 			
 		if(GUI.Button(new Rect(buttonSize3+marginButton,0,buttonSize3,buttonSize3), "", "levels"))
 			Application.LoadLevel("03_LEVEL_SELECT");
@@ -176,11 +194,6 @@ public class GUIManager : MonoBehaviour
 			gui_state = "show_options";
 		
 		GUI.EndGroup();
-		
-		string minutes = Mathf.Floor(Time.timeSinceLevelLoad/60.0f).ToString("00");
-		string seconds = (Time.timeSinceLevelLoad % 60).ToString("00");
-		
-		GUI.Label(new Rect(20,20,100,50), "TIME: " + minutes + ":" + seconds);
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -216,7 +229,9 @@ public class GUIManager : MonoBehaviour
 	
 	void OnGUIShowHelp()
 	{
-		GUI.Box(new Rect(0,0,Screen.width,Screen.height), "", "help_screen");
+		height = ratio_4_3/ratio;
+		offset = (1.0f-height)/2.0f;
+		GUI.DrawTextureWithTexCoords(new Rect(0,0,Screen.width,Screen.height), m_tex_help, new Rect(0,offset,1,height));
 		
 		if(GUI.Button(new Rect(20,20,buttonSize, buttonSize), "", "back"))
 			gui_state = "show_options";
@@ -231,7 +246,7 @@ public class GUIManager : MonoBehaviour
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	void showFPS()
+	void ShowFPS()
 	{
 		timeleft -= Time.deltaTime;
 		accum += Time.timeScale / Time.deltaTime;

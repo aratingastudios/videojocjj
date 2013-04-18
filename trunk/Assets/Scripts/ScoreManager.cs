@@ -10,16 +10,52 @@ public class ScoreManager : MonoBehaviour
 	public bool bChangesBonus = false;
 	public bool bSecretItemBonus = false;
 	
+	public GUISkin m_skin;
+	
 	float totalTime;
 	int nPlayerChanges = 0;
 	
 	int num_levels;
+	
+	bool bInPause=false;
+	
+	float screen_width = 800.0f;
+	float screen_ratio;
+	int boxSize;
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	void Start()
 	{
 		num_levels = PlayerPrefs.GetInt("num_levels");
+		screen_ratio = Screen.width / screen_width;
+		boxSize  = (int)(40.0f * screen_ratio);
+	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	void OnGUI()
+	{
+		GUI.skin = m_skin;
+		
+		if(bInPause)
+		{
+			//Time
+			string minutes = Mathf.Floor(Time.timeSinceLevelLoad/60.0f).ToString("00");
+			string seconds = (Time.timeSinceLevelLoad % 60).ToString("00");
+			
+			GUI.Box(new Rect(20,20,boxSize,boxSize),"","bonus_time");
+			
+			//GUI.Label(new Rect(50,40,100,50), minutes + ":" + seconds, "score_text");
+			
+			/*
+			//Player swaps
+			GUI.Label(new Rect(120,20,100,50), "S: " + nPlayerChanges + "/" + numChanges, "score_text");
+			
+			//Secret Item
+			GUI.Label(new Rect(200,20,100,50), "I: " + (bSecretItemBonus?1:0)+ "/1", "score_text");
+			*/
+		}
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -83,6 +119,13 @@ public class ScoreManager : MonoBehaviour
 	void SecretItemReached()
 	{
 		bSecretItemBonus = true;
+	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	void SetInPause(bool b)
+	{
+		bInPause = b;
 	}
 }
 		
