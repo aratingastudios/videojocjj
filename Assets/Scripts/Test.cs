@@ -3,13 +3,10 @@ using System.Collections;
 
 public class Test : MonoBehaviour
 {
-	public GUISkin m_skin;
+	public GUIStyle m_style;
 	
 	void OnGUI()
 	{
-		GUI.skin = m_skin;
-		
-		GUI.Label(new Rect(Screen.width/2-100,Screen.height/2-50,200,200), "LOADING...", "loading");
-		
+		GUI.Label(new Rect(50,50,500,100), "A B C D E", m_style);
 	}
 }
