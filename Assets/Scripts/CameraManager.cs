@@ -18,6 +18,14 @@ public class CameraManager : MonoBehaviour
 	
 	void Awake()
 	{
+		//LO QUE HAY EN EL UPDATE LO PONDREMOS EN EL AWAKE
+		//DE MOMENTO, LO DEJAMOS ASI PARA HACER EL TESTEO
+	}
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	void Update()
+	{
 		ratio = (float)Screen.width/(float)Screen.height;
 		float f = Mathf.InverseLerp(ratio_16_9, ratio_4_3, ratio);
 		camera.orthographicSize = Mathf.Lerp(size_16_9, size_4_3, f);
