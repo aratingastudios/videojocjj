@@ -1,21 +1,15 @@
 fileFormatVersion: 2
-guid: 3b7f1062ccb0688478ee65473ed0d173
+guid: f788b7f5ec3d84841b46c8a7b344a3cd
 ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
-    100000: Muntanya_01
+    100000: BG_02
     100002: //RootNode
-    100004: Muntanya_07
-    400000: Muntanya_01
+    400000: BG_02
     400002: //RootNode
-    400004: Muntanya_07
-    2300000: Muntanya_01
-    2300002: Muntanya_07
-    3300000: Muntanya_01
-    3300002: Muntanya_07
-    4300000: Muntanya_01
-    4300002: Muntanya_07
-    6400000: Muntanya_01
+    2300000: BG_02
+    3300000: BG_02
+    4300000: BG_02
     9500000: //RootNode
   materials:
     importMaterials: 1
