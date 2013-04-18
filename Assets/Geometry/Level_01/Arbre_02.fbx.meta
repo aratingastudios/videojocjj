@@ -1,21 +1,20 @@
 fileFormatVersion: 2
-guid: 3b7f1062ccb0688478ee65473ed0d173
+guid: 56f72295bcbfcc545856eb068a8568e1
 ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
-    100000: Muntanya_01
+    100000: Arbre_015
     100002: //RootNode
-    100004: Muntanya_07
-    400000: Muntanya_01
+    100004: Arbre_02
+    400000: Arbre_015
     400002: //RootNode
-    400004: Muntanya_07
-    2300000: Muntanya_01
-    2300002: Muntanya_07
-    3300000: Muntanya_01
-    3300002: Muntanya_07
-    4300000: Muntanya_01
-    4300002: Muntanya_07
-    6400000: Muntanya_01
+    400004: Arbre_02
+    2300000: Arbre_015
+    2300002: Arbre_02
+    3300000: Arbre_015
+    3300002: Arbre_02
+    4300000: Arbre_015
+    4300002: Arbre_02
     9500000: //RootNode
   materials:
     importMaterials: 1
