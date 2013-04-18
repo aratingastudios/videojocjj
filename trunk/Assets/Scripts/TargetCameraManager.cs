@@ -34,6 +34,7 @@ public class TargetCameraManager : MonoBehaviour
 	float ratio_16_9 = 16.0f/9.0f;
 	float ratio_4_3 = 4.0f/3.0f;
 	float ratio;
+	float inv_ratio;
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -53,9 +54,7 @@ public class TargetCameraManager : MonoBehaviour
 		
 		//Calulamos el minY y el maxY adecuado en función del ratio actual
 		ratio = (float)Screen.width/(float)Screen.height;
-		float f = Mathf.InverseLerp(ratio_16_9, ratio_4_3, ratio);
-		minY = Mathf.Lerp(minY_16_9, minY_4_3, f);
-		maxY = Mathf.Lerp(maxY_16_9, maxY_4_3, f);
+		inv_ratio = Mathf.InverseLerp(ratio_16_9, ratio_4_3, ratio);
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -87,6 +86,12 @@ public class TargetCameraManager : MonoBehaviour
 		//check camera limits
 		if(m_check_bounds)
 			CheckBounds();
+		
+		//////////////
+		//UNA VEZ TERMINADA LA FASE DE PRUEBAS HABRA QUE PONER ESTO EN EL AWAKE!!!
+		//////////////
+		minY = Mathf.Lerp(minY_16_9, minY_4_3, inv_ratio);
+		maxY = Mathf.Lerp(maxY_16_9, maxY_4_3, inv_ratio);
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
