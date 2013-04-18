@@ -17,7 +17,9 @@ public class TargetCameraManager : MonoBehaviour
 	public float minY_16_9;
 	public float minY_4_3;
 	float minY;
-	public float maxY;
+	public float maxY_16_9;
+	public float maxY_4_3;
+	float maxY;
 	
 	bool bChangePos=false;
 	Vector3 newPos;
@@ -49,10 +51,11 @@ public class TargetCameraManager : MonoBehaviour
 		else
 			m_players[1] = GameObject.Find("PLAYER1_concept").transform;
 		
-		//Calulamos el minY adecuado en función del ratio actual
+		//Calulamos el minY y el maxY adecuado en función del ratio actual
 		ratio = (float)Screen.width/(float)Screen.height;
 		float f = Mathf.InverseLerp(ratio_16_9, ratio_4_3, ratio);
 		minY = Mathf.Lerp(minY_16_9, minY_4_3, f);
+		maxY = Mathf.Lerp(maxY_16_9, maxY_4_3, f);
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
