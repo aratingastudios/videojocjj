@@ -52,9 +52,7 @@ public class TargetCameraManager : MonoBehaviour
 		else
 			m_players[1] = GameObject.Find("PLAYER1_concept").transform;
 		
-		//Calulamos el minY y el maxY adecuado en función del ratio actual
-		ratio = (float)Screen.width/(float)Screen.height;
-		inv_ratio = Mathf.InverseLerp(ratio_16_9, ratio_4_3, ratio);
+		
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -87,11 +85,16 @@ public class TargetCameraManager : MonoBehaviour
 		if(m_check_bounds)
 			CheckBounds();
 		
-		//////////////
+		////////////////////////////
 		//UNA VEZ TERMINADA LA FASE DE PRUEBAS HABRA QUE PONER ESTO EN EL AWAKE!!!
-		//////////////
+		////////////////////////////
+		//Calulamos el minY y el maxY adecuado en función del ratio actual
+		ratio = (float)Screen.width/(float)Screen.height;
+		inv_ratio = Mathf.InverseLerp(ratio_16_9, ratio_4_3, ratio);
+		
 		minY = Mathf.Lerp(minY_16_9, minY_4_3, inv_ratio);
 		maxY = Mathf.Lerp(maxY_16_9, maxY_4_3, inv_ratio);
+		//////////////
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -54,21 +54,7 @@ public class GUIManager : MonoBehaviour
 	{
 		gui_state="in_game";
 		
-		screen_ratio = Screen.width / screen_width;
 		
-		buttonSize  = (int)(80.0f * screen_ratio);
-		buttonSize2 = (int)(100.0f * screen_ratio);
-		buttonSize3 = (int)(120.0f * screen_ratio);
-		
-		labelSize    = (int)(85.0f * screen_ratio);
-		marginLabel  = (int)(20.0f * screen_ratio);
-		marginTitle  = (int)(200.0f * screen_ratio);
-		marginButton = (int)(50.0f * screen_ratio);
-		marginStars  = (int)(20.0f * screen_ratio);
-		
-		black_width  = (int)(400.0f * screen_ratio);
-		completed_width  = (int)(300.0f * screen_ratio);
-		completed_height = (int)(37.5f * screen_ratio);
 		
 		timeleft = updateInterval;
 		
@@ -87,6 +73,26 @@ public class GUIManager : MonoBehaviour
 	
 	void Update()
 	{
+		////////////////////////////
+		//UNA VEZ TERMINADA LA FASE DE PRUEBAS HABRA QUE PONER ESTO EN EL AWAKE!!!
+		////////////////////////////
+		screen_ratio = Screen.width / screen_width;
+		
+		buttonSize  = (int)(80.0f * screen_ratio);
+		buttonSize2 = (int)(100.0f * screen_ratio);
+		buttonSize3 = (int)(120.0f * screen_ratio);
+		
+		labelSize    = (int)(85.0f * screen_ratio);
+		marginLabel  = (int)(20.0f * screen_ratio);
+		marginTitle  = (int)(200.0f * screen_ratio);
+		marginButton = (int)(50.0f * screen_ratio);
+		marginStars  = (int)(20.0f * screen_ratio);
+		
+		black_width  = (int)(400.0f * screen_ratio);
+		completed_width  = (int)(300.0f * screen_ratio);
+		completed_height = (int)(37.5f * screen_ratio);
+		////////////////////////////
+		
 		if(bFPS)
 			ShowFPS();
 	}
