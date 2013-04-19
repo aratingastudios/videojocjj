@@ -1,17 +1,14 @@
 fileFormatVersion: 2
-guid: 5b0c3a7afc209dc4581c54190323ec7f
+guid: 7ddd448568f178b4682e8ea19f9b4d7c
 ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
     100000: //RootNode
-    100002: Arbre_01
     400000: //RootNode
-    400002: Arbre_01
     2300000: //RootNode
-    2300002: Arbre_01
     3300000: //RootNode
-    3300002: Arbre_01
-    4300000: Arbre_01
+    4300000: Columna_01
+    6400000: //RootNode
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -31,7 +28,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
