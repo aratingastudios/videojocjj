@@ -183,7 +183,7 @@ public class GUIManager : MonoBehaviour
 	
 	void OnGUIShowMenu()
 	{
-		GUI.Box(new Rect(0,0,Screen.width,Screen.height), "");
+		GUI.Box(new Rect(-5,-5,Screen.width+10,Screen.height+10), "");
 		
 		GUI.BeginGroup(new Rect(Screen.width/2-buttonSize3-buttonSize3/2-marginButton,Screen.height/2-buttonSize3/2,buttonSize3*3+marginButton*2,buttonSize3));
 		
