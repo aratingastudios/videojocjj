@@ -64,11 +64,7 @@ public class PlayerControl : MonoBehaviour
 
 	void Start()
 	{
-		buttonSize = (int)(Screen.width * originalRatio);
 		
-		touchLeft  = new Rect(5,Screen.height-buttonSize-5,buttonSize,buttonSize);
-		touchRight = new Rect(buttonSize+10,Screen.height-buttonSize-5,buttonSize,buttonSize);
-		touchJump  = new Rect(Screen.width-buttonSize-5,Screen.height-buttonSize-5,buttonSize,buttonSize);
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -92,6 +88,15 @@ public class PlayerControl : MonoBehaviour
 	
 	void Update()
 	{
+		//////////////////////////
+		//ESTO LO PONDREMOS EN EL START DESPUES DE LA FASE DE PRUEBAS
+		//////////////////////////
+		buttonSize = (int)(Screen.width * originalRatio);
+		touchLeft  = new Rect(5,Screen.height-buttonSize-5,buttonSize,buttonSize);
+		touchRight = new Rect(buttonSize+10,Screen.height-buttonSize-5,buttonSize,buttonSize);
+		touchJump  = new Rect(Screen.width-buttonSize-5,Screen.height-buttonSize-5,buttonSize,buttonSize);
+		//////////////////////////
+		
 		if(guiManager.gui_state == "in_game")
 		{
 			//Moving platform support
