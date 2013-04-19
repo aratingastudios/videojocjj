@@ -3,10 +3,17 @@ using System.Collections;
 
 public class Test : MonoBehaviour
 {
-	public GUIStyle m_style;
+	float res;
+	float _from = 1.0f;
+	float _to = 0.0f;
 	
-	void OnGUI()
+	void Update()
 	{
-		GUI.Label(new Rect(50,50,500,100), "A B C D E", m_style);
+		//Debug.Log("time: " + Time.time);
+		//Debug.Log("deltatime: " + Time.deltaTime);
+		
+		Debug.Log("res: " + res);
+		
+		res = Mathf.Lerp(_from, _to, Time.time);
 	}
 }
