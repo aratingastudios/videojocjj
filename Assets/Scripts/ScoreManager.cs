@@ -17,11 +17,15 @@ public class ScoreManager : MonoBehaviour
 	
 	int num_levels;
 	
-	bool bInPause=false;
-	
 	float screen_width = 800.0f;
 	float screen_ratio;
 	int boxSize;
+	
+	float fading_time = 2.0f;
+	Color old_gui_color;
+	float alpha = 1.0f;
+	string state = "idle";
+	float yVelocity;
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -34,13 +38,30 @@ public class ScoreManager : MonoBehaviour
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
+	void Update()
+	{
+		if(state=="fading")
+		{
+			alpha = Mathf.SmoothDamp(1.0f, 0.0f, ref yVelocity, fading_time);
+			
+			if(alpha<0.1f)
+				state="idle";
+		}
+	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
 	void OnGUI()
 	{
 		GUI.skin = m_skin;
 		
-		if(bInPause)
+		if(state=="in_pause" || state=="fading")
 		{
-			//Time
+			old_gui_color = GUI.color;
+			
+			if(state=="fading")
+				GUI.color = new Color(1.0f, 1.0f, 1.0f, alpha);
+			
 			string minutes = Mathf.Floor(Time.timeSinceLevelLoad/60.0f).ToString();
 			string seconds = (Time.timeSinceLevelLoad % 60).ToString("00");
 			
@@ -52,6 +73,8 @@ public class ScoreManager : MonoBehaviour
 			
 			GUI.Box(new Rect(360,10,boxSize,boxSize),"","bonus_item");
 			GUI.Label(new Rect(425,10,100,50), (bSecretItemBonus?1:0)+ "/1", "score_text");
+			
+			GUI.color = old_gui_color;
 		}
 	}
 	
@@ -122,7 +145,13 @@ public class ScoreManager : MonoBehaviour
 	
 	void SetInPause(bool b)
 	{
-		bInPause = b;
+		if(b)
+			state="in_pause";
+		else
+		{
+			state="fading";
+			alpha=1.0f;
+		}
 	}
 }
 		
