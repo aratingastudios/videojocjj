@@ -41,20 +41,17 @@ public class ScoreManager : MonoBehaviour
 		if(bInPause)
 		{
 			//Time
-			string minutes = Mathf.Floor(Time.timeSinceLevelLoad/60.0f).ToString("00");
+			string minutes = Mathf.Floor(Time.timeSinceLevelLoad/60.0f).ToString();
 			string seconds = (Time.timeSinceLevelLoad % 60).ToString("00");
 			
-			GUI.Box(new Rect(20,20,boxSize,boxSize),"","bonus_time");
+			GUI.Box(new Rect(40,10,boxSize,boxSize),"","bonus_time");
+			GUI.Label(new Rect(100,10,110,50), minutes + ":" + seconds, "score_text");
 			
-			//GUI.Label(new Rect(50,40,100,50), minutes + ":" + seconds, "score_text");
+			GUI.Box(new Rect(200,10,boxSize,boxSize),"","bonus_swaps");
+			GUI.Label(new Rect(265,10,110,50), nPlayerChanges + "/" + numChanges, "score_text");
 			
-			/*
-			//Player swaps
-			GUI.Label(new Rect(120,20,100,50), "S: " + nPlayerChanges + "/" + numChanges, "score_text");
-			
-			//Secret Item
-			GUI.Label(new Rect(200,20,100,50), "I: " + (bSecretItemBonus?1:0)+ "/1", "score_text");
-			*/
+			GUI.Box(new Rect(360,10,boxSize,boxSize),"","bonus_item");
+			GUI.Label(new Rect(425,10,100,50), (bSecretItemBonus?1:0)+ "/1", "score_text");
 		}
 	}
 	
