@@ -11,6 +11,7 @@ public class ScoreManager : MonoBehaviour
 	public bool bSecretItemBonus = false;
 	
 	public GUISkin m_skin;
+	public GUIStyle m_text_style;
 	
 	float totalTime;
 	int nPlayerChanges = 0;
@@ -20,29 +21,44 @@ public class ScoreManager : MonoBehaviour
 	float screen_width = 800.0f;
 	float screen_ratio;
 	int boxSize;
+	int fontSize;
 	
-	float fading_time = 2.0f;
+	float wait_time = 2.0f;
+	float fading_time = 1.0f;
 	Color old_gui_color;
 	float alpha = 1.0f;
 	string state = "idle";
-	float yVelocity;
+	float timer;
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	void Start()
 	{
 		num_levels = PlayerPrefs.GetInt("num_levels");
-		screen_ratio = Screen.width / screen_width;
-		boxSize  = (int)(40.0f * screen_ratio);
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	void Update()
 	{
-		if(state=="fading")
+		////////////////////////////
+		//UNA VEZ TERMINADA LA FASE DE PRUEBAS HABRA QUE PONER ESTO EN EL AWAKE!!!
+		////////////////////////////
+		screen_ratio = Screen.width / screen_width;
+		boxSize = (int)(40.0f * screen_ratio);
+		fontSize = (int)(32.0f * screen_ratio);
+		////////////////////////////
+		
+		if(state=="waiting" && Time.time - timer > wait_time)
 		{
-			alpha = Mathf.SmoothDamp(1.0f, 0.0f, ref yVelocity, fading_time);
+			state="fading";
+			timer = Time.time;
+		}
+			
+		else if(state=="fading")
+		{
+			float t = (Time.time - timer) / fading_time;
+			alpha = Mathf.SmoothStep(1.0f, 0.0f, t);
 			
 			if(alpha<0.1f)
 				state="idle";
@@ -55,7 +71,7 @@ public class ScoreManager : MonoBehaviour
 	{
 		GUI.skin = m_skin;
 		
-		if(state=="in_pause" || state=="fading")
+		if(state=="in_pause" || state=="waiting" || state=="fading")
 		{
 			old_gui_color = GUI.color;
 			
@@ -65,19 +81,37 @@ public class ScoreManager : MonoBehaviour
 			string minutes = Mathf.Floor(Time.timeSinceLevelLoad/60.0f).ToString();
 			string seconds = (Time.timeSinceLevelLoad % 60).ToString("00");
 			
+			m_text_style.fontSize = fontSize;
 			GUI.Box(new Rect(40,10,boxSize,boxSize),"","bonus_time");
-			GUI.Label(new Rect(100,10,110,50), minutes + ":" + seconds, "score_text");
+			GUI.Label(new Rect(95,13,110,50), minutes + ":" + seconds, m_text_style);
 			
 			GUI.Box(new Rect(200,10,boxSize,boxSize),"","bonus_swaps");
-			GUI.Label(new Rect(265,10,110,50), nPlayerChanges + "/" + numChanges, "score_text");
+			GUI.Label(new Rect(260,13,110,50), nPlayerChanges + "/" + numChanges, m_text_style);
 			
 			GUI.Box(new Rect(360,10,boxSize,boxSize),"","bonus_item");
-			GUI.Label(new Rect(425,10,100,50), (bSecretItemBonus?1:0)+ "/1", "score_text");
+			GUI.Label(new Rect(420,13,100,50), (bSecretItemBonus?1:0)+ "/1", m_text_style);
 			
 			GUI.color = old_gui_color;
 		}
 	}
 	
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//Para hacer outline, pintamos el texto por debajo 9 veces (un poco guarro, no?)
+	/*
+	void DrawLabelOutline(Rect r, string text, string outline)
+	{	
+		for(int i=-5;i<6;i+=5)
+		{
+			for(int j=-5;j<6;j+=5)
+			{
+				Rect tmp_r = new Rect(r.x+i, r.y+j, r.width, r.height);
+				GUI.Label(tmp_r, outline, "text_white");	
+			}
+		}
+		
+		GUI.Label(r, text, "text_white");
+	}
+	*/
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	void CheckBonus(int nLevel)
@@ -143,14 +177,14 @@ public class ScoreManager : MonoBehaviour
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	void SetInPause(bool b)
+	void SetState(string _state)
 	{
-		if(b)
-			state="in_pause";
-		else
+		state=_state;
+		
+		if(state=="waiting")
 		{
-			state="fading";
 			alpha=1.0f;
+			timer = Time.time;
 		}
 	}
 }
