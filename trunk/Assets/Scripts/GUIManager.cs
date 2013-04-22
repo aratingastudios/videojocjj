@@ -110,7 +110,7 @@ public class GUIManager : MonoBehaviour
 			if(GUI.Button(new Rect(Screen.width-5-buttonSize,5,buttonSize,buttonSize), "", "pause"))
 			{
 				gui_state="show_menu";
-				scoreManager.SendMessage("SetInPause", true);
+				scoreManager.SendMessage("SetState", "in_pause");
 			}
 			
 			//Reset level button
@@ -190,14 +190,17 @@ public class GUIManager : MonoBehaviour
 		if(GUI.Button(new Rect(0,0,buttonSize3,buttonSize3), "", "continue"))
 		{
 			gui_state = "in_game";
-			scoreManager.SendMessage("SetInPause", false);
+			scoreManager.SendMessage("SetState", "waiting");
 		}
 			
 		if(GUI.Button(new Rect(buttonSize3+marginButton,0,buttonSize3,buttonSize3), "", "levels"))
 			Application.LoadLevel("03_LEVEL_SELECT");
 			
 		if(GUI.Button(new Rect(buttonSize3*2+marginButton*2,0,buttonSize3,buttonSize3), "", "options"))
+		{
 			gui_state = "show_options";
+			scoreManager.SendMessage("SetState", "show_options");
+		}
 		
 		GUI.EndGroup();
 	}

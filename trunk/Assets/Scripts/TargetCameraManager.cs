@@ -51,8 +51,6 @@ public class TargetCameraManager : MonoBehaviour
 			m_players[1] = GameObject.Find("PLAYER1").transform;
 		else
 			m_players[1] = GameObject.Find("PLAYER1_concept").transform;
-		
-		
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
