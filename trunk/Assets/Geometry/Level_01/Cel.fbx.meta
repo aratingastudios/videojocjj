@@ -1,15 +1,17 @@
 fileFormatVersion: 2
-guid: 1cf720055e7c92d4f82062da3a2951d4
+guid: 23424ab63bf530048ae1469e4c9acf0a
 ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
-    100000: Level_01_Terra1
+    100000: Cel
     100002: //RootNode
-    400000: Level_01_Terra1
+    100004: G_Level_01
+    400000: Cel
     400002: //RootNode
-    2300000: Level_01_Terra1
-    3300000: Level_01_Terra1
-    4300000: Level_01_Terra1
+    400004: G_Level_01
+    2300000: Cel
+    3300000: Cel
+    4300000: Cel
     9500000: //RootNode
   materials:
     importMaterials: 1
