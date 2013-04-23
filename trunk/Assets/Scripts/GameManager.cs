@@ -87,13 +87,16 @@ public class GameManager : MonoBehaviour
 	
 	void Update()
 	{
-		//Keyboard reset level
-		if(Input.GetKeyDown(KeyCode.R))
-			ResetLevel();
-		
-		//Keyboard change player
-		if(Input.GetKeyDown(KeyCode.Q))
-			ChangePlayer();
+		if(guiManager.gui_state == "in_game")
+		{
+			//Keyboard reset level
+			if(Input.GetKeyDown(KeyCode.R))
+				ResetLevel();
+			
+			//Keyboard change player
+			if(Input.GetKeyDown(KeyCode.Q))
+				ChangePlayer();
+		}
 		
 		if(bConcept && m_players[iPlayerActive])
 		{

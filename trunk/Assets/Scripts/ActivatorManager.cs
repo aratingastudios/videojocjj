@@ -10,11 +10,16 @@ public class ActivatorManager : MonoBehaviour
 	float smoothTime = 0.3f;
 	Vector3 velocity = Vector3.zero;
 	
+	GameObject gameManagerObj;
+	GUIManager guiManager;
+	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	void Awake()
 	{
 		targetPosition = new Vector3(transform.position.x, transform.position.y-0.3f, transform.position.z);
+		gameManagerObj = GameObject.Find("_GAMEMANAGER");
+		guiManager = gameManagerObj.GetComponent<GUIManager>();
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -35,7 +40,7 @@ public class ActivatorManager : MonoBehaviour
 			
 			state="end";
 			
-			if(audio && !audio.isPlaying)
+			if(audio && !audio.isPlaying && guiManager.bAudioFx)
 				audio.Play();
 		}
 	}

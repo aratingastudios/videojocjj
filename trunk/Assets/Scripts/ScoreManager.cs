@@ -13,15 +13,10 @@ public class ScoreManager : MonoBehaviour
 	public GUISkin m_skin;
 	public GUIStyle m_text_style;
 	
-	float totalTime;
-	int nPlayerChanges = 0;
+	public float totalTime;
+	public int nPlayerChanges = 0;
 	
 	int num_levels;
-	
-	float screen_width = 800.0f;
-	float screen_ratio;
-	int boxSize;
-	int fontSize;
 	
 	float wait_time = 2.0f;
 	float fading_time = 1.0f;
@@ -29,6 +24,8 @@ public class ScoreManager : MonoBehaviour
 	float alpha = 1.0f;
 	string state = "idle";
 	float timer;
+	
+	int iconSize = 40;
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -41,14 +38,6 @@ public class ScoreManager : MonoBehaviour
 	
 	void Update()
 	{
-		////////////////////////////
-		//UNA VEZ TERMINADA LA FASE DE PRUEBAS HABRA QUE PONER ESTO EN EL AWAKE!!!
-		////////////////////////////
-		screen_ratio = Screen.width / screen_width;
-		boxSize = (int)(40.0f * screen_ratio);
-		fontSize = (int)(32.0f * screen_ratio);
-		////////////////////////////
-		
 		if(state=="waiting" && Time.time - timer > wait_time)
 		{
 			state="fading";
@@ -81,15 +70,14 @@ public class ScoreManager : MonoBehaviour
 			string minutes = Mathf.Floor(Time.timeSinceLevelLoad/60.0f).ToString();
 			string seconds = (Time.timeSinceLevelLoad % 60).ToString("00");
 			
-			m_text_style.fontSize = fontSize;
-			GUI.Box(new Rect(40,10,boxSize,boxSize),"","bonus_time");
-			GUI.Label(new Rect(95,13,110,50), minutes + ":" + seconds, m_text_style);
+			GUI.Box(new Rect(40,10,iconSize,iconSize),"","bonus_time");
+			GUI.Label(new Rect(100,17,110,50), minutes + ":" + seconds, m_text_style);
 			
-			GUI.Box(new Rect(200,10,boxSize,boxSize),"","bonus_swaps");
-			GUI.Label(new Rect(260,13,110,50), nPlayerChanges + "/" + numChanges, m_text_style);
+			GUI.Box(new Rect(200,10,iconSize,iconSize),"","bonus_swaps");
+			GUI.Label(new Rect(255,17,110,50), nPlayerChanges + "/" + numChanges, m_text_style);
 			
-			GUI.Box(new Rect(360,10,boxSize,boxSize),"","bonus_item");
-			GUI.Label(new Rect(420,13,100,50), (bSecretItemBonus?1:0)+ "/1", m_text_style);
+			GUI.Box(new Rect(360,10,iconSize,iconSize),"","bonus_item");
+			GUI.Label(new Rect(415,17,100,50), (bSecretItemBonus?1:0)+ "/1", m_text_style);
 			
 			GUI.color = old_gui_color;
 		}
