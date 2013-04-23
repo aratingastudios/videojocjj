@@ -203,13 +203,16 @@ public class PlayerControl : MonoBehaviour
 			
 	void PlaySound(int id)
 	{
-		if(id==1)
-			audio.Stop();
-		
-		if(sounds.Length>0 && sounds[id] && !audio.isPlaying)
+		if(guiManager.bAudioFx)
 		{
-			audio.clip = sounds[id];
-			audio.Play();
+			if(id==1)
+				audio.Stop();
+			
+			if(sounds.Length>0 && sounds[id] && !audio.isPlaying)
+			{
+				audio.clip = sounds[id];
+				audio.Play();
+			}
 		}
 	}
 	

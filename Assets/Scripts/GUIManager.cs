@@ -7,24 +7,16 @@ public class GUIManager : MonoBehaviour
 	public string gui_state;
 	
 	//Mobile->Tamaño de pantalla de referencia: 800x480
-	float screen_width = 800.0f;
-	//float screen_height = 480.0f;
+	float screenWidth = 800.0f;
+	float screenHeight = 480.0f;
 	
 	float screen_ratio;
 	
 	int buttonSize;
 	int buttonSize2;
 	int buttonSize3;
-	
-	int labelSize;
-	int marginTitle;
 	int marginButton;
-	int marginLabel;
-	int marginStars;
-	
 	int black_width;
-	int completed_width;
-	int completed_height;
 	
 	string[] player_buttons;
 	
@@ -54,8 +46,6 @@ public class GUIManager : MonoBehaviour
 	{
 		gui_state="in_game";
 		
-		
-		
 		timeleft = updateInterval;
 		
 		player_buttons = new string[]{"player0_button", "player1_button"};
@@ -76,21 +66,14 @@ public class GUIManager : MonoBehaviour
 		////////////////////////////
 		//UNA VEZ TERMINADA LA FASE DE PRUEBAS HABRA QUE PONER ESTO EN EL AWAKE!!!
 		////////////////////////////
-		screen_ratio = Screen.width / screen_width;
+		screen_ratio = Screen.width / screenWidth;
 		
 		buttonSize  = (int)(80.0f * screen_ratio);
 		buttonSize2 = (int)(100.0f * screen_ratio);
 		buttonSize3 = (int)(120.0f * screen_ratio);
-		
-		labelSize    = (int)(85.0f * screen_ratio);
-		marginLabel  = (int)(20.0f * screen_ratio);
-		marginTitle  = (int)(200.0f * screen_ratio);
 		marginButton = (int)(50.0f * screen_ratio);
-		marginStars  = (int)(20.0f * screen_ratio);
-		
 		black_width  = (int)(400.0f * screen_ratio);
-		completed_width  = (int)(300.0f * screen_ratio);
-		completed_height = (int)(37.5f * screen_ratio);
+		
 		////////////////////////////
 		
 		if(bFPS)
@@ -142,30 +125,62 @@ public class GUIManager : MonoBehaviour
 	
 	void OnGUILevelCompleted()
 	{
-		//GUI.Box(new Rect(0,0,Screen.width,Screen.height), "", "background");
 		GUI.Box(new Rect(Screen.width/2-black_width/2,0,black_width,Screen.height), "", "black");
-		GUI.Box(new Rect(Screen.width/2-completed_width/2, Screen.height/2-marginTitle,completed_width,completed_height), "", "level_completed");
 		
-		//labels
-		GUI.BeginGroup(new Rect(Screen.width/2-labelSize-labelSize/2-marginLabel,Screen.height/2-20,labelSize*3+marginLabel*2,labelSize));
+		string minutes = Mathf.Floor(scoreManager.totalTime/60.0f).ToString();
+		string seconds = (scoreManager.totalTime % 60).ToString("00");
 		
-		GUI.Label(new Rect(0,0,labelSize,labelSize), "TIME BONUS", scoreManager.bTimeBonus ? "bonus_text_on" : "bonus_text_off");
-		GUI.Label(new Rect(labelSize+marginLabel,0,labelSize,labelSize), "PLAYER SWAPS", scoreManager.bChangesBonus ? "bonus_text_on" : "bonus_text_off");
-		GUI.Label(new Rect(labelSize*2+marginLabel*2,0,labelSize,labelSize), "SECRET ITEM", scoreManager.bSecretItemBonus ? "bonus_text_on" : "bonus_text_off");
-			
-		GUI.EndGroup();
+		string minutesL = Mathf.Floor(scoreManager.levelTime/60.0f).ToString();
+		string secondsL = (scoreManager.levelTime % 60).ToString("00");
 		
-		//stars
-		GUI.BeginGroup(new Rect(Screen.width/2-labelSize-labelSize/2-marginStars,Screen.height/2-100,labelSize*3+marginStars*2,labelSize));
+		//Reescalamos el GUI para que se adapte a las diferentes resoluciones de pantalla
+		//Para que no deforme tenemos que mirar si ha crecido más en W o en H
+		//El factor de escalado será el que haya crecido menos
+		float scaleFactor = Mathf.Min(Screen.width/screenWidth,Screen.height/screenHeight);
+		Vector3 scale = new Vector3(scaleFactor, scaleFactor, 1.0f);
+		Matrix4x4 svMat = GUI.matrix; //save current matrix
 		
-		GUI.Box(new Rect(0,0,labelSize,labelSize), "", scoreManager.bTimeBonus ? "star_on" : "star_off");
-		GUI.Box(new Rect(labelSize+marginStars,0,labelSize,labelSize), "", scoreManager.bChangesBonus ? "star_on" : "star_off");
-		GUI.Box(new Rect(labelSize*2+marginStars*2,0,labelSize,labelSize), "", scoreManager.bSecretItemBonus ? "star_on" : "star_off");
-				
-		GUI.EndGroup();
+		float newX = (Screen.width - screenWidth*scaleFactor)/2;
+		float newY = (Screen.height - screenHeight*scaleFactor)/2;
+		
+		GUI.matrix = Matrix4x4.TRS(new Vector3(newX>0?newX:1,newY>0?newY:1,0), Quaternion.identity, scale);
+		
+		////
+		
+		GUI.Label(new Rect(0,30,screenWidth,50), "LEVEL COMPLETE!", "level_complete");
+		
+		int area_w = 350;
+		int area_h = 250;
+		
+		GUILayout.BeginArea(new Rect(screenWidth/2-area_w/2,screenHeight/2-area_h/2,area_w,area_h));
+		GUILayout.BeginHorizontal();
+		
+		GUILayout.BeginVertical();
+		GUILayoutBox("bonus_time", 64);
+		GUILayout.Label(minutes + ":" + seconds, "bonus_text");
+		GUILayout.Label(minutesL + ":" + secondsL, "bonus_text_blue");
+		GUILayoutBox(scoreManager.bTimeBonus ? "star_on" : "star_off", 64);
+		GUILayout.EndVertical();
+		
+		GUILayout.BeginVertical();
+		GUILayoutBox("bonus_swaps", 64);
+		GUILayout.Label(scoreManager.nPlayerChanges + "/" + scoreManager.numChanges, "bonus_text");
+		GUILayoutBox(scoreManager.bChangesBonus ? "star_on" : "star_off", 64);
+		GUILayout.EndVertical();
+		
+		GUILayout.BeginVertical();
+		GUILayoutBox("bonus_item", 64);
+		GUILayout.Label((scoreManager.bSecretItemBonus?1:0)+ "/1", "bonus_text");
+		GUILayoutBox(scoreManager.bSecretItemBonus ? "star_on" : "star_off", 64);
+		GUILayout.EndVertical();
+		
+		GUILayout.EndHorizontal();
+		GUILayout.EndArea();
+		
+		GUI.matrix = svMat; //restore matrix		
 		
 		//buttons
-		GUI.BeginGroup(new Rect(Screen.width/2-buttonSize-buttonSize/2-marginButton,Screen.height-buttonSize-marginButton,buttonSize*3+marginButton*2,buttonSize));
+		GUI.BeginGroup(new Rect(Screen.width/2-buttonSize-buttonSize/2-marginButton,Screen.height-buttonSize-20,buttonSize*3+marginButton*2,buttonSize));
 		
 		if(GUI.Button(new Rect(0, 0, buttonSize, buttonSize), "", "reset"))
 			gameManager.SendMessage("ResetLevel");
@@ -177,6 +192,17 @@ public class GUIManager : MonoBehaviour
 			gameManager.SendMessage("LoadNextLevel");
 		
 		GUI.EndGroup();
+	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	void GUILayoutBox(string item, int size)
+	{
+		GUILayout.BeginHorizontal();
+		GUILayout.FlexibleSpace();
+		GUILayout.Box("", item, GUILayout.Width(size), GUILayout.Height(size));
+		GUILayout.FlexibleSpace();
+		GUILayout.EndHorizontal();
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -229,7 +255,6 @@ public class GUIManager : MonoBehaviour
 		{
 			bAudioFxOld = bAudioFx;
 			PlayerPrefs.SetInt("musicFx", bAudioFx ? 1 : 0);
-			
 			gameManager.SendMessage("SetAudioFx", bAudioFx);
 		}
 	}

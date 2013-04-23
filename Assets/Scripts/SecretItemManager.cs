@@ -6,12 +6,14 @@ public class SecretItemManager : MonoBehaviour
 {
 	bool bFound = false;
 	GameObject gameManagerObj;
+	GUIManager guiManager;
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////
 	
 	void Awake()
 	{
 		gameManagerObj = GameObject.Find("_GAMEMANAGER");
+		guiManager = gameManagerObj.GetComponent<GUIManager>();
 	}
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////
@@ -20,7 +22,7 @@ public class SecretItemManager : MonoBehaviour
 	{
 		if(collider.name.Contains("PLAYER"))
 		{
-			if(audio)
+			if(audio && guiManager.bAudioFx)
 				audio.Play();
 			
 			bFound = true;
