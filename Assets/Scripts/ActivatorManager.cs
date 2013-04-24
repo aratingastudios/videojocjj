@@ -5,10 +5,9 @@ using System.Collections;
 public class ActivatorManager : MonoBehaviour
 {
 	public Transform[] targets;
-	public Vector2 targetPos;
 	
+	Vector3 targetPos;
 	string state = "idle";
-	Vector3 targetPosition;
 	float smoothTime = 0.3f;
 	Vector3 velocity = Vector3.zero;
 	
@@ -29,6 +28,8 @@ public class ActivatorManager : MonoBehaviour
 		
 		targetCameraObj = GameObject.Find("TargetCamera");
 		targetCameraManager = targetCameraObj.GetComponent<TargetCameraManager>();
+		
+		targetPos = new Vector3(transform.position.x, transform.position.y-0.5f, transform.position.z);
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -37,10 +38,9 @@ public class ActivatorManager : MonoBehaviour
 	{
 		if(state == "move")
 		{
-			Vector3 newPos = new Vector3(targetPos.x, targetPos.y, transform.position.z);
-			transform.position = Vector3.SmoothDamp(transform.position, newPos, ref velocity, smoothTime);
+			transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, smoothTime);
 			
-			if(Vector3.Distance(transform.position, newPos) < 0.01f)
+			if(Vector3.Distance(transform.position, targetPos) < 0.01f)
 				state="activate";
 		}
 		
