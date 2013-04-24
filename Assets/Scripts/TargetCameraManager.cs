@@ -6,12 +6,13 @@ public class TargetCameraManager : MonoBehaviour
 	Transform[] m_players;
 	Transform m_target;
 	Transform m_current;
+	
 	Vector3 m_activatorPos;
+	Vector3 m_initialPos;
 
 	public bool m_check_bounds;
 	public bool m_change_player;
 	public int m_iPlayer;
-	public float speed;
 	
 	public float minX;
 	public float maxX;
@@ -27,7 +28,8 @@ public class TargetCameraManager : MonoBehaviour
 	
 	float smoothTime = 0.3F;
 	Vector3 velocity = Vector3.zero;
-	public float smoothTimeDamp = 1.0f;
+	float smoothTimeDamp = 1.0f;
+	public float speed = 1.0f;
 	
 	float ratio_16_9 = 16.0f/9.0f;
 	float ratio_4_3  = 4.0f/3.0f;
@@ -84,26 +86,49 @@ public class TargetCameraManager : MonoBehaviour
 			if(bChangePos)
 				ChangeActivePlayer();
 		}
+		//Calculamos el tiempo de desplazamiento sabiendo que queremos velocidad constante
+		else if(state=="calculate_time")
+		{
+			m_initialPos = transform.position;
+			dist = Vector3.Distance(transform.position, m_activatorPos);
+			smoothTimeDamp = dist / speed;
+			state="view_activator";
+		}
+		//Movemos la cámara hacia la plataforma que se está moviendo
 		else if(state=="view_activator")
 		{
 			Vector3 newPos = new Vector3(m_activatorPos.x, m_activatorPos.y, transform.position.z);
 			transform.position = Vector3.SmoothDamp(transform.position, newPos, ref velocity, smoothTimeDamp);
-			
-			dist = Vector3.Distance(transform.position, m_activatorPos);
 			currentTime = Time.time-startTime;
 			
+			//Cuando este suficientemente cerca ya no hace falta acercarse mas
 			if(dist < 8.0f)
 			{
 				state="viewing";
 				startTime=Time.time;
 			}
+			//Si tarda demasiado en llegar (por culpa de max,min) hacemos que vuelva
 			else if(currentTime > 4.0f)
-				state="idle";
+			{
+				state="return";
+				startTime=Time.time;
+			}
 		}
+		//Esperamos un tiempo antes de hacer volver la cámara a su sitio
 		else if(state=="viewing")
 		{
 			currentTime = Time.time-startTime;
 			if(currentTime > 1.5f)
+				state="return";
+		}
+		//Hacemos que la cámara vuelva al punto de partida
+		else if(state=="return")
+		{
+			Vector3 newPos = new Vector3(m_initialPos.x, m_initialPos.y, transform.position.z);
+			transform.position = Vector3.SmoothDamp(transform.position, newPos, ref velocity, smoothTimeDamp);
+			currentTime = Time.time-startTime;
+			
+			if(dist < 1.0f || currentTime > 4.0f)
 				state="idle";
 		}
 		
@@ -170,7 +195,7 @@ public class TargetCameraManager : MonoBehaviour
 	//para que el jugador pueda ver lo que está ocurriendo
 	void LookAtActivator(Vector3 targetPos)
 	{
-		state="view_activator";
+		state="calculate_time";
 		m_activatorPos=targetPos;
 		startTime=Time.time;
 	}
