@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 65062e1f09d9af54aa2795dcfe4a50e2
+guid: 250df810c5225174db08e7623feaf6c3
 ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
@@ -7,8 +7,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: Icono_Monolito_01
-    6400000: //RootNode
+    4300000: Sotaterra_01
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -28,7 +27,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 1
+    addColliders: 0
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
