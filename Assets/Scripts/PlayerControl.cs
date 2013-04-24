@@ -12,8 +12,8 @@ public class PlayerControl : MonoBehaviour
 	
 	public bool isActive;
 	public GUISkin m_skin;
-	
 	public AudioClip[] sounds;
+	public bool bConcept = false;
 	
     Vector3 moveDirection = Vector3.zero;
 	
@@ -42,8 +42,6 @@ public class PlayerControl : MonoBehaviour
 	Vector3 activeGlobalPlatformPoint;
 	
 	Material mat_child;
-	
-	public bool bConcept = false;
 	
 	Ray ray;
 	RaycastHit hit;
