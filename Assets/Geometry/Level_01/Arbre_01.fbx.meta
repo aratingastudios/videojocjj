@@ -5,8 +5,10 @@ ModelImporter:
   fileIDToRecycleName:
     100000: //RootNode
     100002: Arbre_01
+    100004: G_Level_01
     400000: //RootNode
     400002: Arbre_01
+    400004: G_Level_01
     2300000: //RootNode
     2300002: Arbre_01
     3300000: //RootNode

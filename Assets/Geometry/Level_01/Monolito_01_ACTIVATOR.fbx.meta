@@ -1,23 +1,21 @@
 fileFormatVersion: 2
-guid: 246fee64148ba804f8f7d9d115b60cde
+guid: 65062e1f09d9af54aa2795dcfe4a50e2
 ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
-    100000: Muntanya_02
-    100002: //RootNode
-    100004: Muntanya_017
-    100006: G_Level_4
-    400000: Muntanya_02
-    400002: //RootNode
-    400004: Muntanya_017
-    400006: G_Level_4
-    2300000: Muntanya_02
-    2300002: Muntanya_017
-    3300000: Muntanya_02
-    3300002: Muntanya_017
-    4300000: Muntanya_02
-    4300002: Muntanya_017
-    6400000: Muntanya_017
+    100000: //RootNode
+    100002: G_Level_01
+    100004: Icono_Monolito_01
+    400000: //RootNode
+    400002: G_Level_01
+    400004: Icono_Monolito_01
+    2300000: //RootNode
+    2300002: Icono_Monolito_01
+    3300000: //RootNode
+    3300002: Icono_Monolito_01
+    4300000: Icono_Monolito_01
+    6400000: //RootNode
+    6400002: Icono_Monolito_01
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -37,7 +35,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
