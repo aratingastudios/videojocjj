@@ -8,7 +8,7 @@ Shader "Joel/DiffuseAlpha"
  
     Category
     {
-        ZWrite Off
+        ZWrite On
         Cull Back
         Fog { Mode Off }
         Blend SrcAlpha OneMinusSrcAlpha
