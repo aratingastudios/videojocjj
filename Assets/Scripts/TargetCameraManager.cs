@@ -25,8 +25,9 @@ public class TargetCameraManager : MonoBehaviour
 	bool bChangePos=false;
 	Vector3 newPos;
 	
-	float smoothTime  = 0.3F;
-	Vector3 velocity  = Vector3.zero;
+	float smoothTime = 0.3F;
+	Vector3 velocity = Vector3.zero;
+	public float smoothTimeDamp = 1.0f;
 	
 	float ratio_16_9 = 16.0f/9.0f;
 	float ratio_4_3  = 4.0f/3.0f;
@@ -86,7 +87,7 @@ public class TargetCameraManager : MonoBehaviour
 		else if(state=="view_activator")
 		{
 			Vector3 newPos = new Vector3(m_activatorPos.x, m_activatorPos.y, transform.position.z);
-			transform.position = Vector3.SmoothDamp(transform.position, newPos, ref velocity, smoothTime);
+			transform.position = Vector3.SmoothDamp(transform.position, newPos, ref velocity, smoothTimeDamp);
 			
 			dist = Vector3.Distance(transform.position, m_activatorPos);
 			currentTime = Time.time-startTime;
