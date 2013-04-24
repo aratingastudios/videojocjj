@@ -5,6 +5,8 @@ using System.Collections;
 public class ActivatorManager : MonoBehaviour
 {
 	public Transform[] targets;
+	public Vector3 targetPos;
+	
 	string state = "idle";
 	Vector3 targetPosition;
 	float smoothTime = 0.3f;
@@ -17,7 +19,6 @@ public class ActivatorManager : MonoBehaviour
 	
 	void Awake()
 	{
-		targetPosition = new Vector3(transform.position.x, transform.position.y-0.3f, transform.position.z);
 		gameManagerObj = GameObject.Find("_GAMEMANAGER");
 		guiManager = gameManagerObj.GetComponent<GUIManager>();
 	}
@@ -28,8 +29,8 @@ public class ActivatorManager : MonoBehaviour
 	{
 		if(state == "move")
 		{
-			transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
-			if(Vector3.Distance(transform.position, targetPosition) < 0.1f)
+			transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, smoothTime);
+			if(Vector3.Distance(transform.position, targetPos) < 0.01f)
 				state="activate";
 		}
 		
