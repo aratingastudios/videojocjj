@@ -176,10 +176,13 @@ public class PlayerControl : MonoBehaviour
 			}
 			
 			//Colocamos los 2 personajes en distintos carriles para que no choquen
-			if(isActive)
-				transform.position = new Vector3(transform.position.x, transform.position.y, -1.0f);
-			else
-				transform.position = new Vector3(transform.position.x, transform.position.y, 1.0f);
+			if(!bGoalReached)
+			{
+				if(isActive)
+					transform.position = new Vector3(transform.position.x, transform.position.y, -1.0f);
+				else
+					transform.position = new Vector3(transform.position.x, transform.position.y, 1.0f);
+			}
 		}
 	}
 	
@@ -244,7 +247,6 @@ public class PlayerControl : MonoBehaviour
 	{	
 		if(collider.name=="Goal")
 		{
-			Debug.Log("end");
 			bGoalReached=true;
 			transform.position = new Vector3(transform.position.x, transform.position.y, 1.0f);
 			gameManagerObj.SendMessage("GoalReached", id);
