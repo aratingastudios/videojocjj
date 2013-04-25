@@ -173,10 +173,11 @@ public class PlayerControl : MonoBehaviour
 				activeLocalPlatformPoint = activePlatform.InverseTransformPoint(transform.position);
 			}
 			
+			//Colocamos los 2 personajes en distintos carriles para que no choquen
 			if(isActive)
-				transform.position = new Vector3(transform.position.x, transform.position.y, -0.7f);
+				transform.position = new Vector3(transform.position.x, transform.position.y, -1.0f);
 			else
-				transform.position = new Vector3(transform.position.x, transform.position.y, 0.7f);
+				transform.position = new Vector3(transform.position.x, transform.position.y, 1.0f);
 		}
 	}
 	
@@ -230,11 +231,12 @@ public class PlayerControl : MonoBehaviour
 			else
 				mat_child.color = Color.grey;
 		}
-		
+		/*
 		if(isActive)
 			transform.position = new Vector3(transform.position.x, transform.position.y, -0.7f);
 		else
 			transform.position = new Vector3(transform.position.x, transform.position.y, 0.7f);
+		*/
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
