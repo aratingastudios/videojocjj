@@ -23,6 +23,7 @@ ModelImporter:
     4300002: Monster_01_Body
     4300004: Monster_01_Eye
     4300006: Monster_01_Arm
+    4300008: Character_Test
     9500000: //RootNode
   materials:
     importMaterials: 1
