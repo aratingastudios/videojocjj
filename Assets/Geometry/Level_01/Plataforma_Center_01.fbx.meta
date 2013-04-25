@@ -1,13 +1,17 @@
 fileFormatVersion: 2
-guid: 419945924fa6ad1418bf3b17fd6b10b2
+guid: af17f438bba597d49a068fbc92313569
 ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Buvols_01
+    100000: Plataforma_Center_01
+    100002: //RootNode
+    400000: Plataforma_Center_01
+    400002: //RootNode
+    2300000: Plataforma_Center_01
+    2300002: //RootNode
+    3300000: Plataforma_Center_01
+    3300002: //RootNode
+    4300000: Plataforma_Center_01
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -25,7 +29,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: .00999999978
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
