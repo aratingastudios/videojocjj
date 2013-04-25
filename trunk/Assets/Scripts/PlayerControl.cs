@@ -156,7 +156,12 @@ public class PlayerControl : MonoBehaviour
 			//	transform.forward = Vector3.Normalize(new Vector3(0.0f, 0.0f, -1.0f));
 	
 	        if(controller.isGrounded)
+			{
 				moveDirection = new Vector3(horiz*speed, vert*jumpSpeed*speed, 0.0f);
+				
+				if(!CheckEdge())
+					moveDirection = transform.forward * speed;
+			}
 			else
 				moveDirection.x = horiz*speed;
 			
@@ -184,6 +189,14 @@ public class PlayerControl : MonoBehaviour
 					transform.position = new Vector3(transform.position.x, transform.position.y, 1.0f);
 			}
 		}
+	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	bool CheckEdge()
+	{
+		bool b = Physics.Raycast(transform.position, Vector3.down, 0.1f);
+		return b;
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
