@@ -27,9 +27,8 @@ public class TargetCameraManager : MonoBehaviour
 	Vector3 newPos;
 	
 	float smoothTime = 0.3F;
+	float smoothTimeView = 1.0f;
 	Vector3 velocity = Vector3.zero;
-	float smoothTimeDamp = 1.0f;
-	public float speed = 1.0f;
 	
 	float ratio_16_9 = 16.0f/9.0f;
 	float ratio_4_3  = 4.0f/3.0f;
@@ -86,49 +85,30 @@ public class TargetCameraManager : MonoBehaviour
 			if(bChangePos)
 				ChangeActivePlayer();
 		}
-		//Calculamos el tiempo de desplazamiento sabiendo que queremos velocidad constante
-		else if(state=="calculate_time")
-		{
-			m_initialPos = transform.position;
-			dist = Vector3.Distance(transform.position, m_activatorPos);
-			smoothTimeDamp = dist / speed;
-			state="view_activator";
-		}
 		//Movemos la cámara hacia la plataforma que se está moviendo
 		else if(state=="view_activator")
 		{
 			Vector3 newPos = new Vector3(m_activatorPos.x, m_activatorPos.y, transform.position.z);
-			transform.position = Vector3.SmoothDamp(transform.position, newPos, ref velocity, smoothTimeDamp);
+			transform.position = Vector3.SmoothDamp(transform.position, newPos, ref velocity, smoothTimeView);
 			currentTime = Time.time-startTime;
+			dist = Vector3.Distance(transform.position, newPos);
 			
 			//Cuando este suficientemente cerca ya no hace falta acercarse mas
-			if(dist < 8.0f)
+			if(dist < 10.0f)
 			{
 				state="viewing";
 				startTime=Time.time;
 			}
 			//Si tarda demasiado en llegar (por culpa de max,min) hacemos que vuelva
 			else if(currentTime > 4.0f)
-			{
-				state="return";
-				startTime=Time.time;
-			}
+				state="idle";
+				
 		}
 		//Esperamos un tiempo antes de hacer volver la cámara a su sitio
 		else if(state=="viewing")
 		{
 			currentTime = Time.time-startTime;
 			if(currentTime > 1.5f)
-				state="return";
-		}
-		//Hacemos que la cámara vuelva al punto de partida
-		else if(state=="return")
-		{
-			Vector3 newPos = new Vector3(m_initialPos.x, m_initialPos.y, transform.position.z);
-			transform.position = Vector3.SmoothDamp(transform.position, newPos, ref velocity, smoothTimeDamp);
-			currentTime = Time.time-startTime;
-			
-			if(dist < 1.0f || currentTime > 4.0f)
 				state="idle";
 		}
 		
@@ -147,23 +127,9 @@ public class TargetCameraManager : MonoBehaviour
 		if(m_check_bounds)
 			CheckBounds();
 	}
-	
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-	void ChangePlayer()
-	{
-		m_change_player=true;
-	}
-	
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-	void SetPlayerActive(int id)
-	{
-		m_iPlayer = id;
-	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
+	//Move camera to next player
 	void ChangeActivePlayer()
 	{	
 		if(m_target!=null)
@@ -180,10 +146,9 @@ public class TargetCameraManager : MonoBehaviour
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+	//Check level bounds
 	void CheckBounds()
 	{
-		//Check level bounds
 		float newX = Mathf.Clamp(transform.position.x, minX, maxX);
 		float newY = Mathf.Clamp(transform.position.y, minY, maxY);
 		
@@ -191,11 +156,27 @@ public class TargetCameraManager : MonoBehaviour
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//Message from GameManager
+	void ChangePlayer()
+	{
+		m_change_player=true;
+	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//Message from GameManager
+	void SetPlayerActive(int id)
+	{
+		m_iPlayer = id;
+	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//Cuando se pulsa un activador la cámara se mueve hasta el control que se ha activado
 	//para que el jugador pueda ver lo que está ocurriendo
+	
+	//Message from ActivatorManager
 	void LookAtActivator(Vector3 targetPos)
 	{
-		state="calculate_time";
+		state="view_activator";
 		m_activatorPos=targetPos;
 		startTime=Time.time;
 	}

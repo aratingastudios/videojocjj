@@ -15,6 +15,8 @@ public class PlayerControl : MonoBehaviour
 	public AudioClip[] sounds;
 	public bool bConcept = false;
 	
+	bool bGoalReached=false;
+	
     Vector3 moveDirection = Vector3.zero;
 	
 	float horiz=0.0f;
@@ -108,7 +110,7 @@ public class PlayerControl : MonoBehaviour
 			activePlatform = null;	
 			CheckMovingPlatforms();
 			
-			if(isActive)
+			if(isActive && !bGoalReached)
 			{	
 				//Mobile controls
 				if(Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer)
@@ -216,27 +218,24 @@ public class PlayerControl : MonoBehaviour
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
+	//Message from GameManager
 	void SetActivePlayer(SetActiveOptions options)
 	{
-		isActive = options.bSetActive;
-		
-		if(!bConcept)
+		if(!bGoalReached)
 		{
-			if(options.bPlayAudio)
-				PlaySound(2);
-		
-			if(isActive)
-				mat_child.color = Color.white;
-			else
-				mat_child.color = Color.grey;
+			isActive = options.bSetActive;
+			
+			if(!bConcept)
+			{
+				if(options.bPlayAudio)
+					PlaySound(2);
+			
+				if(isActive)
+					mat_child.color = Color.white;
+				else
+					mat_child.color = Color.grey;
+			}
 		}
-		/*
-		if(isActive)
-			transform.position = new Vector3(transform.position.x, transform.position.y, -0.7f);
-		else
-			transform.position = new Vector3(transform.position.x, transform.position.y, 0.7f);
-		*/
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -245,17 +244,10 @@ public class PlayerControl : MonoBehaviour
 	{	
 		if(collider.name=="Goal")
 		{
-			gameManagerObj.SendMessage("goalReached", id);
-		}
-	}
-	
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-	void OnTriggerExit(Collider collider)
-	{	
-		if(collider.name=="Goal")
-		{
-			gameManagerObj.SendMessage("goalLeft", id);
+			Debug.Log("end");
+			bGoalReached=true;
+			transform.position = new Vector3(transform.position.x, transform.position.y, 1.0f);
+			gameManagerObj.SendMessage("GoalReached", id);
 		}
 	}
 	
@@ -298,16 +290,3 @@ public class PlayerControl : MonoBehaviour
 }
 	
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
