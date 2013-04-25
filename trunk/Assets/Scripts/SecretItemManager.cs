@@ -7,6 +7,7 @@ public class SecretItemManager : MonoBehaviour
 	bool bFound = false;
 	GameObject gameManagerObj;
 	GUIManager guiManager;
+	ScoreManager scoreManager;
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -14,6 +15,7 @@ public class SecretItemManager : MonoBehaviour
 	{
 		gameManagerObj = GameObject.Find("_GAMEMANAGER");
 		guiManager = gameManagerObj.GetComponent<GUIManager>();
+		scoreManager = gameManagerObj.GetComponent<ScoreManager>();
 	}
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////
@@ -35,7 +37,7 @@ public class SecretItemManager : MonoBehaviour
 	{
 		if(bFound && !audio.isPlaying)
 		{
-			gameManagerObj.SendMessage("SecretItemReached_M");
+			scoreManager.SendMessage("SecretItemReached");
 			Destroy(gameObject);
 		}
 	}

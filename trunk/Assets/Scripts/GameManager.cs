@@ -106,7 +106,7 @@ public class GameManager : MonoBehaviour
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
+	//Message from GUIManager
 	void SetAudioFx(bool bPlay)
 	{
 		if(audio && audio.isPlaying && !bPlay)
@@ -117,7 +117,7 @@ public class GameManager : MonoBehaviour
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
+	//Message from GUIManager
 	void ResetLevel()
 	{
 		PlayerPrefs.SetString("next_level", Application.loadedLevelName);
@@ -125,61 +125,42 @@ public class GameManager : MonoBehaviour
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
+	//Message from GUIManager
 	void ChangePlayer()
 	{
-		iPlayerActive++;
-		iPlayerActive=iPlayerActive%2;
-		
-		targetCameraManager.SendMessage("SetPlayerActive", iPlayerActive);
-		targetCameraManager.SendMessage("ChangePlayer");
-		
-		if(scoreManager!=null)
-			scoreManager.SendMessage("PlayerChanged");
-		
-		m_players[0].SendMessage("SetActivePlayer", new SetActiveOptions(iPlayerActive==0, true));
-		m_players[1].SendMessage("SetActivePlayer", new SetActiveOptions(iPlayerActive==1, true));
+		if(!bGoalsReached[(iPlayerActive+1)%2])
+		{
+			iPlayerActive=(iPlayerActive+1)%2;
+			
+			targetCameraManager.SendMessage("SetPlayerActive", iPlayerActive);
+			targetCameraManager.SendMessage("ChangePlayer");
+			
+			if(scoreManager!=null)
+				scoreManager.SendMessage("PlayerChanged");
+			
+			m_players[0].SendMessage("SetActivePlayer", new SetActiveOptions(iPlayerActive==0, true));
+			m_players[1].SendMessage("SetActivePlayer", new SetActiveOptions(iPlayerActive==1, true));
+		}
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-	void goalReached(int id)
+	//Message from PlayerControl
+	void GoalReached(int id)
 	{
 		bGoalsReached[id] = true;
 		
 		//Level completed
 		if(bGoalsReached[0] && bGoalsReached[1])
 		{
-			DoLevelCompleted();
+			guiManager.SendMessage("LevelCompleted");
+			
+			if(scoreManager!=null)
+				scoreManager.SendMessage("CheckBonus", m_level);
 		}
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-	void DoLevelCompleted()
-	{
-		guiManager.SendMessage("LevelCompleted");
-			
-		if(scoreManager!=null)
-			scoreManager.SendMessage("CheckBonus", m_level);
-	}
-	
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-	void goalLeft(int id)
-	{
-		bGoalsReached[id] = false;
-	}
-	
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-	void SecretItemReached_M()
-	{
-		scoreManager.SendMessage("SecretItemReached");
-	}
-	
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
+	//Message from GUIManager
 	void LoadNextLevel()
 	{
 		m_level+=1;
