@@ -75,7 +75,7 @@ public class PlayerControl : MonoBehaviour
 		
 		if(guiManager.gui_state == "in_game")
 		{
-			if(isActive)
+			if(isActive && !bGoalReached)
 			{
 				GUI.Box(touchLeft, "", "arrow_left");
 				GUI.Box(touchRight, "", "arrow_right");
@@ -159,7 +159,7 @@ public class PlayerControl : MonoBehaviour
 			{
 				moveDirection = new Vector3(horiz*speed, vert*jumpSpeed*speed, 0.0f);
 				
-				if(!CheckEdge())
+				if(CheckEdge())
 					moveDirection = transform.forward * speed;
 			}
 			else
@@ -192,11 +192,16 @@ public class PlayerControl : MonoBehaviour
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
+	//Check if player is in the edge of a moving or static platform
 	bool CheckEdge()
 	{
-		bool b = Physics.Raycast(transform.position, Vector3.down, 0.1f);
-		return b;
+		if(activePlatform == null) //avoid problems with moving platforms
+		{
+			bool b = Physics.Raycast(transform.position, Vector3.down, 0.1f);
+			return !b;
+		}
+		else
+			return false;
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -289,7 +294,7 @@ public class PlayerControl : MonoBehaviour
 		if(hit.gameObject.name.Contains("Elevator") && hit.moveDirection.y < -0.9 && hit.normal.y > 0.5)
 			activePlatform = hit.collider.transform;    
 		*/
-		
+			
 		//Comprobar choques por arriba
 		if(hit.moveDirection.y > 0.9 && hit.normal.y < 0.5)
 			if(moveDirection.y > 0.0f)
