@@ -8,6 +8,6 @@
   <extra>maya 2013 x64</extra>
   <extra>Usuario</extra>
   <Channels>
-    <channel0 ChannelName="Columna_Movil_0Shape1" ChannelType="FloatVectorArray" ChannelInterpretation="positions" SamplingType="Regular" SamplingRate="1250" StartTime="250" EndTime="24000"/>
+    <channel0 ChannelName="Columna_Movil_01_EyesShape" ChannelType="FloatVectorArray" ChannelInterpretation="positions" SamplingType="Regular" SamplingRate="1250" StartTime="250" EndTime="24000"/>
   </Channels>
 </Autodesk_Cache_File>
