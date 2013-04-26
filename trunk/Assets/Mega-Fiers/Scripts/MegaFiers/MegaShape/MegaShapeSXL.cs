@@ -164,7 +164,7 @@ public class MegaShapeSXL
 
 		//shape.Centre(0.01f, new Vector3(-1.0f, 1.0f, 1.0f));
 		shape.Centre(scale, new Vector3(1.0f, 1.0f, 1.0f), start);
-		shape.CalcLength(10);
+		shape.CalcLength();	//10);
 	}
 
 }

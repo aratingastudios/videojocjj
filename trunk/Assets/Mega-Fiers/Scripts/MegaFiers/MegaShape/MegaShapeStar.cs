@@ -118,7 +118,7 @@ public class MegaShapeStar : MegaShape
 		}
 
 		spline.closed = true;
-		CalcLength(10);
+		CalcLength();	//10);
 		//stepdist = spline.length / 80.0f;
 	}
 }

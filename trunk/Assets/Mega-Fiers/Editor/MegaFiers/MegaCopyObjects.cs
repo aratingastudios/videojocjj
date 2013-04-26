@@ -7,6 +7,13 @@ using System.IO;
 #if !UNITY_FLASH
 public class MegaCopyObjects : MonoBehaviour
 {
+	[MenuItem("GameObject/Mega Instance Object")]
+	static void InstanceModifiedMesh()
+	{
+		GameObject from = Selection.activeGameObject;
+		MegaCopyObject.InstanceObject(from);
+	}
+
 	[MenuItem("GameObject/Mega Copy Object")]
 	static void DoCopyObjects()
 	{

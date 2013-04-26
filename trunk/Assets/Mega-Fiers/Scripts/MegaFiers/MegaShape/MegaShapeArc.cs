@@ -50,7 +50,7 @@ public class MegaShapeArc : MegaShape
 			spline.closed = true;
 		}
 
-		CalcLength(10);
+		CalcLength();	//10);
 		//if ( reverse )
 			//spline->Reverse(TRUE);
 	}

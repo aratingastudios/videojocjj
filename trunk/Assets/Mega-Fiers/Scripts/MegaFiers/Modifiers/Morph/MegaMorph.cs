@@ -10,6 +10,7 @@ using System.Collections.Generic;
 public class MegaMorphBase : MegaModifier
 {
 	public List<MegaMorphChan>	chanBank;
+	public MegaMorphAnimType animtype = MegaMorphAnimType.Bezier;
 
 	public override void PostCopy(MegaModifier src)
 	{
@@ -93,18 +94,41 @@ public class MegaMorphBase : MegaModifier
 
 	public void SetAnim(float t)
 	{
-		for ( int i = 0; i < chanBank.Count; i++ )
+		if ( animtype == MegaMorphAnimType.Bezier )
 		{
-			if ( chanBank[i].control != null )
+			for ( int i = 0; i < chanBank.Count; i++ )
 			{
-				if ( chanBank[i].control.Times != null )
+				if ( chanBank[i].control != null )
 				{
-					if ( chanBank[i].control.Times.Length > 0 )
-						chanBank[i].Percent = chanBank[i].control.GetFloat(t);	//, 0.0f, 100.0f);
+					if ( chanBank[i].control.Times != null )
+					{
+						if ( chanBank[i].control.Times.Length > 0 )
+							chanBank[i].Percent = chanBank[i].control.GetFloat(t);	//, 0.0f, 100.0f);
+					}
+				}
+			}
+		}
+		else
+		{
+			for ( int i = 0; i < chanBank.Count; i++ )
+			{
+				if ( chanBank[i].control != null )
+				{
+					if ( chanBank[i].control.Times != null )
+					{
+						if ( chanBank[i].control.Times.Length > 0 )
+							chanBank[i].Percent = chanBank[i].control.GetHermiteFloat(t);	//, 0.0f, 100.0f);
+					}
 				}
 			}
 		}
 	}
+}
+
+public enum MegaMorphAnimType
+{
+	Bezier,
+	Hermite,
 }
 
 [AddComponentMenu("Modifiers/Morph")]
@@ -357,16 +381,32 @@ public class MegaMorph : MegaMorphBase
 		bool firstchan = true;
 		bool morphed = false;
 
+		float min = 0.0f;
+		float max = 100.0f;
+
+		if ( UseLimit )
+		{
+			min = Min;
+			max = Max;
+		}
+
 		for ( int i = 0; i < chanBank.Count; i++ )
 		{
 			MegaMorphChan chan = chanBank[i];
 			chan.UpdatePercent();
 
 			//fChannelPercent = Mathf.Clamp(chan.Percent, 0.0f, 100.0f);
-			if ( chan.mUseLimit )
-				fChannelPercent = Mathf.Clamp(chan.Percent, chan.mSpinmin, chan.mSpinmax);
+			if ( UseLimit )
+			{
+				fChannelPercent = Mathf.Clamp(chan.Percent, min, max);	//chan.mSpinmin, chan.mSpinmax);
+			}
 			else
-				fChannelPercent = Mathf.Clamp(chan.Percent, 0.0f, 100.0f);
+			{
+				if ( chan.mUseLimit )
+					fChannelPercent = Mathf.Clamp(chan.Percent, chan.mSpinmin, chan.mSpinmax);
+				else
+					fChannelPercent = Mathf.Clamp(chan.Percent, 0.0f, 100.0f);
+			}
 
 			//if ( fChannelPercent > 0.0f )
 			if ( fChannelPercent != 0.0f || (fChannelPercent == 0.0f && chan.fChannelPercent != 0.0f) )

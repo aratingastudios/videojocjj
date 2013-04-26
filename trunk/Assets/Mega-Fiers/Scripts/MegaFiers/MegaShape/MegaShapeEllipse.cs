@@ -31,7 +31,7 @@ public class MegaShapeEllipse : MegaShape
 		}
 
 		spline.closed = true;
-		CalcLength(10);
+		CalcLength();	//10);
 	}
 
 	public override void MakeShape()
@@ -62,6 +62,6 @@ public class MegaShapeEllipse : MegaShape
 		}
 
 		MakeCircle(radius / 2.0f, xmult, ymult);
-		CalcLength(10);
+		CalcLength();	//10);
 	}
 }

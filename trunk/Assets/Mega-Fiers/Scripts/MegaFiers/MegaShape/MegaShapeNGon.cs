@@ -80,6 +80,6 @@ public class MegaShapeNGon : MegaShape
 			//spline->ComputeBezPoints();
 		}
 
-		CalcLength(10);
+		CalcLength();	//10);
 	}
 }

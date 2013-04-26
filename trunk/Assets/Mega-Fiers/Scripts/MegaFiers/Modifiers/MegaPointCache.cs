@@ -377,13 +377,15 @@ public class MegaPointCache : MegaModifier
 			return false;
 
 		if ( animated )
+		{
 			time += Time.deltaTime * speed;
 
-		switch ( LoopMode )
-		{
-			case MegaRepeatMode.Loop:		t = Mathf.Repeat(time, maxtime); break;
-			case MegaRepeatMode.PingPong:	t = Mathf.PingPong(time, maxtime); break;
-			case MegaRepeatMode.Clamp:		t = Mathf.Clamp(time, 0.0f, maxtime); break;
+			switch ( LoopMode )
+			{
+				case MegaRepeatMode.Loop:		t = Mathf.Repeat(time, maxtime); break;
+				case MegaRepeatMode.PingPong:	t = Mathf.PingPong(time, maxtime); break;
+				case MegaRepeatMode.Clamp:		t = Mathf.Clamp(time, 0.0f, maxtime); break;
+			}
 		}
 
 		alpha = t / maxtime;

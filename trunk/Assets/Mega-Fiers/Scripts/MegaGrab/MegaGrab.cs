@@ -2,10 +2,9 @@
 // All code copyright Chris West 2011.
 // If you make any improvements please send them back to me at chris@west-racing.com so I can update the package.
 
-#if !UNITY_FLASH
-
 using UnityEngine;
 using System.IO;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -41,6 +40,7 @@ public class MegaGrab : MonoBehaviour
 	public float				EstimatedTime		= 0.0f;				// Guide to show how long a grab will take in Seconds
 	public int					GrabWidthWillBe		= 0;				// Width of final image
 	public int					GrabHeightWillBe	= 0;				// Height of final IMage
+	public bool					UseCoroutine		= false;			// Use coroutine method, needed for later versions of unity
 	float						mleft;
 	float						mright;
 	float						mtop;
@@ -320,18 +320,6 @@ public class MegaGrab : MonoBehaviour
 		return grabtex;
 	}
 
-	IEnumerator GrabCoroutine()
-	{
-		yield return new WaitForEndOfFrame();
-
-		if ( OutputFormat == IMGFormat.Tga )
-			DoGrabTGA();
-		else
-			DoGrabJPG();
-
-		yield return null;
-	}
-
 	void DoGrabTGA()
 	{
 		if ( InitGrab(Screen.width, Screen.height, AASamples) )
@@ -410,11 +398,22 @@ public class MegaGrab : MonoBehaviour
 			if ( Enviro != null && Enviro.Length > 0 )
 				epath = System.Environment.GetEnvironmentVariable(Enviro);
 
-			string fname = epath + Path + SaveName + " " + (width * ResUpscale) + "x" + (height * ResUpscale) + " " + System.DateTime.Now.ToString(Format);
+			//string fname = epath + Path + SaveName + " " + (width * ResUpscale) + "x" + (height * ResUpscale) + " " + System.DateTime.Now.ToString(Format);
 
 			// Save big version
 
-			SaveTGA(fname + ".tga", (width * ResUpscale), (height * ResUpscale), output1);
+			//if ( uploadGrabs )
+			//{
+			//	string fname = SaveName + " " + (width * ResUpscale) + "x" + (height * ResUpscale) + " " + System.DateTime.Now.ToString(Format);
+			//	UploadTGA(fname + ".tga", (width * ResUpscale), (height * ResUpscale), output1);
+			//}
+			//else
+			//{
+				string fname = epath + Path + SaveName + " " + (width * ResUpscale) + "x" + (height * ResUpscale) + " " + System.DateTime.Now.ToString(Format);
+				SaveTGA(fname + ".tga", (width * ResUpscale), (height * ResUpscale), output1);
+			//}
+
+			//SaveTGA(fname + ".tga", (width * ResUpscale), (height * ResUpscale), output1);
 
 			//SrcCamera.camera.worldToCameraMatrix = cameraMat;
 			//SrcCamera.ResetWorldToCameraMatrix();
@@ -500,18 +499,28 @@ public class MegaGrab : MonoBehaviour
 			if ( Enviro != null && Enviro.Length > 0 )
 				epath = System.Environment.GetEnvironmentVariable(Enviro);
 
-			string fname = epath + Path + SaveName + " " + (width * ResUpscale) + "x" + (height * ResUpscale) + " " + System.DateTime.Now.ToString(Format);
+			//string fname = epath + Path + SaveName + " " + (width * ResUpscale) + "x" + (height * ResUpscale) + " " + System.DateTime.Now.ToString(Format);
 
 			// Save big version
 
-			SaveJPG(fname + ".jpg", (width * ResUpscale), (height * ResUpscale), outputjpg);
-
+			if ( uploadGrabs )
+			{
+				string fname = SaveName + " " + (width * ResUpscale) + "x" + (height * ResUpscale) + " " + System.DateTime.Now.ToString(Format);
+				UploadJPG(fname + ".jpg", (width * ResUpscale), (height * ResUpscale), outputjpg);
+			}
+			else
+			{
+				string fname = epath + Path + SaveName + " " + (width * ResUpscale) + "x" + (height * ResUpscale) + " " + System.DateTime.Now.ToString(Format);
+				SaveJPG(fname + ".jpg", (width * ResUpscale), (height * ResUpscale), outputjpg);
+			}
 			//SrcCamera.camera.worldToCameraMatrix = cameraMat;
 			//SrcCamera.ResetWorldToCameraMatrix();
 			SrcCamera.ResetProjectionMatrix();
 			Cleanup();
 		}
 	}
+
+	public bool uploadGrabs = false;
 
 	void SaveJPG(string filename, int width, int height, Color[] pixels)
 	{
@@ -533,6 +542,26 @@ public class MegaGrab : MonoBehaviour
 			fs.Close();
 		}
 	}
+
+	void UploadJPG(string filename, int width, int height, Color[] pixels)
+	{
+		Quality = Mathf.Clamp(Quality, 0.0f, 100.0f);
+		JPGEncoder NewEncoder = new JPGEncoder(pixels, width, height, Quality);
+		NewEncoder.doEncoding();
+		byte[] TexData = NewEncoder.GetBytes();
+
+		UploadFile(TexData, m_URL, filename);
+	}
+
+#if false
+	void UploadTGA(string filename, int width, int height, byte[] pixels)
+	{
+		//byte[] data = new byte[output1.Length * 4];
+		//Buffer.BlockCopy(output1, 0, data, 0, data.Length);
+
+		UploadFile(pixels, m_URL, filename);
+	}
+#endif
 
 	void SaveTGA(string filename, int width, int height, byte[] pixels)
 	{
@@ -559,6 +588,7 @@ public class MegaGrab : MonoBehaviour
 
 				bw.Close();
 			}
+
 			fs.Close();
 		}
 	}
@@ -583,10 +613,25 @@ public class MegaGrab : MonoBehaviour
 		EstimatedTime = NumberOfGrabs * 0.41f;
 	}
 
+	IEnumerator GrabCoroutine()
+	{
+		yield return new WaitForEndOfFrame();
+
+		if ( OutputFormat == IMGFormat.Tga )
+			DoGrabTGA();
+		else
+			DoGrabJPG();
+
+		yield return null;
+	}
+
 	void LateUpdate()
 	{
 		if ( Input.GetKeyDown(GrabKey) )
 		{
+#if UNITY_IPHONE
+			Path = Application.persistentDataPath + "/";
+#endif
 			//StartCoroutine(GrabCoroutine());
 
 			if ( CalcFromSize )
@@ -594,15 +639,22 @@ public class MegaGrab : MonoBehaviour
 
 			CalcEstimate();
 
-			float t = Time.realtimeSinceStartup;
-			//DoGrabTGA();
-			if ( OutputFormat == IMGFormat.Tga )
-				DoGrabTGA();
+			if ( UseCoroutine )
+			{
+				StartCoroutine(GrabCoroutine());
+			}
 			else
-				DoGrabJPG();
+			{
+				float t = Time.realtimeSinceStartup;
+				//DoGrabTGA();
+				if ( OutputFormat == IMGFormat.Tga )
+					DoGrabTGA();
+				else
+					DoGrabJPG();
 
-			float time = Time.realtimeSinceStartup - t;
-			Debug.Log("Took " + time.ToString("0.00000000") + "s");
+				float time = Time.realtimeSinceStartup - t;
+				Debug.Log("Took " + time.ToString("0.00000000") + "s");
+			}
 		}
 	}
 
@@ -613,5 +665,131 @@ public class MegaGrab : MonoBehaviour
 
 		CalcEstimate();
 	}
+
+
+	//using UnityEngine;
+	//using System.Collections;
+ 
+//public class FileUpload : MonoBehaviour
+//{
+	public string m_URL = "http://www.west-racing.com/uploadtest1.php";
+ 
+	IEnumerator UploadFileCo(byte[] data, string uploadURL, string filename)
+	{
+		WWWForm postForm = new WWWForm();
+		// version 1
+		//postForm.AddBinaryData("theFile",localFile.bytes);
+ 
+		Debug.Log("uploading " + filename);
+		// version 2
+		postForm.AddField("action", "Upload Image");
+		postForm.AddBinaryData("theFile", data, filename, "images/jpg");	//text/plain");
+ 
+		Debug.Log("url " + uploadURL);
+		WWW upload = new WWW(uploadURL, postForm);
+		yield return upload;
+		//if ( upload.error == null )
+			Debug.Log("upload done :" + upload.text);
+		//else
+			Debug.Log("Error during upload: " + upload.error);
+	}
+ 
+	void UploadFile(byte[] data, string uploadURL, string filename)
+	{
+		Debug.Log("Start upload");
+		//StartCoroutine(UploadFileCo(data, uploadURL, filename));
+		StartCoroutine(UploadLevel(data, uploadURL, filename));
+		Debug.Log("len " + data.Length);
+	}
+
+	IEnumerator UploadLevel(byte[] data, string uploadURL, string filename)
+	{
+		WWWForm form = new WWWForm();
+
+		form.AddField("action", "level upload");
+		form.AddField("file", "file");
+		form.AddBinaryData("file", data, filename, "images/jpg");
+		Debug.Log("url " + uploadURL);
+
+		WWW w = new WWW(uploadURL, form);
+		yield return w;
+
+		if ( w.error != null )
+		{
+			print("error");
+			print(w.error);
+		}
+		else
+		{
+			if ( w.uploadProgress == 1 && w.isDone )
+			{
+				yield return new WaitForSeconds(5);
+			}
+		}
+	}
+
+#if false
+	    <?
+        if ( isset ($_POST['action']) ) {
+            if($_POST['action'] == "Upload Image") {
+                unset($imagename);
+     
+                if(!isset($_FILES) && isset($HTTP_POST_FILES)) $_FILES = $HTTP_POST_FILES;
+     
+                if(!isset($_FILES['fileUpload'])) $error["image_file"] = "An image was not found.";
+     
+                $imagename = basename($_FILES['fileUpload']['name']);
+     
+                if(empty($imagename)) $error["imagename"] = "The name of the image was not found.";
+     
+                if(empty($error)) {
+                    $newimage = "images/" . $imagename;
+                    //echo $newimage;
+                    $result = @move_uploaded_file($_FILES['fileUpload']['tmp_name'], $newimage);
+                    if ( empty($result) ) $error["result"] = "There was an error moving the uploaded file.";
+                }
+            }
+        } else {
+            echo "no form data found";
+        }
+    ?>
+#endif
 }
+
+// Example php code to take uploaded jog images
+#if false
+// Php Code, upload this to your server
+<?php
+    //check if something its being sent to this script
+    if ($_POST)
+    {
+        //check if theres a field called action in the sent data
+        if ( isset ($_POST['action']) )
+        {
+            //if it indeed theres an field called action. check if its value its level upload
+            if($_POST['action'] === 'level upload')
+            {
+                if(!isset($_FILES) && isset($HTTP_POST_FILES))
+                {
+                    $_FILES = $HTTP_POST_FILES;
+                }
+                   
+                if ($_FILES['file']['error'] === UPLOAD_ERR_OK)
+                {
+                    //check if the file has a name, in this script it has to have a name to be stored, the file name is sent by unity
+                    if ($_FILES['file']['name'] !== "")
+                    {
+                        //this checks the file mime type, to filter the kind of files you want to accept, this script is configured to accept only jpg files
+                        if ($_FILES['file']['type'] === 'images/jpg')
+                        {
+                            $uploadfile =  $_FILES['file']['name'];
+                            $newimage = "images/" . $uploadfile;
+                            move_uploaded_file($_FILES['file']['tmp_name'], $newimage);              
+                        }
+                    }
+                }
+            }
+        }   
+    }
+?>
 #endif

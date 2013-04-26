@@ -545,7 +545,7 @@ public class MegaShapeSVG
 
 		//shape.Centre(0.01f, new Vector3(-1.0f, 1.0f, 1.0f));
 		shape.Centre(scale, new Vector3(-1.0f, 1.0f, 1.0f), start);
-		shape.CalcLength(10);
+		shape.CalcLength();	//10);
 	}
 
 	const float CIRCLE_VECTOR_LENGTH = 0.5517861843f;

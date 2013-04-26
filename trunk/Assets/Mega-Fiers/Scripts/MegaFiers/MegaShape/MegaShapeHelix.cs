@@ -88,7 +88,7 @@ public class MegaShapeHelix : MegaShape
 				spline.AddKnot(p, outvec, invec, tm);
 		}
 
-		CalcLength(10);
+		CalcLength();	//10);
 		//if ( reverse )
 		//spline->Reverse(TRUE);
 	}

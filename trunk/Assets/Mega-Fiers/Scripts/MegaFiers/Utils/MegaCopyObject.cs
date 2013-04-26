@@ -558,5 +558,115 @@ public class MegaCopyObject
 			}
 		}
 	}
+
+	static public GameObject DeepCopy(GameObject subject)
+	{
+		GameObject clone = null;
+		if ( subject )
+		{
+			clone = (GameObject)GameObject.Instantiate(subject);
+
+			SkinnedMeshRenderer[] skinmesh = subject.GetComponentsInChildren<SkinnedMeshRenderer>();
+			SkinnedMeshRenderer[] cskinmesh = clone.GetComponentsInChildren<SkinnedMeshRenderer>();
+
+			int l = skinmesh.Length;
+
+			for ( int i = 0; i < l; i++ )
+			{
+				Mesh mesh = skinmesh[i].sharedMesh;
+				Mesh clonemesh = new Mesh();
+				clonemesh.vertices = mesh.vertices;
+				clonemesh.uv1 = mesh.uv1;
+				clonemesh.uv2 = mesh.uv2;
+				clonemesh.uv = mesh.uv;
+				clonemesh.normals = mesh.normals;
+				clonemesh.tangents = mesh.tangents;
+				clonemesh.colors = mesh.colors;
+
+				clonemesh.subMeshCount = mesh.subMeshCount;
+
+				for ( int s = 0; s < mesh.subMeshCount; s++ )
+					clonemesh.SetTriangles(mesh.GetTriangles(s), s);
+
+				clonemesh.boneWeights = mesh.boneWeights;
+				clonemesh.bindposes = mesh.bindposes;
+				clonemesh.name = mesh.name + "_copy";
+				clonemesh.RecalculateBounds();
+				cskinmesh[i].sharedMesh = clonemesh;
+			}
+
+			MeshFilter[] mfs = subject.GetComponentsInChildren<MeshFilter>();
+			MeshFilter[] clonemfs = clone.GetComponentsInChildren<MeshFilter>();
+
+			MeshCollider[] mcs = clone.GetComponentsInChildren<MeshCollider>();
+			MeshCollider[] clonemcs = clone.GetComponentsInChildren<MeshCollider>();
+
+			for ( int i = 0; i < mfs.Length; i++ )
+			{
+				MeshFilter mf = mfs[i];
+				MeshFilter clonemf = clonemfs[i];
+				Mesh mesh = mf.sharedMesh;
+				Mesh clonemesh = new Mesh();
+				clonemesh.vertices = mesh.vertices;
+				clonemesh.uv1 = mesh.uv1;
+				clonemesh.uv2 = mesh.uv2;
+				clonemesh.uv = mesh.uv;
+				clonemesh.normals = mesh.normals;
+				clonemesh.tangents = mesh.tangents;
+				clonemesh.colors = mesh.colors;
+
+				clonemesh.subMeshCount = mesh.subMeshCount;
+
+				for ( int s = 0; s < mesh.subMeshCount; s++ )
+					clonemesh.SetTriangles(mesh.GetTriangles(s), s);
+
+				clonemesh.boneWeights = mesh.boneWeights;
+				clonemesh.bindposes = mesh.bindposes;
+				clonemesh.name = mesh.name + "_copy";
+				clonemesh.RecalculateBounds();
+				clonemf.sharedMesh = clonemesh;
+
+				for ( int j = 0; j < mcs.Length; j++ )
+				{
+					MeshCollider mc = mcs[j];
+					if ( mc.sharedMesh = mesh )
+						clonemcs[j].sharedMesh = clonemesh;
+				}
+			}
+
+			MegaModifyObject[] modobjs = clone.GetComponentsInChildren<MegaModifyObject>();
+
+			for ( int i = 0; i < modobjs.Length; i++ )
+			{
+				modobjs[i].MeshUpdated();
+			}
+		}
+
+		return clone;
+	}
+
+	static public GameObject InstanceObject(GameObject obj)
+	{
+		GameObject newobj = null;
+		if ( obj )
+		{
+			MeshFilter mf = obj.GetComponent<MeshFilter>();
+			MeshRenderer mr = obj.GetComponent<MeshRenderer>();
+
+			if ( mf )
+			{
+				newobj = new GameObject();
+				newobj.name = obj.name + " MegaInstance";
+
+				MeshRenderer newmr = newobj.AddComponent<MeshRenderer>();
+				MeshFilter newmf = newobj.AddComponent<MeshFilter>();
+
+				newmf.sharedMesh = mf.sharedMesh;
+				newmr.sharedMaterials = mr.sharedMaterials;
+			}
+		}
+
+		return newobj;
+	}
 }
 #endif

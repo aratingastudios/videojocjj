@@ -767,11 +767,69 @@ public class MegaDynamicRipple : MegaModifier
 
 		lpos = transform.worldToLocalMatrix.MultiplyPoint(lpos);
 
-		x = (lpos.x - bbox.min.x) / (bbox.max.x - bbox.min.x);
-		y = (lpos.y - bbox.min.y) / (bbox.max.y - bbox.min.y);
+		x = (lpos.x - bbox.min[xc]) / (bbox.max[xc] - bbox.min[xc]);
+		y = (lpos.y - bbox.min[yc]) / (bbox.max[yc] - bbox.min[yc]);
 
 		int xi = (int)(x * cols);
 		int yi = (int)(y * rows);
+
+		if ( xi < 0 || xi >= cols )
+			return;
+
+		if ( yi < 0 || yi >= rows )
+			return;
+
+		input[(yi * cols) + xi] = force;
+	}
+
+
+
+	public void ForceAt(Vector3 p, float force)
+	{
+		p = transform.worldToLocalMatrix.MultiplyPoint(p);
+
+		BoxCollider bc = (BoxCollider)collider;
+		if ( bc.size.x != 0.0f )
+			p.x /= bc.size.x;
+
+		if ( bc.size.y != 0.0f )
+			p.y /= bc.size.y;
+
+		if ( bc.size.z != 0.0f )
+			p.z /= bc.size.z;
+
+		p.x += 0.5f;
+		p.y += 0.5f;
+		p.z += 0.5f;
+		//Debug.Log("p " + p);
+
+		//float column = (p.x) * (cols - 1);
+		//float row = p.y * (rows - 1);
+
+		float column = 0.0f;
+		float row = 0.0f;
+
+		switch ( axis )
+		{
+			case MegaAxis.X:
+				vertcomponent = 0;
+				column = (p.y) * (cols - 1);
+				row = p.z * (rows - 1);
+				break;
+
+			case MegaAxis.Y:
+				column = (p.x) * (cols - 1);
+				row = p.z * (rows - 1);
+				break;
+
+			case MegaAxis.Z:
+				column = (p.x) * (cols - 1);
+				row = p.y * (rows - 1);
+				break;
+		}
+
+		int xi = (int)column;
+		int yi = (int)row;
 
 		if ( xi < 0 || xi >= cols )
 			return;
@@ -1061,6 +1119,8 @@ public class MegaDynamicRipple : MegaModifier
 		}
 	}
 #endif
+	int xc = 0;
+	int yc = 0;
 
 	void BuildMesh()
 	{
@@ -1068,8 +1128,8 @@ public class MegaDynamicRipple : MegaModifier
 		Vector3 last = Vector3.zero;
 
 		//int vertcomponent = 0;
-		int xc = 0;
-		int yc = 0;
+		xc = 0;
+		yc = 0;
 
 		switch ( axis )
 		{
@@ -1094,13 +1154,13 @@ public class MegaDynamicRipple : MegaModifier
 
 		for ( int i = 0; i < rows; i++ )
 		{
-			pos.y = bbox.min[yc] + ((bbox.max[yc] - bbox.min[yc]) * ((float)i / (float)rows));
+			pos.z = bbox.min[yc] + ((bbox.max[yc] - bbox.min[yc]) * ((float)i / (float)rows));
 
 			for ( int j = 0; j < cols; j++ )
 			{
 				pos.x = bbox.min[xc] + ((bbox.max[xc] - bbox.min[xc]) * ((float)j / (float)cols));
 
-				pos.z = currentBuffer[(i * cols) + j];
+				pos.y = currentBuffer[(i * cols) + j];
 
 				if ( j > 0 )
 					Gizmos.DrawLine(last, pos);
@@ -1115,9 +1175,9 @@ public class MegaDynamicRipple : MegaModifier
 
 			for ( int i = 0; i < rows; i++ )
 			{
-				pos.y = bbox.min[yc] + ((bbox.max[yc] - bbox.min[yc]) * ((float)i / (float)rows));
+				pos.z = bbox.min[yc] + ((bbox.max[yc] - bbox.min[yc]) * ((float)i / (float)rows));
 
-				pos.z = currentBuffer[(i * cols) + j];
+				pos.y = currentBuffer[(i * cols) + j];
 
 				if ( i > 0 )
 					Gizmos.DrawLine(last, pos);
@@ -1142,7 +1202,20 @@ public class MegaDynamicRipple : MegaModifier
 		scl.y = 1.0f - (scl.y - 1.0f);
 		gtm.SetTRS(pos, Quaternion.Euler(gizmoRot), scl);
 
-		Gizmos.matrix = transform.localToWorldMatrix * gtm;
+		Matrix4x4 tm = Matrix4x4.identity;
+
+		switch ( axis )
+		{
+			case MegaAxis.X:
+				MegaMatrix.RotateZ(ref tm, 90.0f * Mathf.Deg2Rad);
+				break;
+
+			case MegaAxis.Z:
+				MegaMatrix.RotateX(ref tm, 90.0f * Mathf.Deg2Rad);
+				break;
+		}
+
+		Gizmos.matrix = transform.localToWorldMatrix * gtm * tm;
 
 		BuildMesh();
 	}

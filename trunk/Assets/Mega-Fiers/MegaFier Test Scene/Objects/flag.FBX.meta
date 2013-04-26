@@ -3,18 +3,18 @@ guid: 89bb187283f9f114397ef830d71a19ed
 ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
-    100000: bayrak_Sphere03
+    100000: bayrak03
     100002: bayrak_Plane03
-    100004: bayrak03
+    100004: bayrak_Sphere03
     100006: //RootNode
-    400000: bayrak_Sphere03
+    400000: bayrak03
     400002: bayrak_Plane03
-    400004: bayrak03
+    400004: bayrak_Sphere03
     400006: //RootNode
-    2300000: bayrak_Sphere03
-    2300002: bayrak_Plane03
-    3300000: bayrak_Sphere03
-    3300002: bayrak_Plane03
+    2300000: bayrak_Plane03
+    2300002: bayrak_Sphere03
+    3300000: bayrak_Plane03
+    3300002: bayrak_Sphere03
     4300000: bayrak_Sphere03
     4300002: bayrak_Plane03
     11100000: //RootNode

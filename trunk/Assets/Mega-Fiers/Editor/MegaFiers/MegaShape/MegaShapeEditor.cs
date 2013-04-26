@@ -21,6 +21,8 @@ public class MegaShapeEditor : Editor
 	static public Vector3 CursorPos = Vector3.zero;
 	static public Vector3 CursorSpline = Vector3.zero;
 	static public Vector3 CursorTangent = Vector3.zero;
+	static public int		CursorKnot = 0;
+	//static public float		CursorPercent = 0.0f;
 
 	public virtual bool Params()	{ return false; }
 
@@ -54,7 +56,7 @@ public class MegaShapeEditor : Editor
 
 			//sp = selected + 1;
 			//Debug.Log("CursorPos " + CursorPos + " CursorKnot " + CursorKnot);
-			float per = CursorPercent * 0.01f;
+			float per = shape.CursorPercent * 0.01f;
 
 			CursorTangent = shape.splines[curve].Interpolate(per + 0.01f, true, ref CursorKnot);	//this.GetPositionOnSpline(i) - p;
 			CursorPos = shape.splines[curve].Interpolate(per, true, ref CursorKnot);	//this.GetPositionOnSpline(i) - p;
@@ -70,7 +72,7 @@ public class MegaShapeEditor : Editor
 			knot.outvec += knot.p;
 
 			shape.splines[curve].knots.Insert(CursorKnot + 1, knot);
-			shape.CalcLength(10);
+			shape.CalcLength();	//10);
 			EditorUtility.SetDirty(target);
 			buildmesh = true;
 		}
@@ -82,7 +84,7 @@ public class MegaShapeEditor : Editor
 				//Undo.RegisterUndo(target, "Delete Knot");
 				shape.splines[curve].knots.RemoveAt(selected);
 				selected--;
-				shape.CalcLength(10);
+				shape.CalcLength();	//10);
 			}
 			EditorUtility.SetDirty(target);
 			buildmesh = true;
@@ -100,7 +102,7 @@ public class MegaShapeEditor : Editor
 				Vector3 p = shape.splines[curve].knots[selected].p;
 				Vector3 d = shape.splines[curve].knots[selected].outvec - p;
 				shape.splines[curve].knots[selected].invec = p - d;
-				shape.CalcLength(10);
+				shape.CalcLength();	//10);
 			}
 			EditorUtility.SetDirty(target);
 			buildmesh = true;
@@ -171,8 +173,8 @@ public class MegaShapeEditor : Editor
 		if ( showcommon )
 		{
 			//CursorPos = EditorGUILayout.Vector3Field("Cursor", CursorPos);
-			CursorPercent = EditorGUILayout.FloatField("Cursor", CursorPercent);
-			CursorPercent = Mathf.Repeat(CursorPercent, 100.0f);
+			shape.CursorPercent = EditorGUILayout.FloatField("Cursor", shape.CursorPercent);
+			shape.CursorPercent = Mathf.Repeat(shape.CursorPercent, 100.0f);
 
 			ImportScale = EditorGUILayout.FloatField("Import Scale", ImportScale);
 
@@ -211,17 +213,32 @@ public class MegaShapeEditor : Editor
 			shape.KnotSize = EditorGUILayout.FloatField("Knot Size", shape.KnotSize);
 			shape.stepdist = EditorGUILayout.FloatField("Step Dist", shape.stepdist);
 
+			MegaSpline spline = shape.splines[shape.selcurve];
+
 			if ( shape.stepdist < 0.01f )
 				shape.stepdist = 0.01f;
 
 			shape.dolateupdate = EditorGUILayout.Toggle("Do Late Update", shape.dolateupdate);
 			shape.normalizedInterp = EditorGUILayout.Toggle("Normalized Interp", shape.normalizedInterp);
+
+			spline.constantSpeed = EditorGUILayout.Toggle("Constant Speed", spline.constantSpeed);
+			int subdivs = EditorGUILayout.IntField("Calc Subdivs", spline.subdivs);
+
+			if ( subdivs < 2 )
+				subdivs = 2;
+			if ( subdivs != spline.subdivs )
+			{
+				//spline.subdivs = subdivs;
+				spline.CalcLength(subdivs);
+			}
+
 			shape.drawHandles = EditorGUILayout.Toggle("Draw Handles", shape.drawHandles);
 			shape.drawKnots = EditorGUILayout.Toggle("Draw Knots", shape.drawKnots);
 			shape.drawspline = EditorGUILayout.Toggle("Draw Spline", shape.drawspline);
 			shape.lockhandles = EditorGUILayout.Toggle("Lock Handles", shape.lockhandles);
 			shape.autosmooth = EditorGUILayout.Toggle("Auto Smooth", shape.autosmooth);
 			shape.handleType = (MegaHandleType)EditorGUILayout.EnumPopup("Handle Type", shape.handleType);
+
 			showlabels = EditorGUILayout.Toggle("Labels", showlabels);
 
 			hidewire = EditorGUILayout.Toggle("Hide Wire", hidewire);
@@ -236,8 +253,6 @@ public class MegaShapeEditor : Editor
 				shape.speed = EditorGUILayout.FloatField("Speed", shape.speed);
 				shape.LoopMode = (MegaRepeatMode)EditorGUILayout.EnumPopup("Loop Mode", shape.LoopMode);
 			}
-
-			MegaSpline spline = shape.splines[shape.selcurve];
 
 			if ( shape.splines.Count > 0 )
 			{
@@ -254,7 +269,7 @@ public class MegaShapeEditor : Editor
 						if ( outlineSpline != shape.selcurve )
 						{
 							shape.OutlineSpline(shape.splines[spline.outlineSpline], spline, spline.outline, true);
-							spline.CalcLength(10);
+							spline.CalcLength();	//10);
 							EditorUtility.SetDirty(target);
 							buildmesh = true;
 						}
@@ -541,7 +556,7 @@ public class MegaShapeEditor : Editor
 
 		if ( recalc )
 		{
-			shape.CalcLength(10);
+			shape.CalcLength();	//10);
 		}
 	}
 
@@ -552,7 +567,7 @@ public class MegaShapeEditor : Editor
 		if ( closed != spline.closed )
 		{
 			spline.closed = closed;
-			shape.CalcLength(10);
+			shape.CalcLength();	//10);
 			EditorUtility.SetDirty(target);
 			//shape.BuildMesh();
 		}
@@ -949,15 +964,15 @@ public class MegaShapeEditor : Editor
 
 			float calpha = 0.0f;
 			CursorPos = shape.FindNearestPoint(CursorPos, 5, ref CursorKnot, ref CursorTangent, ref calpha);
-			CursorPercent = calpha * 100.0f;
+			shape.CursorPercent = calpha * 100.0f;
 		}
 
 		//Handles.Label(tm.MultiplyPoint(CursorPos), "Cursor " + CursorPercent.ToString("0.00") + "% - " + CursorPos);
-		Handles.Label(CursorPos, "Cursor " + CursorPercent.ToString("0.00") + "% - " + CursorPos);
+		Handles.Label(CursorPos, "Cursor " + shape.CursorPercent.ToString("0.00") + "% - " + CursorPos);
 
 		if ( recalc )
 		{
-			shape.CalcLength(10);
+			shape.CalcLength();	//10);
 			shape.BuildMesh();
 		}
 
@@ -1028,7 +1043,7 @@ public class MegaShapeEditor : Editor
 				Color col = Color.yellow;
 				col.a = 0.5f;
 				Gizmos.color = col;	//Color.yellow;
-				CursorPos = shape.InterpCurve3D(shape.selcurve, CursorPercent * 0.01f, true);
+				CursorPos = shape.InterpCurve3D(shape.selcurve, shape.CursorPercent * 0.01f, true);
 				Gizmos.DrawSphere(shape.transform.TransformPoint(CursorPos), shape.KnotSize * 0.01f);
 				Handles.color = Color.white;
 				//Handles.Label(shape.transform.TransformPoint(CursorPos), "Cursor " + CursorPercent.ToString("0.00") + "% - " + CursorPos);
@@ -1062,10 +1077,6 @@ public class MegaShapeEditor : Editor
 		Gizmos.DrawIcon(shape.transform.position, "MegaSpherify icon.png", false);
 		Handles.Label(shape.transform.position, " " + shape.name);
 	}
-
-
-	static public int CursorKnot = 0;
-	static public float CursorPercent = 0.0f;
 
 	// Dont want this in here, want in editor
 	// If we go over a knot then should draw to the knot
