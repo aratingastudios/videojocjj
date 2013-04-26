@@ -812,7 +812,7 @@ public class MegaModifiers : MonoBehaviour
 
 		while ( isRunning )
 		{
-			inf.pauseevent.WaitOne(Timeout.Infinite);
+			inf.pauseevent.WaitOne(Timeout.Infinite, false);
 
 			switch ( inf.jobtype )
 			{

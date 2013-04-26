@@ -36,6 +36,9 @@ public class MegaKnot
 	public float	length;
 	public bool		notlocked;
 
+	public float[]		lengths;
+	public Vector3[]	points;
+
 	public MegaKnot()
 	{
 		p = new Vector3();
@@ -66,6 +69,44 @@ public class MegaKnot
 
 		return tp;
 	}
+
+	public Vector3 InterpolateCS(float t, MegaKnot k)
+	{
+		if ( lengths == null || lengths.Length == 0 )
+			return Interpolate(t, k);
+
+		float u = (t * seglength) + lengths[0];
+		int i = 0;
+		for ( i = 0; i < lengths.Length - 1; i++ )
+		{
+			if ( u < lengths[i] )
+			{
+				break;
+			}
+		}
+
+		float alpha = (u - lengths[i - 1]) / (lengths[i] - lengths[i - 1]);
+		return Vector3.Lerp(points[i - 1], points[i], alpha);
+	}
+
+	public Vector3 Tangent(float t, MegaKnot k)
+	{
+		Vector3 vel;
+
+		float a = t;
+		float b = 1.0f - t;
+
+		float b2 = b * b;
+		float a2 = a * a;
+
+		vel.x = (-3.0f * p.x * b2) + (3.0f * outvec.x * b * (b - 2.0f * a)) + (3.0f * k.invec.x * a * (2.0f * b - a)) + (k.p.x * 3.0f * a2);
+		vel.y = (-3.0f * p.y * b2) + (3.0f * outvec.y * b * (b - 2.0f * a)) + (3.0f * k.invec.y * a * (2.0f * b - a)) + (k.p.y * 3.0f * a2);
+		vel.z = (-3.0f * p.z * b2) + (3.0f * outvec.z * b * (b - 2.0f * a)) + (3.0f * k.invec.z * a * (2.0f * b - a)) + (k.p.z * 3.0f * a2);
+
+		//float d = vel.sqrMagnitude;
+
+		return vel;
+	}
 }
 
 [System.Serializable]
@@ -84,6 +125,9 @@ public class MegaSpline
 	public int					outlineSpline = -1;
 	public float				outline = 0.0f;
 
+	public bool					constantSpeed = false;
+	public int					subdivs = 10;
+
 	static public MegaSpline Copy(MegaSpline src)
 	{
 		MegaSpline spl = new MegaSpline();
@@ -96,6 +140,9 @@ public class MegaSpline
 		spl.length = src.length;
 
 		spl.knots = new List<MegaKnot>();	//src.knots);
+
+		spl.constantSpeed = src.constantSpeed;
+		spl.subdivs = src.subdivs;
 
 		for ( int i = 0; i < src.knots.Count; i++ )
 		{
@@ -174,6 +221,7 @@ public class MegaSpline
 	}
 
 	// Should actually go through segments, what about scale?
+#if false	// old
 	public float CalcLength(int steps)
 	{
 		length = 0.0f;
@@ -210,14 +258,210 @@ public class MegaSpline
 			length = knots[knot].length;
 		}
 
+		//AdjustSpline();
+
 		return length;
 	}
+#else
+	public float CalcLength(int steps)
+	{
+		if ( steps < 1 )
+			steps = 1;
+		subdivs = steps;
+		return CalcLength();
+	}
+
+	public float CalcLength()
+	{
+		length = 0.0f;
+
+		int kend = knots.Count - 1;
+
+		if ( closed )
+			kend++;
+
+		for ( int knot = 0; knot < kend; knot++ )
+		{
+			int k1 = (knot + 1) % knots.Count;
+
+			Vector3 p1 = knots[knot].p;
+			float step = 1.0f / (float)subdivs;
+			float pos = step;
+
+			knots[knot].seglength = 0.0f;
+
+			if ( knots[knot].lengths == null || knots[knot].lengths.Length != subdivs + 1 )
+			{
+				knots[knot].lengths = new float[subdivs + 1];
+				knots[knot].points = new Vector3[subdivs + 1];
+			}
+
+			knots[knot].lengths[0] = length;
+			knots[knot].points[0] = knots[knot].p;
+
+			float dist = 0.0f;
+			for ( int i = 1; i < subdivs; i++ )
+			{
+				Vector3 p2 = knots[knot].Interpolate(pos, knots[k1]);
+
+				knots[knot].points[i] = p2;
+				dist = Vector3.Magnitude(p2 - p1);
+				knots[knot].seglength += dist;
+				p1 = p2;
+				pos += step;
+
+				length += dist;
+				knots[knot].lengths[i] = length;
+			}
+
+			dist = Vector3.Magnitude(knots[k1].p - p1);
+			knots[knot].seglength += dist;	//Vector3.Magnitude(knots[k1].p - p1);
+
+			length += dist;	//knots[knot].seglength;
+
+			knots[knot].lengths[subdivs] = length;
+			knots[knot].points[subdivs] = knots[k1].p;
+
+			knots[knot].length = length;
+			length = knots[knot].length;
+		}
+
+		//AdjustSpline();
+
+		return length;
+	}
+#endif
+
+	//List<Vector3>	samples = new List<Vector3>();
+	//public List<float>		alphas = new List<float>();
+
+	//public Vector3 InterpCurve3DSampled(float alpha)
+	//{
+	//	if ( alpha == 1.0f )
+	//		return samples[samples.Count - 1];
+	//	if ( alpha  == 0.0f )
+	//		return samples[0];
+
+	//	float findex = (float)samples.Count * alpha;
+	//	int index = (int)findex;
+	//	findex -= index;
+
+	//	return Vector3.Lerp(samples[index], samples[index + 1], findex);
+	//}
+
+#if false
+	public void AdjustSpline()
+	{
+		int k = 0;
+		float lindist = length / 100.0f;
+
+		float dist = 0.0f;
+		Vector3 last = knots[0].p;
+
+		alphas.Clear();
+		alphas.Add(1.0f);
+		for ( int i = 1; i < 100; i++ )
+		{
+			float alpha = (float)i / 100.0f;
+
+			Vector3 p = InterpCurve3D(alpha, true, ref k);
+			float d = (p - last).magnitude;
+			dist += d;
+
+			float sa = (length * alpha) / dist;
+			float dev = alpha / sa;
+			alphas.Add(sa);	//dev);
+			last = p;
+		}
+
+		alphas.Add(1.0f);
+	}
+#endif
+
+#if false
+	// Could pass start and end alpha
+	public float CalcSampleTable(int steps)
+	{
+		float delta = length / (float)steps;
+
+		samples.Clear();
+
+		int k = 0;
+
+		samples.Add(InterpCurve3D(0.0f, true, ref k));
+
+		float alpha = 0.0f;
+
+		Vector3 last = samples[0];
+		while ( alpha < 1.0f )
+		{
+			float dist = 0.0f;
+
+
+		}
+
+
+
+		samples.Add(InterpCurve3D(1.0f, true, ref k));
+
+
+		length = 0.0f;
+
+		int kend = knots.Count - 1;
+
+		if ( closed )
+			kend++;
+
+		for ( int knot = 0; knot < kend; knot++ )
+		{
+			int k1 = (knot + 1) % knots.Count;
+
+			Vector3 p1 = knots[knot].p;
+			float step = 1.0f / (float)steps;
+			float pos = step;
+
+			knots[knot].seglength = 0.0f;
+
+			for ( int i = 1; i < steps; i++ )
+			{
+				Vector3 p2 = knots[knot].Interpolate(pos, knots[k1]);
+
+				knots[knot].seglength += Vector3.Magnitude(p2 - p1);
+				p1 = p2;
+				pos += step;
+			}
+
+			knots[knot].seglength += Vector3.Magnitude(knots[k1].p - p1);
+
+			length += knots[knot].seglength;
+
+			knots[knot].length = length;
+			length = knots[knot].length;
+		}
+
+		return length;
+	}
+#endif
+
 
 	/*  So this should work for curves or splines, no sep code for curve, derive from common base */
 	/*  Could save a hint for next time through, ie spline and seg */
 	public Vector3 Interpolate(float alpha, bool type, ref int k)
 	{
 		int	seg = 0;
+
+		//if ( alphas != null && alphas.Count > 0 )
+		//{
+		//	int ix = (int)(alpha * (float)alphas.Count);
+		//	alpha *= alphas[ix];
+		//	if ( alpha >= 1.0f )
+		//		alpha = 0.99999f;
+		//	if ( alpha < 0.0f )
+		//		alpha = 0.0f;
+		//}
+
+		if ( constantSpeed )
+			return InterpolateCS(alpha, type, ref k);
 
 		// Special case if closed
 		if ( closed )
@@ -307,6 +551,119 @@ public class MegaSpline
 			{
 				k = seg;
 				return knots[seg].Interpolate(alpha, knots[seg + 1]);
+			}
+			else
+			{
+				k = seg;	//knots.Length - 1;
+				return knots[seg].p;
+
+				//return knots[seg].Interpolate(alpha, knots[seg + 1]);
+			}
+		}
+	}
+
+	public Vector3 InterpolateCS(float alpha, bool type, ref int k)
+	{
+		int	seg = 0;
+
+		//if ( alphas != null && alphas.Count > 0 )
+		//{
+		//	int ix = (int)(alpha * (float)alphas.Count);
+		//	alpha *= alphas[ix];
+		//	if ( alpha >= 1.0f )
+		//		alpha = 0.99999f;
+		//	if ( alpha < 0.0f )
+		//		alpha = 0.0f;
+		//}
+
+		// Special case if closed
+		if ( closed )
+		{
+			if ( type )
+			{
+				float dist = alpha * length;
+
+				if ( dist > knots[knots.Count - 1].length )
+				{
+					k = knots.Count - 1;
+					alpha = 1.0f - ((length - dist) / knots[knots.Count - 1].seglength);
+					return knots[knots.Count - 1].InterpolateCS(alpha, knots[0]);
+				}
+				else
+				{
+					for ( seg = 0; seg < knots.Count; seg++ )
+					{
+						if ( dist <= knots[seg].length )
+							break;
+					}
+				}
+				alpha = 1.0f - ((knots[seg].length - dist) / knots[seg].seglength);
+			}
+			else
+			{
+				float segf = alpha * knots.Count;
+
+				seg = (int)segf;
+
+				if ( seg == knots.Count )
+				{
+					seg--;
+					alpha = 1.0f;
+				}
+				else
+					alpha = segf - seg;
+			}
+
+			if ( seg < knots.Count - 1 )
+			{
+				k = seg;
+
+				return knots[seg].InterpolateCS(alpha, knots[seg + 1]);
+			}
+			else
+			{
+				k = seg;
+
+				return knots[seg].InterpolateCS(alpha, knots[0]);
+			}
+
+			//return knots[0].p;
+		}
+		else
+		{
+
+			if ( type )
+			{
+				float dist = alpha * length;
+
+				for ( seg = 0; seg < knots.Count; seg++ )
+				{
+					if ( dist <= knots[seg].length )
+						break;
+				}
+
+				alpha = 1.0f - ((knots[seg].length - dist) / knots[seg].seglength);
+			}
+			else
+			{
+				float segf = alpha * knots.Count;
+
+				seg = (int)segf;
+
+				if ( seg == knots.Count )
+				{
+					seg--;
+					alpha = 1.0f;
+				}
+				else
+					alpha = segf - seg;
+			}
+
+			// Should check alpha
+			if ( seg < knots.Count - 1 )
+			{
+				k = seg;
+				return knots[seg].InterpolateCS(alpha, knots[seg + 1]);
 			}
 			else
 			{
@@ -419,7 +776,7 @@ public class MegaSpline
 		}
 
 		knots = newknots;
-		CalcLength(10);
+		CalcLength();	//(10);
 	}
 }
 
@@ -464,6 +821,10 @@ public class MegaShape : MonoBehaviour
 	public bool		imported = false;
 	//public int		CurrentCurve = 0;
 
+	//public int		CursorKnot = 0;
+	public float		CursorPercent = 0.0f;
+
+
 	public virtual string GetHelpURL() { return "?page_id=390"; }
 
 	[ContextMenu("Help")]
@@ -485,7 +846,10 @@ public class MegaShape : MonoBehaviour
 
 		switch ( axis )
 		{
-			case MegaAxis.X: MegaMatrix.RotateY(ref tm, Mathf.PI * 0.5f); break;
+			case MegaAxis.X:	MegaMatrix.RotateY(ref tm, -Mathf.PI * 0.5f);
+				MegaMatrix.Scale(ref tm, -Vector3.one, false);
+				break;
+			//case MegaAxis.X: MegaMatrix.RotateY(ref tm, Mathf.PI * 0.5f); break;
 			case MegaAxis.Y: MegaMatrix.RotateX(ref tm, Mathf.PI * 0.5f); break;
 			case MegaAxis.Z: break;	//Matrix.RotateY(ref tm, Mathf.PI * 0.5f); break;
 		}
@@ -582,7 +946,7 @@ public class MegaShape : MonoBehaviour
 						}
 					}
 
-					splines[s].CalcLength(10);	// could use less here
+					splines[s].CalcLength();	//(10);	// could use less here
 				}
 			}
 		}
@@ -835,7 +1199,7 @@ public class MegaShape : MonoBehaviour
 			}
 		}
 
-		CalcLength(10);
+		CalcLength();	//(10);
 	}
 
 	public void Scale(float scale, int start)
@@ -859,7 +1223,7 @@ public class MegaShape : MonoBehaviour
 			}
 		}
 
-		CalcLength(10);
+		CalcLength();	//(10);
 	}
 
 	public void Scale(Vector3 scale)
@@ -891,7 +1255,7 @@ public class MegaShape : MonoBehaviour
 			}
 		}
 
-		CalcLength(10);
+		CalcLength();	//(10);
 	}
 
 	public int GetSpline(int p, ref MegaKnotAnim ma)	//int spl, ref int sp, ref int pt)
@@ -934,17 +1298,34 @@ public class MegaShape : MonoBehaviour
 		return 0.0f;
 	}
 
+	//public float CalcLength(int curve)
+	//{
+	//	if ( curve < splines.Count )
+	//		return splines[curve].CalcLength();
+
+	//	return 0.0f;
+	//}
+
 	[ContextMenu("Recalc Length")]
 	public void ReCalcLength()
 	{
-		CalcLength(10);
+		CalcLength();	//10);
 	}
 
-	public float CalcLength(int step)
+	//public float CalcLength(int step)
+	//{
+	//	float length = 0.0f;
+	//	for ( int i = 0; i < splines.Count; i++ )
+	//		length += CalcLength(i, step);
+
+	//	return length;
+	//}
+
+	public float CalcLength()
 	{
 		float length = 0.0f;
 		for ( int i = 0; i < splines.Count; i++ )
-			length += CalcLength(i, step);
+			length += splines[i].CalcLength();
 
 		return length;
 	}
@@ -967,7 +1348,7 @@ public class MegaShape : MonoBehaviour
 	public void SetKnotPos(int curve, int knot, Vector3 p)
 	{
 		splines[curve].knots[knot].p = p;
-		CalcLength(10);
+		CalcLength();	//10);
 	}
 
 	public void SetKnot(int curve, int knot, Vector3 p, Vector3 intan, Vector3 outtan)
@@ -975,7 +1356,14 @@ public class MegaShape : MonoBehaviour
 		splines[curve].knots[knot].p = p;
 		splines[curve].knots[knot].invec = intan;
 		splines[curve].knots[knot].outvec = outtan;
-		CalcLength(10);
+		CalcLength();	//10);
+	}
+
+	public Quaternion GetRotate(int curve, float alpha)
+	{
+		Vector3 p = InterpCurve3D(curve, alpha, normalizedInterp);
+		Vector3 p1 = InterpCurve3D(curve, alpha + 0.001f, normalizedInterp);
+		return Quaternion.LookRotation(p - p1);
 	}
 
 	public Vector3 InterpCurve3D(int curve, float alpha, bool type)
@@ -1257,7 +1645,7 @@ public class MegaShape : MonoBehaviour
 			}
 		}
 
-		spline.CalcLength(10);
+		spline.CalcLength();	//10);
 	}
 
 	public void AutoCurve(MegaSpline spline, int start, int end)
@@ -1297,7 +1685,7 @@ public class MegaShape : MonoBehaviour
 			}
 		}
 
-		spline.CalcLength(10);
+		spline.CalcLength();	//10);
 	}
 
 
@@ -2280,6 +2668,17 @@ public class MegaShape : MonoBehaviour
 			tris2.Clear();
 			tris = MegaTriangulator.Triangulate(this, splines[selcurve], sdist, ref verts, ref uvs, ref tris, Pivot, ref size);
 
+
+			if ( axis != MegaAxis.Y )
+			{
+				for ( int i = 0; i < tris.Count; i += 3 )
+				{
+					int t = tris[i];
+					tris[i] = tris[i + 2];
+					tris[i + 2] = t;
+				}
+			}
+
 			int vcount = verts.Count;
 			int tcount = tris.Count;
 
@@ -2296,15 +2695,31 @@ public class MegaShape : MonoBehaviour
 				uvs.Clear();	// need to stop triangulator doing uvs
 				Vector2 uv = Vector2.zero;
 				Vector3 uv1 = Vector3.zero;
+
+				int uvx = 0;
+				int uvy = 2;
+				switch ( axis )
+				{
+					case MegaAxis.X:
+						uvx = 1;
+						break;
+
+					case MegaAxis.Z:
+						uvy = 1;
+						break;
+				}
+
 				for ( int i = 0; i < verts.Count; i++ )
 				{
-					uv1.x = (verts[i].x);	// * UVScale.x) + UVOffset.x;	// * UVScale.x;
-					uv1.z = (verts[i].z);	// * UVScale.y) + UVOffset.y;	// * UVScale.y;
+					//uv1.x = (verts[i].x);	// * UVScale.x) + UVOffset.x;	// * UVScale.x;
+					//uv1.z = (verts[i].z);	// * UVScale.y) + UVOffset.y;	// * UVScale.y;
+					uv1.x = verts[i][uvx];	// * UVScale.x) + UVOffset.x;	// * UVScale.x;
+					uv1.z = verts[i][uvy];	// * UVScale.y) + UVOffset.y;	// * UVScale.y;
 
 					if ( !PhysUV )
 					{
-						uv1.x /= size.x;
-						uv1.z /= size.z;
+						uv1.x /= size[uvx];	//.x;
+						uv1.z /= size[uvy];	//.z;
 					}
 					uv1 = tm1.MultiplyPoint3x4(uv1);
 					uv.x = uv1.x + UVOffset.x;
@@ -2495,6 +2910,7 @@ public class MegaShape : MonoBehaviour
 				//	euv.y /= 
 				//}
 				//uvs.Add(euv);
+// 0207 7480062 ext 6684 insure and go
 
 				// Faces
 				int ecount = MegaTriangulator.m_points.Count + 1;
@@ -2672,7 +3088,7 @@ public class MegaShape : MonoBehaviour
 		OutlineSpline(inSpline, outSpline, size, centered);
 
 		shape.splines.Add(outSpline);
-		outSpline.CalcLength(10);
+		outSpline.CalcLength();	//10);
 	}
 
 	public void OutlineSpline(MegaSpline inSpline, MegaSpline outSpline, float size, bool centered)

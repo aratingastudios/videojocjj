@@ -734,6 +734,99 @@ Option to instantiate or copy mesh when add mod obj
 ****************************************
 Changes:
 ****************************************
+v2.39
+Enable option added to Mega Wrap so you can easily turn it off.
+Beta Shrink option added to Mega Wrap so you can make wrapped meshes fit more closely to the target object, useful for clothing.
+Mega Wrap now supports wrapping of non skinned meshes onto skinned ones, so all cases now work.
+Wrap help page updated.
+
+v2.38
+Changed WaitOne method so valid on IOS stripped builds.
+Added basic Line Shape to the helper shapes so you can create a simple straight line spline and set the number of points as a useful starting spline.
+Added Beta of Constant Speed option to splines, you can choose per spline if it is a constant speed bezier spline or a normal bezier spline.
+Calc Subdivs value added this will make length calculations more accurate the higher the value, will also make the constant speed interpolation more accurate. This can be set per spline.
+Tank Track help page added.
+Hose help page added.
+
+v2.37
+Added a check to mor loader to not load empty morph channels.
+Added back in the global UseLimits on morph channels option, somehow got lost in an update.
+Bug fixed in Bouyancy script which didnt take height of water object into account.
+Dynamic Ripple improved to handle different orientations of mesh better.
+No ripples appearing bug fixed in bouyancy script.
+
+v2.35
+MegaMorph Animator help page updated.
+Point Cache animator help page updated.
+Added a gap value to the Mega Wrap system so you can easily offset the wrap away from the surface or sink it in.
+Mega Wrap help page added.
+PlayClip methods on Morph and Point Cache animator can be called from Unity Animation events, bug in Unity 4.x work around.
+Beta of Globe modifier added to deform objects to sit on a sphere.
+Updated the docs for the MegaShapes system.
+Added docs for the meshing options for MegaShapes.
+Help page for Globe modifier added.
+
+v2.34
+MegaWarp can now wrap a skinned mesh onto another skinned mesh so making things like facial hair even easier as you only need to do the morphs etc for the head mesh then you can swap in new hair meshes that are wrapped to the head and they will deform alongside the head.
+
+v2.33
+DeepCopy and InstanceObject methods in MegaCopyObjects now return the GameObject they create.
+Morph Animator can now control multiple morphs in a hierachy, so if you have a hierachy with multiple morphs you can animate all of them with one Morph Animator.
+Morph animator now has option to describe clips in frames or in seconds.
+Point Cache animator now has option to describe clips in frames or in seconds.
+
+v2.32
+Sped up display of vertex weights in volume selects
+Fixed SetActive() error
+
+v2.31
+Added weighting value to Volume Select.
+Added weighting value to Multi Volume select volumes.
+Added Freeze Selection option to Volume select so current selection is frozen so saving time.
+Added Freeze Selection option to Multi Volume select so current selection is frozen so saving time.
+
+v2.30
+Added a Multi volume Select modify for more advanced vertex selections, using sphere or box volumes.
+Added box volume type to Vol Select modifier
+Updated MegaGrab to latest version.
+Fixed Mesh Fill option not working correctly if shapes were generated with an axis value or X or Z.
+Fixed errors on 4.0 and 4.1 for SetActiveRecursively
+Cursor position is now a per spline value instead of a single static.
+
+v2.29
+Added a error dialog when malformed PC2 files are loaded.
+Added Do Late Update option to Hose system
+Added option to disable hose updates if not visible
+Added Tank Tracks System
+Added Tank Wheels helper system
+
+v2.28
+Option to toggle spline display for Hose system.
+Hoses named correctly when created.
+Fixed hose not initializing correctly on creation.
+The hose system now works correctly with prefabs.
+Hose Freecreate mode disables automatically if end objects defined.
+
+v2.27
+Small fix to Morph Animator inspector.
+Small fix to Point Cache Animator inspector.
+Volume Select now has a target value so you can link the volume location to a gameobject.
+
+v2.26
+Imported Maya blendshape animations now 100% correct due to new Hermite animation controllers.
+Maya exporter updated.
+Point Cache modifier has improved mapping detection options.
+
+v2.25
+Removed error when platform set to Flash.
+Mega Deep Copy added to GameObject menu which will allow copying of objects and skinned objects in the scene, MegaCopyObject.DeepCopy(obj) can be used from script.
+Fixed bug in Point Cache Animator that stopped it working.
+Added Mega Create Instance to GameObject menu to make proper instance copies of Modified objects in the scene. MegaCopyObject.InstanceObject(obj) can be used from script.
+Added Mega Hose system to MegaShapes, easily connect two objects with a flexible hose.
+Added Mega Hose Attach to MegaShapes, attach objects to the hose.
+Fixed a bug in the morph animation playback when used with mor files exported from Maya.
+Maya morph exporter updated to fix animation issue.
+
 v2.24
 NormMap renamed to MegaNormMap to avoid naming clashes.
 Fixed Load Mapping bug when working with OBJ files and morphs.

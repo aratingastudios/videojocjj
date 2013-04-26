@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 public class MegaDeepCopy : MonoBehaviour
 {
+#if false
 	[MenuItem("GameObject/Mega Copy Mesh")]
 	static void DeepCopy()
 	{
@@ -56,5 +57,12 @@ public class MegaDeepCopy : MonoBehaviour
 					clonemcs[j].sharedMesh = clonemesh;
 			}
 		}
+	}
+#endif
+
+	[MenuItem("GameObject/Mega Deep Copy")]
+	static void DeepCopyNew()
+	{
+		MegaCopyObject.DeepCopy(Selection.activeGameObject);
 	}
 }

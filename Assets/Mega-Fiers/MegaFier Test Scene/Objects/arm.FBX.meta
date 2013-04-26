@@ -3,37 +3,36 @@ guid: 42bc028ae2c3e434bb7515e1b9151dce
 ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
-    100000: leftHand_thumbB
-    100002: leftHand_thumbA
+    100000: Arm
+    100002: //RootNode
     100004: leftForeArm
-    100006: leftUpperArm
-    100008: Arm
-    100010: //RootNode
+    100006: leftHand_foreFingerA
+    100008: leftHand_foreFingerB
+    100010: leftHand_littleFingerA
     100012: leftHand_littleFingerB
-    100014: leftHand_littleFingerA
-    100016: leftHand_foreFingerB
-    100018: leftHand_foreFingerA
-    100020: leftHand_middleFingerB
-    100022: leftHand_middleFingerA
-    100024: leftHand_middleMAIN
-    400000: leftHand_thumbB
-    400002: leftHand_thumbA
+    100014: leftHand_middleFingerA
+    100016: leftHand_middleFingerB
+    100018: leftHand_middleMAIN
+    100020: leftHand_thumbA
+    100022: leftHand_thumbB
+    100024: leftUpperArm
+    400000: Arm
+    400002: //RootNode
     400004: leftForeArm
-    400006: leftUpperArm
-    400008: Arm
-    400010: //RootNode
+    400006: leftHand_foreFingerA
+    400008: leftHand_foreFingerB
+    400010: leftHand_littleFingerA
     400012: leftHand_littleFingerB
-    400014: leftHand_littleFingerA
-    400016: leftHand_foreFingerB
-    400018: leftHand_foreFingerA
-    400020: leftHand_middleFingerB
-    400022: leftHand_middleFingerA
-    400024: leftHand_middleMAIN
+    400014: leftHand_middleFingerA
+    400016: leftHand_middleFingerB
+    400018: leftHand_middleMAIN
+    400020: leftHand_thumbA
+    400022: leftHand_thumbB
+    400024: leftUpperArm
     4300000: Arm
     7400000: Take 001
     11100000: //RootNode
-    13700000: leftUpperArm
-    13700002: Arm
+    13700000: Arm
   materials:
     importMaterials: 1
     materialName: 0

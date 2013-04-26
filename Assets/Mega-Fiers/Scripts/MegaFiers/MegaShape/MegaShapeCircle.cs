@@ -27,6 +27,6 @@ public class MegaShapeCircle : MegaShape
 		}
 
 		spline.closed = true;
-		CalcLength(10);
+		CalcLength();	//10);
 	}
 }

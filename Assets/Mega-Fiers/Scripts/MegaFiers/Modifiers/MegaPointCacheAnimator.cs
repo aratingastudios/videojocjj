@@ -31,6 +31,9 @@ public class MegaPointCacheAnimator : MonoBehaviour
 	public float t = -1.0f;	// Current clip time
 	public float at = 0.0f;
 
+	public int sourceFPS = 30;
+	public bool	useFrames = true;
+
 	[ContextMenu("Help")]
 	public void Help()
 	{
@@ -53,6 +56,16 @@ public class MegaPointCacheAnimator : MonoBehaviour
 	public float GetTime()
 	{
 		return at;
+	}
+
+	public void PlayClipEvent(int i)
+	{
+		PlayClip(i);
+	}
+
+	public void PlayClipNameEvent(string name)
+	{
+		PlayClip(name);
 	}
 
 	public void PlayClip(int i)

@@ -8,6 +8,9 @@ public class MegaBezFloatKey
 	public float	val;
 	public float	intan;
 	public float	outtan;
+	public float	intanx;
+	public float	outtanx;
+	public float	coef0;
 	public float	coef1;
 	public float	coef2;
 	public float	coef3;
@@ -75,14 +78,78 @@ public class MegaBezFloatKeyControl : MegaControl
 	{
 		for ( int i = 0; i < Keys.Length - 1; i++ )
 		{
-			float dt		= Times[i + 1] - Times[i];
+			float dt	= Times[i + 1] - Times[i];
 			float hout	= Keys[i].val + (Keys[i].outtan * SCALE) * (dt / 3.0f);
-			float hin		= Keys[i + 1].val + (Keys[i + 1].intan * SCALE) * (dt / 3.0f);
+			float hin	= Keys[i + 1].val + (Keys[i + 1].intan * SCALE) * (dt / 3.0f);
 
 			Keys[i].coef1 = Keys[i + 1].val + 3.0f * (hout - hin) - Keys[i].val;
 			Keys[i].coef2 = 3.0f * (hin - 2.0f * hout + Keys[i].val);
 			Keys[i].coef3 = 3.0f * (hout - Keys[i].val);
 		}
+	}
+
+	public void InitKeys(float scale)
+	{
+		for ( int i = 0; i < Keys.Length - 1; i++ )
+		{
+			float dt	= Times[i + 1] - Times[i];
+			float hout	= Keys[i].val + (Keys[i].outtan * scale) * (dt / 3.0f);
+			float hin	= Keys[i + 1].val + (Keys[i + 1].intan * scale) * (dt / 3.0f);
+
+			Keys[i].coef1 = Keys[i + 1].val + 3.0f * (hout - hin) - Keys[i].val;
+			Keys[i].coef2 = 3.0f * (hin - 2.0f * hout + Keys[i].val);
+			Keys[i].coef3 = 3.0f * (hout - Keys[i].val);
+		}
+	}
+
+	public void InitKeysMaya()
+	{
+		for ( int i = 0; i < Keys.Length - 1; i++ )
+		{
+			float x0 = Times[i];
+			float x1 = Times[i] + Keys[i].outtanx;
+			float x2 = Times[i + 1] - Keys[i + 1].intanx;
+			float x3 = Times[i + 1];
+
+			float y0 = Keys[i].val;
+			float y1 = Keys[i].val + Keys[i].outtan;
+			float y2 = Keys[i + 1].val - Keys[i + 1].intan;
+			float y3 = Keys[i + 1].val;
+
+			float dx = x3 - x0;
+			float dy = y3 - y0;
+
+			float tan_x = x1 - x0;
+			float m1 = 0.0f;
+			float m2 = 0.0f;
+			if ( tan_x != 0.0f )
+				m1 = (y1 - y0) / tan_x;
+
+			tan_x = x3 - x2;
+			if ( tan_x != 0.0f )
+				m2 = (y3 - y2) / tan_x;
+
+			float length = 1.0f / (dx * dx);
+			float d1 = dx * m1;
+			float d2 = dx * m2;
+			Keys[i].coef0 = (d1 + d2 - dy - dy) * length / dx;
+			Keys[i].coef1 = (dy + dy + dy - d1 - d1 - d2) * length;
+			Keys[i].coef2 = m1;
+			Keys[i].coef3 = y0;
+		}
+	}
+
+	public float GetHermiteFloat(float tt)
+	{
+		if ( Times.Length == 1 )
+			return Keys[0].val;
+
+		int key = GetKey(tt);
+
+		float t = Mathf.Clamp01((tt - Times[key]) / (Times[key + 1] - Times[key]));
+
+		t = Mathf.Lerp(Times[key], Times[key + 1], t) - Times[key];
+		return (t * (t * (t * Keys[key].coef0 + Keys[key].coef1) + Keys[key].coef2) + Keys[key].coef3);
 	}
 
 	public void MakeKey(MegaBezFloatKey key, Vector2 pco, Vector2 pleft, Vector2 pright, Vector2 co, Vector2 left, Vector2 right)

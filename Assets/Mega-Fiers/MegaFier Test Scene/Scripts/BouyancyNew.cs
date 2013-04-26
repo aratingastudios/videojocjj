@@ -30,6 +30,7 @@ public class BouyancyNew : MonoBehaviour
 	public GameObject water;
 	public MegaDynamicRipple	dynamicwater;
 
+	Transform dwtrans;
 	/// <summary>
 	/// Provides initialization.
 	/// </summary>
@@ -38,6 +39,13 @@ public class BouyancyNew : MonoBehaviour
 		if ( water )
 		{
 			dynamicwater = (MegaDynamicRipple)water.GetComponent<MegaDynamicRipple>();
+		}
+
+		if ( dynamicwater )
+			dwtrans = dynamicwater.transform;
+		else
+		{
+			Debug.LogWarning(string.Format("[Buoyancy.cs] No Dynamic Ripple modifier found", name));
 		}
 
 		//forces = new List<Vector3[]>(); // For drawing force gizmos
@@ -255,7 +263,10 @@ public class BouyancyNew : MonoBehaviour
 			lpos.x = x;
 			lpos.z = z;
 
-			return dynamicwater.GetWaterHeight(water.transform.worldToLocalMatrix.MultiplyPoint(lpos));
+			float h = dynamicwater.GetWaterHeight(water.transform.worldToLocalMatrix.MultiplyPoint(lpos));
+			//h += dynamicwater.transform.position.y;
+
+			return h;
 		}
 		//		return ocean == null ? 0.0f : ocean.GetWaterHeightAtLocation(x, z);
 		return 0.0f;
@@ -268,10 +279,12 @@ public class BouyancyNew : MonoBehaviour
 	{
 		//forces.Clear(); // For drawing force gizmos
 
+		float y = dwtrans.position.y;
+
 		foreach ( var point in voxels )
 		{
 			Vector3 wp = transform.TransformPoint(point);
-			float waterLevel = GetWaterLevel(wp.x, wp.z);
+			float waterLevel = GetWaterLevel(wp.x, wp.z) + y;
 
 			if ( wp.y - voxelHalfHeight < waterLevel )
 			{
@@ -293,7 +306,10 @@ public class BouyancyNew : MonoBehaviour
 				if ( dynamicwater )
 				{
 					if ( velocity.y < -ripplevel )
-						dynamicwater.ForceAt(wp.x, wp.z, velocity.y * rippleforce);	//-force.y * 0.04f);
+					{
+						//dynamicwater.ForceAt(wp.x, wp.z, velocity.y * rippleforce);	//-force.y * 0.04f);
+						dynamicwater.ForceAt(wp, velocity.y * rippleforce);	//-force.y * 0.04f);
+					}
 				}
 				//forces.Add(new[] { wp, force }); // For drawing force gizmos
 			}

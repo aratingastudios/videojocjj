@@ -57,7 +57,7 @@ public class MegaModifyObjectEditor : Editor
 		}
 
 		//showmulti = EditorGUILayout.Foldout(showmulti, "Multi Core");
-
+#if !UNITY_FLASH
 		EditorGUILayout.BeginHorizontal();
 		if ( GUILayout.Button("Copy Object") )
 		{
@@ -77,7 +77,7 @@ public class MegaModifyObjectEditor : Editor
 		}
 
 		EditorGUILayout.EndHorizontal();
-
+#endif
 		if ( GUILayout.Button("Threading Options") )
 			showmulti = !showmulti;
 

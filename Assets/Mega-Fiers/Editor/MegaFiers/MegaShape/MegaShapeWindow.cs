@@ -37,6 +37,7 @@ public class MegaShapeWindow : EditorWindow
 	[MenuItem("GameObject/Create Other/MegaShape/Ellipse Shape")]		static void CreateEllipseShape() { CreateShape("Ellipse", typeof(MegaShapeEllipse)); }
 	[MenuItem("GameObject/Create Other/MegaShape/Rectangle Shape")]		static void CreateRectangleShape() { CreateShape("Rectangle", typeof(MegaShapeRectangle)); }
 	[MenuItem("GameObject/Create Other/MegaShape/Helix Shape")]			static void CreateHelixShape() { CreateShape("Helix", typeof(MegaShapeHelix)); }
+	[MenuItem("GameObject/Create Other/MegaShape/Line Shape")]			static void CreateLineShape() { CreateShape("Line", typeof(MegaShapeLine)); }
 
 	static Color butcol = new Color(0.75f, 0.75f, 1.0f);
 
@@ -45,6 +46,7 @@ public class MegaShapeWindow : EditorWindow
 		new MegaModBut("Circle",		"Create a Circle Shape",	typeof(MegaShapeCircle), butcol),
 		new MegaModBut("Ellipse",		"Create a Ellipse Shape",	typeof(MegaShapeEllipse), butcol),
 		new MegaModBut("Helix",			"Create a Helix Shape",		typeof(MegaShapeHelix), butcol),
+		new MegaModBut("Line",			"Create a Line Shape",		typeof(MegaShapeLine), butcol),
 		new MegaModBut("NGon",			"Create a NGon Shape",		typeof(MegaShapeNGon), butcol),
 		new MegaModBut("Rectangle",		"Create a Rectangle Shape",	typeof(MegaShapeRectangle), butcol),
 		new MegaModBut("Star",			"Create a Star Shape",		typeof(MegaShapeStar), butcol),
@@ -170,6 +172,7 @@ public class MegaShapeWindow : EditorWindow
 	static void CreateShape(string type, System.Type classtype)
 	{
 		Vector3 pos = Vector3.zero;
+
 		if ( UnityEditor.SceneView.lastActiveSceneView != null )
 			pos = UnityEditor.SceneView.lastActiveSceneView.pivot;
 

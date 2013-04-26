@@ -292,8 +292,13 @@ public class MegaPointCacheEditor : MegaModifierEditor
 		br.Close();
 	}
 
+	public bool DoAdjustFirst = false;
+
 	void BuildData(MegaModifiers mods, MegaPointCache am, string filename)
 	{
+		if ( DoAdjustFirst )
+			AdjustVerts(mods, am);
+
 		// Build vector3[] of base verts
 		Vector3[] baseverts = new Vector3[am.Verts.Length];
 
@@ -412,6 +417,7 @@ public class MegaPointCacheEditor : MegaModifierEditor
 		string sig = MegaParse.ReadStr(br);
 		if ( sig != "POINTCACHE2" )
 		{
+			EditorUtility.DisplayDialog("PC2 Importer", "The selected file does not appear to be a valid PC2 File", "Ok");
 			br.Close();
 			return;
 		}
@@ -522,6 +528,7 @@ public class MegaPointCacheEditor : MegaModifierEditor
 	{
 		MegaPointCache am = (MegaPointCache)target;
 
+		DoAdjustFirst = EditorGUILayout.Toggle("Mapping Adjust", DoAdjustFirst);
 		EditorGUILayout.BeginHorizontal();
 		if ( GUILayout.Button("Import PC2") )
 		{
@@ -685,5 +692,52 @@ public class MegaPointCacheEditor : MegaModifierEditor
 
 		//Debug.Log("scl " + scl + " negx " + negx + " negz " + negz + " flipyz " + flipyz);
 		return true;
+	}
+
+
+	void AdjustVerts(MegaModifiers mods, MegaPointCache am)
+	{
+		if ( am.Verts != null )
+		{
+			Vector3[] baseverts = new Vector3[am.Verts.Length];
+
+			for ( int i = 0; i < am.Verts.Length; i++ )
+				baseverts[i] = am.Verts[i].points[0];
+
+			Vector3 min1,max1;
+			Vector3 min2,max2;
+
+			Vector3 ex1 = Extents(mods.verts, out min1, out max1);
+			Vector3 ex2 = Extents(baseverts, out min2, out max2);
+
+			//Debug.Log("mesh extents " + ex1.ToString("0.00000"));
+			//Debug.Log("cache extents " + ex2.ToString("0.00000"));
+
+			//Debug.Log("mesh min " + min1.ToString("0.00000"));
+			//Debug.Log("cache min " + min2.ToString("0.00000"));
+
+			//Debug.Log("mesh max " + max1.ToString("0.00000"));
+			//Debug.Log("cache max " + max2.ToString("0.00000"));
+
+			int largest1 = MegaUtils.LargestComponent(ex1);
+			int largest2 = MegaUtils.LargestComponent(ex2);
+
+			//Debug.Log(largest1 + " " + largest2);
+			float scl1 = ex1[largest1] / ex2[largest2];
+			//Debug.Log("scl " + scl1.ToString("0.0000"));
+
+			//off = verts[0] - (tverts[0] * scl);
+			Vector3 off1 = (min2 * scl1) - min1;
+
+			for ( int i = 0; i < am.Verts.Length; i++ )
+			{
+				for ( int j = 0; j < am.Verts[i].points.Length; j++ )
+				{
+					Vector3 p = am.Verts[i].points[j] * scl1;
+
+					am.Verts[i].points[j] = p - off1;
+				}
+			}
+		}
 	}
 }

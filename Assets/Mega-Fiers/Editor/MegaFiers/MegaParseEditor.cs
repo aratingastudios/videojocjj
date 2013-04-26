@@ -42,6 +42,32 @@ public class MegaParseBezFloatControl
 				con.InitKeys();
 				break;
 
+			case "MKeys":
+				for ( int i = 0; i < con.Keys.Length; i++ )
+				{
+					con.Keys[i] = new MegaBezFloatKey();
+					con.Keys[i].val = br.ReadSingle();
+					con.Keys[i].intan = br.ReadSingle();
+					con.Keys[i].outtan = br.ReadSingle();
+					con.Times[i] = br.ReadSingle();
+				}
+				con.InitKeys(1.0f);
+				break;
+
+			case "HKeys":
+				for ( int i = 0; i < con.Keys.Length; i++ )
+				{
+					con.Keys[i] = new MegaBezFloatKey();
+					con.Keys[i].val = br.ReadSingle();
+					con.Keys[i].intanx = br.ReadSingle();
+					con.Keys[i].outtanx = br.ReadSingle();
+					con.Keys[i].intan = br.ReadSingle();
+					con.Keys[i].outtan = br.ReadSingle();
+					con.Times[i] = br.ReadSingle();
+				}
+				con.InitKeysMaya();
+				break;
+
 			case "BKeys":	// Blender keys
 				Vector2 co = Vector2.zero;
 				Vector2 left = Vector2.zero;

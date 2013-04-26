@@ -670,6 +670,14 @@ public class MegaMorphEditor : Editor
 		if ( GUILayout.Button(num + " - " + channel.mName) )
 			channel.showparams = !channel.showparams;
 
+		float min = 0.0f;
+		float max = 100.0f;
+		if ( morph.UseLimit )
+		{
+			min = morph.Min;
+			max = morph.Max;
+		}
+
 		GUI.backgroundColor = new Color(1, 1, 1);
 		if ( channel.showparams )
 		{
@@ -679,10 +687,17 @@ public class MegaMorphEditor : Editor
 			{
 				channel.mActiveOverride = EditorGUILayout.Toggle("Active", channel.mActiveOverride);
 				
-				if ( channel.mUseLimit )
-					channel.Percent = EditorGUILayout.Slider("Percent", channel.Percent, channel.mSpinmin, channel.mSpinmax);
+				if ( morph.UseLimit )
+				{
+					channel.Percent = EditorGUILayout.Slider("Percent", channel.Percent, min, max);	//0.0f, 100.0f);
+				}
 				else
-					channel.Percent = EditorGUILayout.Slider("Percent", channel.Percent, 0.0f, 100.0f);
+				{
+					if ( channel.mUseLimit )
+						channel.Percent = EditorGUILayout.Slider("Percent", channel.Percent, channel.mSpinmin, channel.mSpinmax);
+					else
+						channel.Percent = EditorGUILayout.Slider("Percent", channel.Percent, 0.0f, 100.0f);
+				}
 				channel.mCurvature = EditorGUILayout.FloatField("Tension", channel.mCurvature);
 			}
 
@@ -738,10 +753,17 @@ public class MegaMorphEditor : Editor
 			if ( channel.mActiveOverride && channel.mTargetCache != null && channel.mTargetCache.Count > 0 )
 			{
 				//channel.Percent = EditorGUILayout.Slider("Percent", channel.Percent, 0.0f, 100.0f);
-				if ( channel.mUseLimit )
-					channel.Percent = EditorGUILayout.Slider("Percent", channel.Percent, channel.mSpinmin, channel.mSpinmax);
+				if ( morph.UseLimit )
+				{
+					channel.Percent = EditorGUILayout.Slider("Percent", channel.Percent, min, max);	//0.0f, 100.0f);
+				}
 				else
-					channel.Percent = EditorGUILayout.Slider("Percent", channel.Percent, 0.0f, 100.0f);
+				{
+					if ( channel.mUseLimit )
+						channel.Percent = EditorGUILayout.Slider("Percent", channel.Percent, channel.mSpinmin, channel.mSpinmax);
+					else
+						channel.Percent = EditorGUILayout.Slider("Percent", channel.Percent, 0.0f, 100.0f);
+				}
 			}
 		}
 	}
@@ -787,6 +809,12 @@ public class MegaMorphEditor : Editor
 			morph.gizCol1 = EditorGUILayout.ColorField("Giz Col 1", morph.gizCol1);
 			morph.gizCol2 = EditorGUILayout.ColorField("Giz Col 2", morph.gizCol2);
 		}
+
+		morph.UseLimit = EditorGUILayout.BeginToggleGroup("Use Limits", morph.UseLimit);
+		morph.Min = EditorGUILayout.FloatField("Min", morph.Min);
+		morph.Max = EditorGUILayout.FloatField("Max", morph.Max);
+
+		EditorGUILayout.EndToggleGroup();
 
 		morph.animate = EditorGUILayout.Toggle("Animate", morph.animate);
 
@@ -1177,11 +1205,26 @@ public class MegaMorphEditor : Editor
 					currentChan = null;
 				}
 				break;
+
 			case "Anim":
 				MegaBezFloatKeyControl con = LoadAnim(br);
 				if ( currentChan != null )
+				{
 					currentChan.control = con;
+					mr.animtype = MegaMorphAnimType.Bezier;
+				}
 				break;
+
+			case "MayaAnim":
+				MegaBezFloatKeyControl hcon = LoadMayaAnim(br);
+				if ( currentChan != null )
+				{
+					currentChan.control = hcon;
+					//currentChan.control = currentChan.hcontrol;
+					mr.animtype = MegaMorphAnimType.Hermite;
+				}
+				break;
+
 			default: return false;
 		}
 
@@ -1202,9 +1245,9 @@ public class MegaMorphEditor : Editor
 		//Debug.Log("ParseMorph " + id);
 		switch ( id )
 		{
-			case "Max": mr.Max = br.ReadSingle(); break;
-			case "Min": mr.Min = br.ReadSingle(); break;
-			case "UseLim": mr.UseLimit = (br.ReadInt32() == 1); break;
+			case "Max": mr.Max = br.ReadSingle(); Debug.Log("Max " + mr.Max); break;
+			case "Min": mr.Min = br.ReadSingle(); Debug.Log("Min " + mr.Min); break;
+			case "UseLim": mr.UseLimit = (br.ReadInt32() == 1); Debug.Log("UseLim " + mr.UseLimit); break;
 
 			case "StartPoints":	// Mapping
 				MegaTargetMesh tm = new MegaTargetMesh();
@@ -1220,7 +1263,9 @@ public class MegaMorphEditor : Editor
 				break;
 
 			case "Channel":
-				mr.chanBank.Add(LoadChan(br));
+				MegaMorphChan chan = LoadChan(br);
+				if ( chan != null )
+					mr.chanBank.Add(chan);
 				break;
 
 			case "Animation":
@@ -1247,12 +1292,28 @@ public class MegaMorphEditor : Editor
 		//Parse(br, ParseChan);
 		MegaParse.Parse(br, ParseChan);
 
+		for ( int i = 0; i < chan.mTargetCache.Count; i++ )
+		{
+			if ( chan.mTargetCache[i].points == null || chan.mTargetCache[i].points.Length == 0 )
+				return null;
+		}
+
 		MegaMorph mr = (MegaMorph)target;
 		chan.Rebuild(mr);
 		return chan;
 	}
 
 	public static MegaBezFloatKeyControl LoadAnim(BinaryReader br)
+	{
+		//MegaBezFloatKeyControl con = new MegaBezFloatKeyControl();
+
+		//Parse(br, con.Parse);
+		//MegaParse.Parse(br, con.Parse);
+		//return con;
+		return MegaParseBezFloatControl.LoadBezFloatKeyControl(br);
+	}
+
+	public static MegaBezFloatKeyControl LoadMayaAnim(BinaryReader br)
 	{
 		//MegaBezFloatKeyControl con = new MegaBezFloatKeyControl();
 

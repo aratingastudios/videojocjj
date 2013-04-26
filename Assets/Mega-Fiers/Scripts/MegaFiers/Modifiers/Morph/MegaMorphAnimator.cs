@@ -27,12 +27,17 @@ public class MegaMorphAnimator : MonoBehaviour
 {
 	public MegaMorphBase	morph;
 
+	public MegaMorphBase[]	morphs;	
+
 	public List<MegaMorphAnimClip>	clips = new List<MegaMorphAnimClip>();
 
 	public int current = 0;
 	public float t = -1.0f;	// Current clip time
 	public float at = 0.0f;
 	//MegaMorphAnimClipEvent	listener;
+
+	public int sourceFPS = 30;
+	public bool	useFrames = true;
 
 	//public void SetListener(MegaMorphAnimClipEvent listen)
 	//{
@@ -61,6 +66,16 @@ public class MegaMorphAnimator : MonoBehaviour
 	public float GetTime()
 	{
 		return at;
+	}
+
+	public void PlayClipEvent(int i)
+	{
+		PlayClip(i);
+	}
+
+	public void PlayClipNameEvent(string name)
+	{
+		PlayClip(name);
 	}
 
 	public void PlayClip(int i)
@@ -119,8 +134,16 @@ public class MegaMorphAnimator : MonoBehaviour
 
 	void Update()
 	{
-		if ( morph == null )
-			morph = (MegaMorphBase)GetComponent<MegaMorphBase>();
+		if ( MultipleMorphs )
+		{
+			if ( morphs == null )
+				morphs = GetComponentsInChildren<MegaMorphBase>();
+		}
+		else
+		{
+			if ( morph == null )
+				morph = (MegaMorphBase)GetComponent<MegaMorphBase>();
+		}
 
 		if ( LinkedUpdate )
 		{
@@ -128,7 +151,8 @@ public class MegaMorphAnimator : MonoBehaviour
 		}
 		else
 		{
-			if ( morph && clips.Count > 0 && current < clips.Count )
+			//if ( morph && clips.Count > 0 && current < clips.Count )
+			if ( clips.Count > 0 && current < clips.Count )
 			{
 				if ( t >= 0.0f )
 				{
@@ -143,12 +167,28 @@ public class MegaMorphAnimator : MonoBehaviour
 					}
 
 					at += clips[current].start;
-					morph.SetAnim(at);
+
+					if ( MultipleMorphs )
+					{
+						if ( morphs != null )
+						{
+							for ( int i = 0; i < morphs.Length; i++ )
+							{
+								morphs[i].SetAnim(at);
+							}
+						}
+					}
+					else
+					{
+						if ( morph )
+							morph.SetAnim(at);
+					}
 				}
 			}
 		}
 	}
 
+	public bool MultipleMorphs = false;
 	public bool LinkedUpdate = false;
 	public bool PlayOnStart = true;
 
@@ -198,7 +238,22 @@ public class MegaMorphAnimator : MonoBehaviour
 										break;
 								}
 								ct += clips[current].start;
-								morph.SetAnim(ct);	//state.time + clips[current].start);
+
+								if ( MultipleMorphs )
+								{
+									if ( morphs != null )
+									{
+										for ( int m = 0; m < morphs.Length; m++ )
+										{
+											morphs[m].SetAnim(at);
+										}
+									}
+								}
+								else
+								{
+									if ( morph )
+										morph.SetAnim(ct);	//state.time + clips[current].start);
+								}
 								return;
 							}
 						}

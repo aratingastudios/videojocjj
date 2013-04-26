@@ -11,10 +11,19 @@ public class MegaPointCacheAnimatorEditor : Editor
 		MegaPointCacheAnimator anim = (MegaPointCacheAnimator)target;
 
 		string[] clips = anim.GetClipNames();
+		anim.useFrames = EditorGUILayout.BeginToggleGroup("Use Frames", anim.useFrames);
+		anim.sourceFPS = EditorGUILayout.IntField("Source FPS", anim.sourceFPS);
+		EditorGUILayout.EndToggleGroup();
+
 		anim.LinkedUpdate = EditorGUILayout.Toggle("Linked Update", anim.LinkedUpdate);
 		anim.PlayOnStart = EditorGUILayout.Toggle("Play On Start", anim.PlayOnStart);
 
-		anim.current = EditorGUILayout.Popup("Playing Clip", anim.current, clips);
+		//anim.current = EditorGUILayout.Popup("Playing Clip", anim.current, clips);
+		int current = EditorGUILayout.Popup("Playing Clip", anim.current, clips);
+		if ( current != anim.current )
+		{
+			anim.PlayClip(current);
+		}
 
 		//anim.t = EditorGUILayout.FloatField("t", anim.t);
 		//anim.at = EditorGUILayout.FloatField("at", anim.at);
@@ -29,9 +38,19 @@ public class MegaPointCacheAnimatorEditor : Editor
 
 			//EditorGUILayout.TextArea("" + i + " - ");
 			anim.clips[i].name = EditorGUILayout.TextField(anim.clips[i].name);
-			anim.clips[i].start = EditorGUILayout.FloatField(anim.clips[i].start, GUILayout.Width(40));
-			anim.clips[i].end = EditorGUILayout.FloatField(anim.clips[i].end, GUILayout.Width(40));
-			anim.clips[i].loop = (MegaRepeatMode)EditorGUILayout.EnumPopup(anim.clips[i].loop);
+
+			if ( anim.useFrames )
+			{
+				anim.clips[i].start = (float)EditorGUILayout.IntField((int)(anim.clips[i].start * anim.sourceFPS), GUILayout.Width(40)) / (float)anim.sourceFPS;
+				anim.clips[i].end = (float)EditorGUILayout.FloatField((int)(anim.clips[i].end * anim.sourceFPS), GUILayout.Width(40)) / (float)anim.sourceFPS;
+				anim.clips[i].loop = (MegaRepeatMode)EditorGUILayout.EnumPopup(anim.clips[i].loop);
+			}
+			else
+			{
+				anim.clips[i].start = EditorGUILayout.FloatField(anim.clips[i].start, GUILayout.Width(40));
+				anim.clips[i].end = EditorGUILayout.FloatField(anim.clips[i].end, GUILayout.Width(40));
+				anim.clips[i].loop = (MegaRepeatMode)EditorGUILayout.EnumPopup(anim.clips[i].loop);
+			}
 
 			if ( GUILayout.Button("-") )
 			{
