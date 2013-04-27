@@ -1,18 +1,15 @@
 fileFormatVersion: 2
-guid: f411ed2adb2795f4aa469819f8116aeb
+guid: 65e6643f44e858749a5bc977465ae623
 ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
-    100000: G_Level_4
+    100000: Runa_02
     100002: //RootNode
-    100004: Terra_03
-    400000: G_Level_4
+    400000: Runa_02
     400002: //RootNode
-    400004: Terra_03
-    2300000: Terra_03
-    3300000: Terra_03
-    4300000: Terra_03
-    6400000: Terra_03
+    2300000: Runa_02
+    3300000: Runa_02
+    4300000: Runa_02
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -32,7 +29,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 1
+    addColliders: 0
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
