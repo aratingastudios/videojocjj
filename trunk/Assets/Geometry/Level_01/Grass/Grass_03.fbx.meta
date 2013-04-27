@@ -1,20 +1,15 @@
 fileFormatVersion: 2
-guid: 3251b3b5aa2c09a49bc9bddfa180abcd
+guid: b79213875f0119d4b82c588cc7ca7092
 ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
-    100000: G_Level_4
-    100002: //RootNode
-    100004: Terra_04
-    100006: G_Level_01
-    400000: G_Level_4
-    400002: //RootNode
-    400004: Terra_04
-    400006: G_Level_01
-    2300000: Terra_04
-    3300000: Terra_04
-    4300000: Terra_04
-    6400000: Terra_04
+    100000: //RootNode
+    100002: MASTER_Planta_02
+    400000: //RootNode
+    400002: MASTER_Planta_02
+    2300000: MASTER_Planta_02
+    3300000: MASTER_Planta_02
+    4300000: MASTER_Planta_02
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -34,7 +29,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 1
+    addColliders: 0
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
