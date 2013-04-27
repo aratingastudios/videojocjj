@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a0e870374ac2c9046935badba8c87ad9
+guid: 136140f6553c8cf4980d7ecebf866681
 ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
@@ -7,7 +7,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: Level_01_Terra
+    4300000: Grass_02
     9500000: //RootNode
   materials:
     importMaterials: 1

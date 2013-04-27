@@ -1,19 +1,13 @@
 fileFormatVersion: 2
-guid: cf11e6b4d4449004c8fbf380c78da0b9
+guid: 3bd79be223c3f5f49995edc92a1bc6e4
 ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
-    100000: Level_01_WalkLine
-    100002: //RootNode
-    100004: pasted__Level_01_Terrra_Line
-    100006: pasted__nurbsToPoly1
-    400000: Level_01_WalkLine
-    400002: //RootNode
-    400004: pasted__Level_01_Terrra_Line
-    400006: pasted__nurbsToPoly1
-    2300000: Level_01_WalkLine
-    3300000: Level_01_WalkLine
-    4300000: Level_01_WalkLine
+    100000: //RootNode
+    400000: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Dandelion
     9500000: //RootNode
   materials:
     importMaterials: 1

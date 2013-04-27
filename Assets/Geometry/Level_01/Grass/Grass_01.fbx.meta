@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 250df810c5225174db08e7623feaf6c3
+guid: 61567c6950e66e944be6e3d7720b2b22
 ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
@@ -7,7 +7,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: Sotaterra_01
+    4300000: Grass_01
     9500000: //RootNode
   materials:
     importMaterials: 1
