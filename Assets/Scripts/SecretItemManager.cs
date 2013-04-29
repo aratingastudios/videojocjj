@@ -4,10 +4,11 @@ using System.Collections;
 [RequireComponent(typeof(AudioSource))]
 public class SecretItemManager : MonoBehaviour
 {
-	bool bFound = false;
 	GameObject gameManagerObj;
 	GUIManager guiManager;
 	ScoreManager scoreManager;
+	
+	string state="idle";
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -22,23 +23,28 @@ public class SecretItemManager : MonoBehaviour
 	
 	void OnTriggerEnter(Collider collider)
 	{
-		if(collider.name.Contains("PLAYER"))
-		{
-			if(audio && guiManager.bAudioFx)
-				audio.Play();
-			
-			bFound = true;
-		}
+		if(state=="idle" && collider.name.Contains("PLAYER"))
+			state = "found";
 	}
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////
 	
 	void Update()
 	{
-		if(bFound && !audio.isPlaying)
+		if(state=="found")
 		{
 			scoreManager.SendMessage("SecretItemReached");
-			Destroy(gameObject);
+			
+			if(audio && guiManager.bAudioFx && !audio.isPlaying)
+				audio.Play();
+			
+			state="playing_audio";
+		}
+		
+		if(state=="playing_audio")
+		{
+			if(!audio.isPlaying)
+				Destroy(gameObject);
 		}
 	}
 }

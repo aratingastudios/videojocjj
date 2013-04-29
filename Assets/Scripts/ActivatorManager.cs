@@ -14,9 +14,8 @@ public class ActivatorManager : MonoBehaviour
 	GameObject gameManagerObj;
 	GUIManager guiManager;
 	
-	GameObject targetCameraObj;
-	TargetCameraManager targetCameraManager;
-	
+	Transform targetCamera;
+		
 	bool bActivationDone=false;
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -26,9 +25,8 @@ public class ActivatorManager : MonoBehaviour
 		gameManagerObj = GameObject.Find("_GAMEMANAGER");
 		guiManager = gameManagerObj.GetComponent<GUIManager>();
 		
-		targetCameraObj = GameObject.Find("TargetCamera");
-		targetCameraManager = targetCameraObj.GetComponent<TargetCameraManager>();
-		
+		targetCamera = GameObject.Find("TargetCamera").transform;
+				
 		targetPos = new Vector3(transform.position.x, transform.position.y-0.5f, transform.position.z);
 	}
 	
@@ -41,10 +39,10 @@ public class ActivatorManager : MonoBehaviour
 			transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, smoothTime);
 			
 			if(Vector3.Distance(transform.position, targetPos) < 0.01f)
-				state="activate";
+				state="activate_targets";
 		}
 		
-		if(state=="activate")
+		if(state=="activate_targets")
 		{
 			foreach(Transform t in targets)
 				t.SendMessage("Activate");
@@ -65,9 +63,9 @@ public class ActivatorManager : MonoBehaviour
 			state = "move";
 			
 			if(targets[0].childCount==0)
-				targetCameraManager.SendMessage("LookAtActivator", targets[0].position);
+				targetCamera.SendMessage("LookAtActivator", targets[0].position);
 			else
-				targetCameraManager.SendMessage("LookAtActivator", targets[0].GetChild(0).position);
+				targetCamera.SendMessage("LookAtActivator", targets[0].GetChild(0).position);
 			
 			bActivationDone=true;
 		}
