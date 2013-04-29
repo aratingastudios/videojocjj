@@ -15,6 +15,14 @@ ModelImporter:
     100018: joint7
     100020: joint8
     100022: joint9
+    100024: joint12
+    100026: Mon_04_JNT_01
+    100028: Mon_04_JNT_02
+    100030: Mon_04_JNT_03
+    100032: Mon_04_JNT_04
+    100034: Mon_04_JNT_05
+    100036: Mon_04_JNT_06
+    100038: Mon_04_JNT_TIP
     400000: Columna_Movil_01
     400002: Monolito_04_Base_JNT
     400004: //RootNode
@@ -27,6 +35,14 @@ ModelImporter:
     400018: joint7
     400020: joint8
     400022: joint9
+    400024: joint12
+    400026: Mon_04_JNT_01
+    400028: Mon_04_JNT_02
+    400030: Mon_04_JNT_03
+    400032: Mon_04_JNT_04
+    400034: Mon_04_JNT_05
+    400036: Mon_04_JNT_06
+    400038: Mon_04_JNT_TIP
     4300000: Columna_Movil_01
     7400000: Take 001
     9500000: //RootNode
