@@ -44,7 +44,7 @@ public class MegaWrap : MonoBehaviour
 	public Vector3[]		verts;
 	public MegaBindVert[]	bindverts;
 	public MegaModifyObject	target;
-	bool					skinned			= false;
+	//bool					skinned			= false;
 	public float			maxdist			= 0.25f;
 	public int				maxpoints		= 4;
 	public bool				WrapEnabled		= true;
@@ -203,7 +203,7 @@ public class MegaWrap : MonoBehaviour
 
 		if ( mf != null )
 		{
-			skinned = false;
+			//skinned = false;
 			srcmesh = mf.mesh;
 		}
 		else
@@ -212,7 +212,7 @@ public class MegaWrap : MonoBehaviour
 
 			if ( smesh != null )
 			{
-				skinned = true;
+				//skinned = true;
 				srcmesh = smesh.sharedMesh;
 				sourceIsSkin = true;
 			}
