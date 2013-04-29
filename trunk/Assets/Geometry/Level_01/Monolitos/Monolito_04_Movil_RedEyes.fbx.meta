@@ -24,6 +24,7 @@ ModelImporter:
     6400000: //RootNode
     7400000: Take 001
     9500000: //RootNode
+    11100000: //RootNode
     13700000: Ulls_01
   materials:
     importMaterials: 1
@@ -75,5 +76,5 @@ ModelImporter:
     rootMotionBoneName: 
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   additionalBone: 1
-  animationType: 2
+  animationType: 1
   userData: 
