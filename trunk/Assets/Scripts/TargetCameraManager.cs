@@ -94,7 +94,7 @@ public class TargetCameraManager : MonoBehaviour
 			dist = Vector3.Distance(transform.position, newPos);
 			
 			//Cuando este suficientemente cerca ya no hace falta acercarse mas
-			if(dist < 10.0f)
+			if(dist < 0.5f)
 			{
 				state="viewing";
 				startTime=Time.time;
@@ -174,11 +174,11 @@ public class TargetCameraManager : MonoBehaviour
 	//para que el jugador pueda ver lo que está ocurriendo
 	
 	//Message from ActivatorManager
-	void LookAtActivator(Vector3 targetPos)
+	void LookAtActivator(Vector2 targetPos)
 	{
-		state="view_activator";
-		m_activatorPos=targetPos;
-		startTime=Time.time;
+		state = "view_activator";
+		m_activatorPos = new Vector3(targetPos.x, targetPos.y, transform.position.z);
+		startTime = Time.time;
 	}
 }
 
