@@ -5,6 +5,7 @@ using System.Collections;
 public class ActivatorManager : MonoBehaviour
 {
 	public Transform[] targets;
+	public Vector2 cameraTarget;
 	
 	Vector3 targetPos;
 	string state = "idle";
@@ -62,10 +63,14 @@ public class ActivatorManager : MonoBehaviour
 		{
 			state = "move";
 			
+			/*
 			if(targets[0].childCount==0)
 				targetCamera.SendMessage("LookAtActivator", targets[0].position);
 			else
 				targetCamera.SendMessage("LookAtActivator", targets[0].GetChild(0).position);
+			*/
+			
+			targetCamera.SendMessage("LookAtActivator", cameraTarget);
 			
 			bActivationDone=true;
 		}
