@@ -23,6 +23,23 @@ ModelImporter:
     100034: Mon_04_JNT_05
     100036: Mon_04_JNT_06
     100038: Mon_04_JNT_TIP
+    100040: Monolito_04_Movil_A_01
+    100042: Monolito_04_Movil_A_02
+    100044: Monolito_04_Movil_A_03
+    100046: Monolito_04_Movil_A_04
+    100048: Monolito_04_Movil_A_05
+    100050: Monolito_04_Movil_A_06
+    100052: polySurface2
+    100054: polySurface4
+    100056: polySurface6
+    100058: polySurface7
+    100060: polySurface8
+    100062: transform1
+    100064: transform2
+    100066: transform3
+    100068: transform4
+    100070: transform5
+    100072: transform6
     400000: Columna_Movil_01
     400002: Monolito_04_Base_JNT
     400004: //RootNode
@@ -43,7 +60,52 @@ ModelImporter:
     400034: Mon_04_JNT_05
     400036: Mon_04_JNT_06
     400038: Mon_04_JNT_TIP
+    400040: Monolito_04_Movil_A_01
+    400042: Monolito_04_Movil_A_02
+    400044: Monolito_04_Movil_A_03
+    400046: Monolito_04_Movil_A_04
+    400048: Monolito_04_Movil_A_05
+    400050: Monolito_04_Movil_A_06
+    400052: polySurface2
+    400054: polySurface4
+    400056: polySurface6
+    400058: polySurface7
+    400060: polySurface8
+    400062: transform1
+    400064: transform2
+    400066: transform3
+    400068: transform4
+    400070: transform5
+    400072: transform6
+    2300000: Monolito_04_Movil_A_01
+    2300002: Monolito_04_Movil_A_02
+    2300004: Monolito_04_Movil_A_03
+    2300006: Monolito_04_Movil_A_04
+    2300008: Monolito_04_Movil_A_05
+    2300010: Monolito_04_Movil_A_06
+    2300012: polySurface8
+    3300000: Monolito_04_Movil_A_01
+    3300002: Monolito_04_Movil_A_02
+    3300004: Monolito_04_Movil_A_03
+    3300006: Monolito_04_Movil_A_04
+    3300008: Monolito_04_Movil_A_05
+    3300010: Monolito_04_Movil_A_06
+    3300012: polySurface8
     4300000: Columna_Movil_01
+    4300002: Monolito_04_Movil_A_02
+    4300004: Monolito_04_Movil_A_03
+    4300006: Monolito_04_Movil_A_04
+    4300008: Monolito_04_Movil_A_06
+    4300010: Monolito_04_Movil_A_05
+    4300012: Monolito_04_Movil_A_01
+    4300014: polySurface8
+    6400000: Monolito_04_Movil_A_01
+    6400002: Monolito_04_Movil_A_02
+    6400004: Monolito_04_Movil_A_03
+    6400006: Monolito_04_Movil_A_04
+    6400008: Monolito_04_Movil_A_05
+    6400010: Monolito_04_Movil_A_06
+    6400012: polySurface8
     7400000: Take 001
     9500000: //RootNode
     11100000: //RootNode
