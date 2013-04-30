@@ -5,12 +5,18 @@ ModelImporter:
   fileIDToRecycleName:
     100000: Level_01_Terra1
     100002: //RootNode
+    100004: Level_01_Terra_2
     400000: Level_01_Terra1
     400002: //RootNode
+    400004: Level_01_Terra_2
     2300000: Level_01_Terra1
+    2300002: Level_01_Terra_2
     3300000: Level_01_Terra1
+    3300002: Level_01_Terra_2
     4300000: Level_01_Terra1
+    4300002: Level_01_Terra_2
     6400000: Level_01_Terra1
+    6400002: Level_01_Terra_2
     9500000: //RootNode
   materials:
     importMaterials: 1
