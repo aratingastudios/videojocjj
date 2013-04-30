@@ -54,7 +54,7 @@ public class MainMenu : MonoBehaviour
 				
 		if(GUI.Button(new Rect(20, Screen.height-20-buttonSize, buttonSize, buttonSize), "", "options"))
 		{
-			//PlayerPrefs.DeleteAll();
+			PlayerPrefs.DeleteAll();
 			bShowOptions=!bShowOptions;
 		}
 	
