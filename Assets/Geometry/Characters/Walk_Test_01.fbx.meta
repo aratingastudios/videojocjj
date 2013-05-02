@@ -61,6 +61,18 @@ ModelImporter:
     100110: CTRL_Monster_01_GEN
     100112: joint25
     100114: Monster_01_Parpella_01 1
+    100116: CTRL_Monster_01_LeftFoot
+    100118: CTRL_Monster_01_RightFoot
+    100120: CTRL_Monster_01_RightHand
+    100122: CTRL_Monster_01_RightHand1
+    100124: ikHandle1
+    100126: ikHandle2
+    100128: ikHandle5
+    100130: ikHandle6
+    100132: joint16
+    100134: joint19
+    100136: joint23
+    100138: joint9
     400000: CTRL_Monster_01_Head
     400002: CTRL_Monster_01_Hip
     400004: CTRL_Monster_01_Mouth
@@ -119,6 +131,18 @@ ModelImporter:
     400110: CTRL_Monster_01_GEN
     400112: joint25
     400114: Monster_01_Parpella_01 1
+    400116: CTRL_Monster_01_LeftFoot
+    400118: CTRL_Monster_01_RightFoot
+    400120: CTRL_Monster_01_RightHand
+    400122: CTRL_Monster_01_RightHand1
+    400124: ikHandle1
+    400126: ikHandle2
+    400128: ikHandle5
+    400130: ikHandle6
+    400132: joint16
+    400134: joint19
+    400136: joint23
+    400138: joint9
     2300000: Monster_01_Eye
     2300002: Monster_01_Eye1
     2300004: Monster_01_R_Head
