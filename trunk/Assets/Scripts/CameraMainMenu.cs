@@ -32,7 +32,7 @@ public class CameraMainMenu : MonoBehaviour
 		
 		dist = Vector3.Distance(transform.position, target);
 		
-		if(dist < 0.5f)
+		if(dist < 2.0f)
 		{
 			index = (index+1)%2;
 			target = targets[index];
