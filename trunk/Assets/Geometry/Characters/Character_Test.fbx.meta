@@ -41,6 +41,11 @@ ModelImporter:
     100070: pPlane14
     100072: pPlane15
     100074: pPlane9
+    100076: CTRL_Monster_01_GEN
+    100078: joint24
+    100080: joint25
+    100082: Monster_01_Parpella_01
+    100084: Monster_01_Parpella_01 1
     400000: //RootNode
     400002: Monster_01_Arm
     400004: Monster_01_Body
@@ -79,6 +84,11 @@ ModelImporter:
     400070: pPlane14
     400072: pPlane15
     400074: pPlane9
+    400076: CTRL_Monster_01_GEN
+    400078: joint24
+    400080: joint25
+    400082: Monster_01_Parpella_01
+    400084: Monster_01_Parpella_01 1
     2300000: //RootNode
     2300002: Monster_01_Arm
     2300004: Monster_01_Body
@@ -89,6 +99,9 @@ ModelImporter:
     2300014: pPlane14
     2300016: pPlane15
     2300018: pPlane9
+    2300020: CTRL_Monster_01_GEN
+    2300022: Monster_01_Parpella_01
+    2300024: Monster_01_Parpella_01 1
     3300000: //RootNode
     3300002: Monster_01_Arm
     3300004: Monster_01_Body
@@ -99,6 +112,9 @@ ModelImporter:
     3300014: pPlane14
     3300016: pPlane15
     3300018: pPlane9
+    3300020: CTRL_Monster_01_GEN
+    3300022: Monster_01_Parpella_01
+    3300024: Monster_01_Parpella_01 1
     4300000: pPlane35
     4300002: Monster_01_Body
     4300004: Monster_01_Eye
@@ -120,6 +136,9 @@ ModelImporter:
     4300036: Monster_01_Eye1
     4300038: Monster_01_R_Mouth
     4300040: pPlane14
+    4300042: CTRL_Monster_01_GEN
+    4300044: Monster_01_Parpella_01
+    4300046: Monster_01_Parpella_01
     7400000: Take 001
     9500000: //RootNode
     13700000: Monster_01_L_Down_Leg
