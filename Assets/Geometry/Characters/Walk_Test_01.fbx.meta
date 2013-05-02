@@ -39,6 +39,28 @@ ModelImporter:
     100066: pPlane15
     100068: pPlane9
     100070: //RootNode
+    100072: joint24
+    100074: Monster_01_Combine
+    100076: Monster_01_Parpella_01
+    100078: transform1
+    100080: transform10
+    100082: transform11
+    100084: transform12
+    100086: transform13
+    100088: transform14
+    100090: transform15
+    100092: transform16
+    100094: transform2
+    100096: transform3
+    100098: transform4
+    100100: transform5
+    100102: transform6
+    100104: transform7
+    100106: transform8
+    100108: transform9
+    100110: CTRL_Monster_01_GEN
+    100112: joint25
+    100114: Monster_01_Parpella_01 1
     400000: CTRL_Monster_01_Head
     400002: CTRL_Monster_01_Hip
     400004: CTRL_Monster_01_Mouth
@@ -75,6 +97,28 @@ ModelImporter:
     400066: pPlane15
     400068: pPlane9
     400070: //RootNode
+    400072: joint24
+    400074: Monster_01_Combine
+    400076: Monster_01_Parpella_01
+    400078: transform1
+    400080: transform10
+    400082: transform11
+    400084: transform12
+    400086: transform13
+    400088: transform14
+    400090: transform15
+    400092: transform16
+    400094: transform2
+    400096: transform3
+    400098: transform4
+    400100: transform5
+    400102: transform6
+    400104: transform7
+    400106: transform8
+    400108: transform9
+    400110: CTRL_Monster_01_GEN
+    400112: joint25
+    400114: Monster_01_Parpella_01 1
     2300000: Monster_01_Eye
     2300002: Monster_01_Eye1
     2300004: Monster_01_R_Head
@@ -82,6 +126,9 @@ ModelImporter:
     2300008: pPlane14
     2300010: pPlane15
     2300012: pPlane9
+    2300014: Monster_01_Parpella_01
+    2300016: CTRL_Monster_01_GEN
+    2300018: Monster_01_Parpella_01 1
     3300000: Monster_01_Eye
     3300002: Monster_01_Eye1
     3300004: Monster_01_R_Head
@@ -89,6 +136,9 @@ ModelImporter:
     3300008: pPlane14
     3300010: pPlane15
     3300012: pPlane9
+    3300014: Monster_01_Parpella_01
+    3300016: CTRL_Monster_01_GEN
+    3300018: Monster_01_Parpella_01 1
     4300000: Monster_01_R_Down_Leg
     4300002: Monster_01_R_Upper_Leg1
     4300004: Monster_01_L_Down_Leg
@@ -105,6 +155,9 @@ ModelImporter:
     4300026: Monster_01_Eye1
     4300028: Monster_01_R_Mouth
     4300030: pPlane14
+    4300032: Monster_01_Parpella_01
+    4300034: CTRL_Monster_01_GEN
+    4300036: Monster_01_Parpella_01
     7400000: Walk_Cicle
     7400002: Lazy
     9500000: //RootNode
@@ -156,7 +209,7 @@ ModelImporter:
       takeName: Take 001
       firstFrame: 25
       lastFrame: 150
-      wrapMode: 0
+      wrapMode: 2
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
