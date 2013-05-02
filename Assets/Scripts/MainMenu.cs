@@ -8,24 +8,18 @@ public class MainMenu : MonoBehaviour
 	
 	int buttonSize;
 	int buttonSize3;
-	float originalRatio=80.0f/800.0f;
-	
+		
 	bool bShowOptions;
 	
 	GameObject goAudioManager;
 	bool bAudio = true;
 	bool bAudioOld = true;
 	
-	float ratio;
-	float ratio_4_3 = 4.0f/3.0f;
-	float height;
-	float offset;
-
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	void Start()
 	{
-		buttonSize  = (int)(Screen.width * originalRatio);
+		buttonSize  = (int)(Screen.width * (80.0f/800.0f));
 		buttonSize3 = (int)(buttonSize*1.5f);
 		
 		bAudio = (PlayerPrefs.GetInt("music") == 1);
@@ -34,8 +28,6 @@ public class MainMenu : MonoBehaviour
 		goAudioManager = GameObject.Find("goAudioManager");
 		if(goAudioManager && !goAudioManager.audio.isPlaying && bAudio)
 			goAudioManager.audio.Play();
-		
-		ratio = (float)Screen.width/(float)Screen.height;
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -44,10 +36,7 @@ public class MainMenu : MonoBehaviour
 	{
 		GUI.skin = m_skin_main_menu;
 		
-		height = ratio_4_3/ratio;
-		offset = (1.0f-height)/2.0f;
-		
-		GUI.DrawTextureWithTexCoords(new Rect(0,0,Screen.width,Screen.height), m_tex, new Rect(0,offset,1,height));
+		GUI.DrawTexture(new Rect(Screen.width/2-m_tex.width/2, 50, m_tex.width, m_tex.height), m_tex);
 		
 		if(GUI.Button(new Rect(Screen.width/2-buttonSize3/2, Screen.height/2-buttonSize3/2, buttonSize3, buttonSize3), "", "continue"))
 			Application.LoadLevel("03_LEVEL_SELECT");
