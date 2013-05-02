@@ -35,6 +35,10 @@ public class GUIManager : MonoBehaviour
 	bool bAudioFxOld = true;
 	
 	public Texture2D m_tex_help;
+	public Texture2D m_tex_tut_01;
+	public Texture2D m_tex_tut_02;
+	public Texture2D m_tex_tut_03;
+	public Texture2D m_tex_tut_04;
 	float ratio;
 	float ratio_4_3 = 4.0f/3.0f;
 	float height;
@@ -111,7 +115,7 @@ public class GUIManager : MonoBehaviour
 		else if(gui_state=="show_options")
 			OnGUIShowOptions();
 		
-		else if(gui_state=="show_help")
+		else if(gui_state.Contains("show_tut"))
 			OnGUIShowHelp();
 		
 		else if(gui_state=="show_level_completed")
@@ -235,14 +239,14 @@ public class GUIManager : MonoBehaviour
 	
 	void OnGUIShowOptions()
 	{	
-		GUI.Box(new Rect(0,0,Screen.width,Screen.height), "");
+		GUI.Box(new Rect(-5,-5,Screen.width+10,Screen.height+10), "");
 		
 		GUI.BeginGroup(new Rect(Screen.width/2-buttonSize3-buttonSize3/2-marginButton,Screen.height/2-buttonSize3/2,buttonSize3*3+marginButton*2,buttonSize3));
 		
 		bAudioFx = GUI.Toggle(new Rect(0,0,buttonSize3,buttonSize3), bAudioFx, "", "fx");
 		
 		if(GUI.Button(new Rect(buttonSize3+marginButton,0,buttonSize3, buttonSize3), "", "help"))
-			gui_state = "show_help";
+			gui_state = "show_tut_01";
 		
 		GUI.Button(new Rect(buttonSize3*2+marginButton*2,0,buttonSize3, buttonSize3), "", "info");
 		
@@ -265,10 +269,39 @@ public class GUIManager : MonoBehaviour
 	{
 		height = ratio_4_3/ratio;
 		offset = (1.0f-height)/2.0f;
-		GUI.DrawTextureWithTexCoords(new Rect(0,0,Screen.width,Screen.height), m_tex_help, new Rect(0,offset,1,height));
 		
-		if(GUI.Button(new Rect(20,20,buttonSize, buttonSize), "", "back"))
-			gui_state = "show_options";
+		GUI.Box(new Rect(-5,-5,Screen.width+10,Screen.height+10), "");
+		
+		if(gui_state == "show_tut_01")
+		{
+			GUI.DrawTextureWithTexCoords(new Rect(0,0,Screen.width,Screen.height), m_tex_tut_01, new Rect(0,offset,1,height));
+			if(GUI.Button(new Rect(0,0,Screen.width,Screen.height), "", "dummy_style"))
+				gui_state = "show_tut_02";
+		}
+		
+		else if(gui_state == "show_tut_02")
+		{
+			GUI.DrawTextureWithTexCoords(new Rect(0,0,Screen.width,Screen.height), m_tex_tut_02, new Rect(0,offset,1,height));
+			if(GUI.Button(new Rect(0,0,Screen.width,Screen.height), "", "dummy_style"))
+				gui_state = "show_tut_03";
+		}
+		
+		else if(gui_state == "show_tut_03")
+		{
+			GUI.DrawTextureWithTexCoords(new Rect(0,0,Screen.width,Screen.height), m_tex_tut_03, new Rect(0,offset,1,height));
+			if(GUI.Button(new Rect(0,0,Screen.width,Screen.height), "", "dummy_style"))
+				gui_state = "show_tut_04";
+		}
+		
+		else if(gui_state == "show_tut_04")
+		{
+			GUI.DrawTextureWithTexCoords(new Rect(0,0,Screen.width,Screen.height), m_tex_tut_04, new Rect(0,offset,1,height));
+			if(GUI.Button(new Rect(0,0,Screen.width,Screen.height), "", "dummy_style"))
+				gui_state = "show_options";
+		}
+		
+		//if(GUI.Button(new Rect(20,20,buttonSize, buttonSize), "", "back"))
+		//	gui_state = "show_options";
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

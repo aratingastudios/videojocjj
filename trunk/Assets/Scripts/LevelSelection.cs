@@ -3,6 +3,13 @@ using System.Collections;
 
 public class LevelSelection : MonoBehaviour
 {
+	public Texture2D m_tex;
+	
+	float ratio;
+	float ratio_4_3 = 4.0f/3.0f;
+	float height;
+	float offset;
+		
 	public GUISkin m_skin_level_select;
 	public int num_levels;
 	public int num_levels_total;
@@ -29,6 +36,8 @@ public class LevelSelection : MonoBehaviour
 		PlayerPrefs.SetInt("num_levels", num_levels);
 		
 		goAudioManager = GameObject.Find("goAudioManager");
+		
+		ratio = (float)Screen.width/(float)Screen.height;
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -74,7 +83,10 @@ public class LevelSelection : MonoBehaviour
 	{
 		GUI.skin = m_skin_level_select;
 		
-		GUI.Box(new Rect(0,0,Screen.width, Screen.height), "", "background");
+		//GUI.Box(new Rect(0,0,Screen.width, Screen.height), "", "background");
+		height = ratio_4_3/ratio;
+		offset = (1.0f-height)/2.0f;
+		GUI.DrawTextureWithTexCoords(new Rect(0,0,Screen.width,Screen.height), m_tex, new Rect(0,offset,1,height));
 			
 		GUI.BeginGroup(new Rect(marginH,marginV,gridWidth,gridHeight));
 		
