@@ -56,8 +56,8 @@ public class PlayerControl : MonoBehaviour
 		gameManagerObj = GameObject.Find("_GAMEMANAGER");
 		guiManager = gameManagerObj.GetComponent<GUIManager>();
 		
-		if(transform.GetChildCount() > 0)
-			mat_child = transform.GetChild(0).renderer.material;
+		//if(transform.GetChildCount() > 0)
+		//	mat_child = transform.GetChild(0).renderer.material;
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -150,7 +150,15 @@ public class PlayerControl : MonoBehaviour
 			
 			//rotate character to face direction when move
 			if(Mathf.Abs(horiz)>0.1f)
+			{
 				transform.forward = Vector3.Normalize(new Vector3(horiz, 0.0f, 0.0f));
+				animation.Play("Walk_Cicle");
+			}
+			else
+			{
+				animation.Play("Lazy");
+			}
+				
 			//face to camera when idle
 			//else
 			//	transform.forward = Vector3.Normalize(new Vector3(0.0f, 0.0f, -1.0f));
@@ -197,7 +205,7 @@ public class PlayerControl : MonoBehaviour
 	{
 		if(activePlatform == null) //avoid problems with moving platforms
 		{
-			bool b = Physics.Raycast(transform.position, Vector3.down, 0.1f);
+			bool b = Physics.Raycast(transform.position, Vector3.down, 1.0f);
 			return !b;
 		}
 		else
@@ -250,11 +258,12 @@ public class PlayerControl : MonoBehaviour
 			{
 				if(options.bPlayAudio)
 					PlaySound(2);
-			
+			/*
 				if(isActive)
 					mat_child.color = Color.white;
 				else
 					mat_child.color = Color.grey;
+					*/
 			}
 		}
 	}
