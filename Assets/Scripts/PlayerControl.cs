@@ -152,11 +152,13 @@ public class PlayerControl : MonoBehaviour
 			if(Mathf.Abs(horiz)>0.1f)
 			{
 				transform.forward = Vector3.Normalize(new Vector3(horiz, 0.0f, 0.0f));
-				animation.Play("Walk_Cicle");
+				if(animation.GetClipCount() > 0)
+					animation.Play("Walk_Cicle");
 			}
 			else
 			{
-				animation.Play("Lazy");
+				if(animation.GetClipCount() > 0)
+					animation.Play("Lazy");
 			}
 				
 			//face to camera when idle
