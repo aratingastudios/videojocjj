@@ -152,12 +152,12 @@ public class PlayerControl : MonoBehaviour
 			if(Mathf.Abs(horiz)>0.1f)
 			{
 				transform.forward = Vector3.Normalize(new Vector3(horiz, 0.0f, 0.0f));
-				if(animation.GetClipCount() > 0)
+				if(animation && animation.GetClipCount() > 0)
 					animation.Play("Walk_Cicle");
 			}
 			else
 			{
-				if(animation.GetClipCount() > 0)
+				if(animation && animation.GetClipCount() > 0)
 					animation.Play("Lazy");
 			}
 				
