@@ -74,6 +74,21 @@ ModelImporter:
     100136: transform8
     100138: transform9
     100140: Monster_01
+    100142: CTRL_Monster_01_L_Feet
+    100144: CTRL_Monster_01_L_Foot
+    100146: CTRL_Monster_01_R_Feet
+    100148: CTRL_Monster_01_R_Foot
+    100150: CTRL_Monster_01_RightHand
+    100152: CTRL_Monster_01_RightHand1
+    100154: ikHandle1
+    100156: ikHandle2
+    100158: ikHandle5
+    100160: ikHandle6
+    100162: joint19
+    100164: joint23
+    100166: joint27
+    100168: joint27 1
+    100170: transform1
     400000: CTRL_Monster_01_GEN
     400002: CTRL_Monster_01_Hip
     400004: JNT_Monster_01_Root
@@ -145,11 +160,96 @@ ModelImporter:
     400136: transform8
     400138: transform9
     400140: Monster_01
+    400142: CTRL_Monster_01_L_Feet
+    400144: CTRL_Monster_01_L_Foot
+    400146: CTRL_Monster_01_R_Feet
+    400148: CTRL_Monster_01_R_Foot
+    400150: CTRL_Monster_01_RightHand
+    400152: CTRL_Monster_01_RightHand1
+    400154: ikHandle1
+    400156: ikHandle2
+    400158: ikHandle5
+    400160: ikHandle6
+    400162: joint19
+    400164: joint23
+    400166: joint27
+    400168: joint27 1
+    400170: transform1
     2300000: //RootNode
+    2300002: Monster_01_L_Down_Leg
+    2300004: Monster_01_L_Down_Leg1
+    2300006: Monster_01_L_Up_Leg
+    2300008: Monster_01_R_Body
+    2300010: Monster_01_R_Down_Arm
+    2300012: Monster_01_R_Down_Arm1
+    2300014: Monster_01_R_Down_Leg
+    2300016: Monster_01_R_Down_Leg1
+    2300018: Monster_01_R_Upper_Leg1
+    2300020: Monster_R_Up_Arm
+    2300022: Monster_R_Up_Arm1
+    2300024: Monster_01_Eye
+    2300026: Monster_01_Eye1
+    2300028: Monster_01_Parpella_01
+    2300030: Monster_01_Parpella_01 1
+    2300032: Monster_01_R_Head
+    2300034: Monster_01_R_Mouth
+    2300036: Monster_01_Teeth_01
+    2300038: Monster_01_Teeth_02
+    2300040: Monster_01_Teeth_03
     3300000: //RootNode
+    3300002: Monster_01_L_Down_Leg
+    3300004: Monster_01_L_Down_Leg1
+    3300006: Monster_01_L_Up_Leg
+    3300008: Monster_01_R_Body
+    3300010: Monster_01_R_Down_Arm
+    3300012: Monster_01_R_Down_Arm1
+    3300014: Monster_01_R_Down_Leg
+    3300016: Monster_01_R_Down_Leg1
+    3300018: Monster_01_R_Upper_Leg1
+    3300020: Monster_R_Up_Arm
+    3300022: Monster_R_Up_Arm1
+    3300024: Monster_01_Eye
+    3300026: Monster_01_Eye1
+    3300028: Monster_01_Parpella_01
+    3300030: Monster_01_Parpella_01 1
+    3300032: Monster_01_R_Head
+    3300034: Monster_01_R_Mouth
+    3300036: Monster_01_Teeth_01
+    3300038: Monster_01_Teeth_02
+    3300040: Monster_01_Teeth_03
     4300000: Monster_01_R_Upper_Leg1
+    4300002: Monster_01_R_Down_Leg
+    4300004: Monster_01_L_Down_Leg
+    4300006: Monster_01_L_Up_Leg
+    4300008: Monster_01_R_Body
+    4300010: Monster_R_Up_Arm
+    4300012: Monster_R_Up_Arm1
+    4300014: Monster_01_R_Down_Arm
+    4300016: Monster_01_R_Down_Arm1
+    4300018: Monster_01_R_Down_Leg1
+    4300020: Monster_01_L_Down_Leg1
+    4300022: Monster_01_R_Head
+    4300024: Monster_01_Eye
+    4300026: Monster_01_Teeth_01
+    4300028: Monster_01_Teeth_03
+    4300030: Monster_01_Eye1
+    4300032: Monster_01_Parpella_01
+    4300034: Monster_01_Parpella_01
+    4300036: Monster_01_R_Mouth
+    4300038: Monster_01_Teeth_02
     7400000: Take 001
     9500000: //RootNode
+    13700000: Monster_01_L_Down_Leg
+    13700002: Monster_01_L_Down_Leg1
+    13700004: Monster_01_L_Up_Leg
+    13700006: Monster_01_R_Body
+    13700008: Monster_01_R_Down_Arm
+    13700010: Monster_01_R_Down_Arm1
+    13700012: Monster_01_R_Down_Leg
+    13700014: Monster_01_R_Down_Leg1
+    13700016: Monster_01_R_Upper_Leg1
+    13700018: Monster_R_Up_Arm
+    13700020: Monster_R_Up_Arm1
   materials:
     importMaterials: 1
     materialName: 0
