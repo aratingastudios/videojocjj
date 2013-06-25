@@ -157,12 +157,12 @@ public class PlayerControl : MonoBehaviour
 			if(Mathf.Abs(horiz)>0.1f)
 			{
 				transform.forward = Vector3.Normalize(new Vector3(horiz, 0.0f, 0.0f));
-				if(animation_child && animation_child.GetClipCount() > 0)
+				if(animation_child && animation_child.GetClipCount() > 0 && controller.isGrounded)
 					animation_child.Play("walk");
 			}
 			else
 			{
-				if(animation_child && animation_child.GetClipCount() > 0)
+				if(animation_child && animation_child.GetClipCount() > 0 && controller.isGrounded)
 					animation_child.Play("idle");
 			}
 				
@@ -176,6 +176,9 @@ public class PlayerControl : MonoBehaviour
 				
 				if(CheckEdge())
 					moveDirection = transform.forward * speed;
+				
+				if(vert>0.95f)
+					animation_child.Play("jump");
 			}
 			else
 				moveDirection.x = horiz*speed;
