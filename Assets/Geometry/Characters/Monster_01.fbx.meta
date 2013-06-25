@@ -250,6 +250,7 @@ ModelImporter:
     7400002: bored
     7400004: idle
     7400006: shout
+    7400008: Saltar
     9500000: //RootNode
     11100000: //RootNode
     13700000: Monster_01_L_Down_Leg
@@ -279,7 +280,7 @@ ModelImporter:
     - name: walk
       takeName: Take 001
       firstFrame: 1
-      lastFrame: 23
+      lastFrame: 32
       wrapMode: 2
       orientationOffsetY: 0
       level: 0
@@ -299,8 +300,8 @@ ModelImporter:
       transformMask: []
     - name: bored
       takeName: Take 001
-      firstFrame: 25
-      lastFrame: 120
+      firstFrame: 33
+      lastFrame: 184
       wrapMode: 2
       orientationOffsetY: 0
       level: 0
@@ -320,8 +321,8 @@ ModelImporter:
       transformMask: []
     - name: idle
       takeName: Take 001
-      firstFrame: 121
-      lastFrame: 150
+      firstFrame: 185
+      lastFrame: 226
       wrapMode: 2
       orientationOffsetY: 0
       level: 0
@@ -341,13 +342,34 @@ ModelImporter:
       transformMask: []
     - name: shout
       takeName: Take 001
-      firstFrame: 151
-      lastFrame: 170
+      firstFrame: 169.899994
+      lastFrame: 297
       wrapMode: 2
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      transformMask: []
+    - name: Saltar
+      takeName: Take 001
+      firstFrame: 298
+      lastFrame: 346
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
