@@ -48,6 +48,8 @@ public class PlayerControl : MonoBehaviour
 	Ray ray;
 	RaycastHit hit;
 	
+	Animation animation_child;
+	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	void Awake()
@@ -58,6 +60,9 @@ public class PlayerControl : MonoBehaviour
 		
 		//if(transform.GetChildCount() > 0)
 		//	mat_child = transform.GetChild(0).renderer.material;
+		
+		if(transform.GetChildCount() > 0)
+			animation_child = transform.GetChild(0).animation;
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -152,13 +157,13 @@ public class PlayerControl : MonoBehaviour
 			if(Mathf.Abs(horiz)>0.1f)
 			{
 				transform.forward = Vector3.Normalize(new Vector3(horiz, 0.0f, 0.0f));
-				if(animation && animation.GetClipCount() > 0)
-					animation.Play("Walk_Cicle");
+				if(animation_child && animation_child.GetClipCount() > 0)
+					animation_child.Play("walk");
 			}
 			else
 			{
-				if(animation && animation.GetClipCount() > 0)
-					animation.Play("Lazy");
+				if(animation_child && animation_child.GetClipCount() > 0)
+					animation_child.Play("idle");
 			}
 				
 			//face to camera when idle
@@ -177,7 +182,7 @@ public class PlayerControl : MonoBehaviour
 			
 			moveDirection.y -= gravity * Time.deltaTime;
 			controller.Move(moveDirection * Time.deltaTime);
-			
+						
 			//..end of movement..//
 			
 			horiz=0.0f;
