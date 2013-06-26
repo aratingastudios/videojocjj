@@ -14,6 +14,8 @@ public class PlayerControl : MonoBehaviour
 	public GUISkin m_skin;
 	public AudioClip[] sounds;
 	public bool bConcept = false;
+	public bool bCheckEdges = true;
+	public LayerMask layermask = -1;
 	
 	bool bGoalReached=false;
 	
@@ -151,25 +153,25 @@ public class PlayerControl : MonoBehaviour
 					//Play sounds
 					PlaySounds("");
 				}
+			
+				//rotate character to face direction when move
+				if(Mathf.Abs(horiz)>0.1f)
+				{
+					transform.forward = Vector3.Normalize(new Vector3(horiz, 0.0f, 0.0f));
+					if(animation_child && animation_child.GetClipCount() > 0 && controller.isGrounded)
+						animation_child.Play("walk");
+				}
+				else
+				{
+					if(animation_child && animation_child.GetClipCount() > 0 && controller.isGrounded)
+						animation_child.Play("idle");
+				}
+				
+				//face to camera when idle
+				//else
+				//	transform.forward = Vector3.Normalize(new Vector3(0.0f, 0.0f, -1.0f));
 			}
 			
-			//rotate character to face direction when move
-			if(Mathf.Abs(horiz)>0.1f)
-			{
-				transform.forward = Vector3.Normalize(new Vector3(horiz, 0.0f, 0.0f));
-				if(animation_child && animation_child.GetClipCount() > 0 && controller.isGrounded)
-					animation_child.Play("walk");
-			}
-			else
-			{
-				if(animation_child && animation_child.GetClipCount() > 0 && controller.isGrounded)
-					animation_child.Play("idle");
-			}
-				
-			//face to camera when idle
-			//else
-			//	transform.forward = Vector3.Normalize(new Vector3(0.0f, 0.0f, -1.0f));
-	
 	        if(controller.isGrounded)
 			{
 				moveDirection = new Vector3(horiz*speed, vert*jumpSpeed*speed, 0.0f);
@@ -177,12 +179,13 @@ public class PlayerControl : MonoBehaviour
 				if(CheckEdge())
 					moveDirection = transform.forward * speed;
 				
-				if(vert>0.95f)
+				if(vert>0.95f && animation_child)
 					animation_child.Play("jump");
 			}
 			else
 				moveDirection.x = horiz*speed;
-			
+
+				
 			moveDirection.y -= gravity * Time.deltaTime;
 			controller.Move(moveDirection * Time.deltaTime);
 						
@@ -213,9 +216,9 @@ public class PlayerControl : MonoBehaviour
 	//Check if player is in the edge of a moving or static platform
 	bool CheckEdge()
 	{
-		if(activePlatform == null) //avoid problems with moving platforms
+		if(bCheckEdges && activePlatform == null) //avoid problems with moving platforms
 		{
-			bool b = Physics.Raycast(transform.position, Vector3.down, 1.0f);
+			bool b = Physics.Raycast(transform.position, Vector3.down, 1.0f, layermask);
 			return !b;
 		}
 		else
