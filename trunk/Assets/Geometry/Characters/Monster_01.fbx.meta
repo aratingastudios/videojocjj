@@ -89,6 +89,15 @@ ModelImporter:
     100166: joint27
     100168: joint27 1
     100170: transform1
+    100172: Monster_01_Eye 1
+    100174: Monster_01_Eye1 1
+    100176: Monster_01_Parpella_02
+    100178: Monster_01_Parpella_03
+    100180: Monster_01_R_Head1
+    100182: Monster_01_R_Mouth1
+    100184: Monster_01_Teeth_01 1
+    100186: Monster_01_Teeth_02 1
+    100188: Monster_01_Teeth_03 1
     400000: CTRL_Monster_01_GEN
     400002: CTRL_Monster_01_Hip
     400004: JNT_Monster_01_Root
@@ -175,6 +184,15 @@ ModelImporter:
     400166: joint27
     400168: joint27 1
     400170: transform1
+    400172: Monster_01_Eye 1
+    400174: Monster_01_Eye1 1
+    400176: Monster_01_Parpella_02
+    400178: Monster_01_Parpella_03
+    400180: Monster_01_R_Head1
+    400182: Monster_01_R_Mouth1
+    400184: Monster_01_Teeth_01 1
+    400186: Monster_01_Teeth_02 1
+    400188: Monster_01_Teeth_03 1
     2300000: //RootNode
     2300002: Monster_01_L_Down_Leg
     2300004: Monster_01_L_Down_Leg1
