@@ -271,12 +271,16 @@ public class PlayerControl : MonoBehaviour
 			{
 				if(options.bPlayAudio)
 					PlaySound(2);
-			/*
+				
+				if(!isActive)
+					animation_child.Play("idle");
+				
+				/*
 				if(isActive)
 					mat_child.color = Color.white;
 				else
 					mat_child.color = Color.grey;
-					*/
+				*/
 			}
 		}
 	}
@@ -290,6 +294,7 @@ public class PlayerControl : MonoBehaviour
 			bGoalReached=true;
 			transform.position = new Vector3(transform.position.x, transform.position.y, 1.0f);
 			gameManagerObj.SendMessage("GoalReached", id);
+			animation_child.Play("portal");
 		}
 	}
 	
