@@ -61,6 +61,9 @@ public class GUIManager : MonoBehaviour
 		bAudioFxOld = bAudioFx;
 		
 		ratio = (float)Screen.width/(float)Screen.height;
+		
+		if(gameManager.m_level == 1)
+			gui_state = "show_tut_01";
 	}
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -297,7 +300,12 @@ public class GUIManager : MonoBehaviour
 		{
 			GUI.DrawTextureWithTexCoords(new Rect(0,0,Screen.width,Screen.height), m_tex_tut_04, new Rect(0,offset,1,height));
 			if(GUI.Button(new Rect(0,0,Screen.width,Screen.height), "", "dummy_style"))
-				gui_state = "show_options";
+			{
+				if(gameManager.m_level == 1)
+					gui_state = "in_game";
+				else
+					gui_state = "show_options";
+			}
 		}
 		
 		//if(GUI.Button(new Rect(20,20,buttonSize, buttonSize), "", "back"))
