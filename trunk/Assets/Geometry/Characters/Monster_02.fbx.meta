@@ -85,6 +85,8 @@ ModelImporter:
     100158: transform7
     100160: transform8
     100162: transform9
+    100164: Monster_01_R_Head2
+    100166: Monster_01_R_Mouth2
     400000: CTRL_Monster_01_GEN
     400002: CTRL_Monster_01_Head
     400004: CTRL_Monster_01_Hip
@@ -167,6 +169,8 @@ ModelImporter:
     400158: transform7
     400160: transform8
     400162: transform9
+    400164: Monster_01_R_Head2
+    400166: Monster_01_R_Mouth2
     2300000: Monster_01_Eye
     2300002: Monster_01_Eye1
     2300004: Monster_01_Parpella_01
@@ -176,6 +180,9 @@ ModelImporter:
     2300012: Monster_01_Teeth_01
     2300014: Monster_01_Teeth_02
     2300016: Monster_01_Teeth_03
+    2300018: Monster_01_R_Head2
+    2300020: Monster_01_R_Mouth2
+    2300022: Monster_01_Teeth_02 1
     3300000: Monster_01_Eye
     3300002: Monster_01_Eye1
     3300004: Monster_01_Parpella_01
@@ -185,6 +192,9 @@ ModelImporter:
     3300012: Monster_01_Teeth_01
     3300014: Monster_01_Teeth_02
     3300016: Monster_01_Teeth_03
+    3300018: Monster_01_R_Head2
+    3300020: Monster_01_R_Mouth2
+    3300022: Monster_01_Teeth_02 1
     4300000: Monster_01_R_Down_Leg
     4300002: Monster_01_R_Upper_Leg1
     4300004: Monster_01_L_Down_Leg
@@ -205,6 +215,8 @@ ModelImporter:
     4300034: Monster_01_Teeth_02
     4300036: Monster_01_R_Down_Leg1
     4300038: Monster_01_L_Down_Leg1
+    4300040: Monster_01_R_Head2
+    4300042: Monster_01_R_Mouth2
     7400000: walk
     7400002: bored
     7400004: idle
