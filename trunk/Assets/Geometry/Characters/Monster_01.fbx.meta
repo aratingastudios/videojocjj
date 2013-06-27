@@ -333,7 +333,7 @@ ModelImporter:
       transformMask: []
     - name: jump
       takeName: Take 001
-      firstFrame: 298
+      firstFrame: 320
       lastFrame: 346
       wrapMode: 0
       orientationOffsetY: 0

@@ -51,6 +51,7 @@ public class PlayerControl : MonoBehaviour
 	RaycastHit hit;
 	
 	Animation animation_child;
+	bool bSendGoalReached;
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -158,12 +159,12 @@ public class PlayerControl : MonoBehaviour
 				if(Mathf.Abs(horiz)>0.1f)
 				{
 					transform.forward = Vector3.Normalize(new Vector3(horiz, 0.0f, 0.0f));
-					if(animation_child && animation_child.GetClipCount() > 0 && controller.isGrounded)
+					if(animation_child && animation_child.GetClipCount() > 0 && controller.isGrounded && !animation_child.IsPlaying("jump"))
 						animation_child.Play("walk");
 				}
 				else
 				{
-					if(animation_child && animation_child.GetClipCount() > 0 && controller.isGrounded)
+					if(animation_child && animation_child.GetClipCount() > 0 && controller.isGrounded && !animation_child.IsPlaying("jump"))
 						animation_child.Play("idle");
 				}
 				
@@ -179,7 +180,7 @@ public class PlayerControl : MonoBehaviour
 				if(CheckEdge())
 					moveDirection = transform.forward * speed;
 				
-				if(vert>0.95f && animation_child)
+				if(vert>0.95f && animation_child && !animation_child.IsPlaying("jump"))
 					animation_child.Play("jump");
 			}
 			else
@@ -208,6 +209,12 @@ public class PlayerControl : MonoBehaviour
 					transform.position = new Vector3(transform.position.x, transform.position.y, -1.0f);
 				else
 					transform.position = new Vector3(transform.position.x, transform.position.y, 1.0f);
+			}
+			
+			if(bSendGoalReached && !animation_child.IsPlaying("portal"))
+			{
+				bSendGoalReached=false;
+				gameManagerObj.SendMessage("GoalReached", id);
 			}
 		}
 	}
@@ -293,8 +300,8 @@ public class PlayerControl : MonoBehaviour
 		{
 			bGoalReached=true;
 			transform.position = new Vector3(transform.position.x, transform.position.y, 1.0f);
-			gameManagerObj.SendMessage("GoalReached", id);
 			animation_child.Play("portal");
+			bSendGoalReached=true;
 		}
 	}
 	
