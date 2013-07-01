@@ -25,7 +25,7 @@ public class LevelSelection : MonoBehaviour
 	int gridButtonSize;
 	
 	int nRows = 3;
-	int nCols = 5;
+	int nCols = 4;
 	
 	GameObject goAudioManager;
 	
@@ -49,11 +49,12 @@ public class LevelSelection : MonoBehaviour
 			goAudioManager.audio.Play();
 		
 		buttonSize = (int)(Screen.width * (60.0f/screen_width));
-		marginH = (int)(Screen.width * (100.0f/screen_width));
-		marginV = (int)(Screen.height * (30.0f/screen_height));
+		marginH = (int)(Screen.width * (150.0f/screen_width));
+		marginV = (int)(Screen.height * (50.0f/screen_height));
 		gridWidth  = Screen.width-marginH*2;
-		gridHeight = (int)(gridWidth*0.6f); // 3/5=0.6
-		gridButtonSize = gridWidth/nCols;
+		//gridHeight = (int)(gridWidth*0.75f); // 3/4=0.75
+		gridHeight = Screen.width-marginV*2;
+		gridButtonSize = (int)(gridWidth/(nCols));
 		
 		if(!PlayerPrefs.HasKey("first_time"))
 			InitializeLevels();

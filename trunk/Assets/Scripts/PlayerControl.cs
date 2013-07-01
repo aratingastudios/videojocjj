@@ -211,7 +211,7 @@ public class PlayerControl : MonoBehaviour
 					transform.position = new Vector3(transform.position.x, transform.position.y, 1.0f);
 			}
 			
-			if(bSendGoalReached && !animation_child.IsPlaying("portal"))
+			if(bSendGoalReached && !animation_child.IsPlaying("portal") && !audio.isPlaying)
 			{
 				bSendGoalReached=false;
 				gameManagerObj.SendMessage("GoalReached", id);
@@ -276,7 +276,7 @@ public class PlayerControl : MonoBehaviour
 			
 			if(!bConcept)
 			{
-				if(options.bPlayAudio)
+				if(options.bPlayAudio && isActive)
 					PlaySound(2);
 				
 				if(!isActive)
@@ -300,6 +300,7 @@ public class PlayerControl : MonoBehaviour
 		{
 			bGoalReached=true;
 			transform.position = new Vector3(transform.position.x, transform.position.y, 1.0f);
+			collider.gameObject.SendMessage("PlayPortalSound");
 			animation_child.Play("portal");
 			bSendGoalReached=true;
 		}
