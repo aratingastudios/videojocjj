@@ -37,6 +37,9 @@ public class GameManager : MonoBehaviour
 	ScoreManager scoreManager;
 	GameObject goAudioManager;
 	
+	public AudioSource audio_loop;
+	public AudioSource audio_end;
+	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	void Awake()
@@ -72,7 +75,7 @@ public class GameManager : MonoBehaviour
 	void Start()
 	{
 		if(guiManager.bAudioFx)
-			audio.Play();
+			audio_loop.Play();
 		
 		if(goAudioManager && goAudioManager.audio)
 			goAudioManager.audio.Stop();
@@ -156,6 +159,8 @@ public class GameManager : MonoBehaviour
 			
 			if(scoreManager!=null)
 				scoreManager.SendMessage("CheckBonus", m_level);
+			
+			audio_end.Play();
 		}
 	}
 	
