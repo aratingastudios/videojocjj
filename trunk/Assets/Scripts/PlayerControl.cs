@@ -279,7 +279,7 @@ public class PlayerControl : MonoBehaviour
 				if(options.bPlayAudio && isActive)
 					PlaySound(2);
 				
-				if(!isActive)
+				if(!isActive && animation_child)
 					animation_child.Play("idle");
 				
 				/*
