@@ -71,7 +71,7 @@ public class GUIManager : MonoBehaviour
 	void Update()
 	{
 		////////////////////////////
-		//UNA VEZ TERMINADA LA FASE DE PRUEBAS HABRA QUE PONER ESTO EN EL AWAKE!!!
+		//TODO:UNA VEZ TERMINADA LA FASE DE PRUEBAS HABRA QUE PONER ESTO EN EL AWAKE!!!
 		////////////////////////////
 		screen_ratio = Screen.width / screenWidth;
 		
