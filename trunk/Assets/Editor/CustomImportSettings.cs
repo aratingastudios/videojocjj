@@ -19,13 +19,13 @@ public class CustomImportSettings : AssetPostprocessor
 	void OnPreprocessTexture() 
 	{
 		TextureImporter importer = assetImporter as TextureImporter;
-		
+		/*
 		if(importer.assetPath.Contains("Textures"))
 		{
 			importer.textureFormat = TextureImporterFormat.AutomaticTruecolor;
 			importer.wrapMode = TextureWrapMode.Clamp;
 		}
-		
+		*/
 		if(importer.assetPath.Contains("GUITextureAndSkins"))
 		{
 			importer.textureType = TextureImporterType.GUI;

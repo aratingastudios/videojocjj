@@ -25,7 +25,7 @@ public class LevelSelection : MonoBehaviour
 	int gridButtonSize;
 	
 	int nRows = 3;
-	int nCols = 4;
+	int nCols = 3;
 	
 	GameObject goAudioManager;
 	
@@ -44,16 +44,20 @@ public class LevelSelection : MonoBehaviour
 	//Inicializamos las medidas en función del tamaño de pantalla actual
 	void Start()
 	{
-		int iAudio = PlayerPrefs.GetInt("music");
-		if(iAudio==1 && goAudioManager && !goAudioManager.audio.isPlaying)
+		int iAudio = PlayerPrefs.GetInt("music"); //0=ON, 1=OFF
+		if(iAudio==0 && goAudioManager && !goAudioManager.audio.isPlaying)
 			goAudioManager.audio.Play();
 		
 		buttonSize = (int)(Screen.width * (60.0f/screen_width));
-		marginH = (int)(Screen.width * (150.0f/screen_width));
+
+		//marginH = (int)(Screen.width * (150.0f/screen_width));
 		marginV = (int)(Screen.height * (50.0f/screen_height));
-		gridWidth  = Screen.width-marginH*2;
-		//gridHeight = (int)(gridWidth*0.75f); // 3/4=0.75
-		gridHeight = Screen.width-marginV*2;
+
+		gridHeight = Screen.height-marginV*2;
+		gridWidth = gridHeight;
+
+		marginH = (int)((Screen.width - gridWidth) / 2f);
+
 		gridButtonSize = (int)(gridWidth/(nCols));
 		
 		if(!PlayerPrefs.HasKey("first_time"))
