@@ -35,6 +35,7 @@ public class GUIManager : MonoBehaviour
 	bool bAudioFxOld = true;
 	
 	public Texture2D m_tex_help;
+	public Texture2D m_tex_info;
 	public Texture2D m_tex_tut_01;
 	public Texture2D m_tex_tut_02;
 	public Texture2D m_tex_tut_03;
@@ -57,7 +58,7 @@ public class GUIManager : MonoBehaviour
 		gameManager = GetComponent<GameManager>();
 		scoreManager = GetComponent<ScoreManager>();
 		
-		bAudioFx = (PlayerPrefs.GetInt("musicFx") == 1);
+		bAudioFx = (PlayerPrefs.GetInt("musicFx") == 0); //0=ON, 1=OFF
 		bAudioFxOld = bAudioFx;
 		
 		ratio = (float)Screen.width/(float)Screen.height;
@@ -115,6 +116,9 @@ public class GUIManager : MonoBehaviour
 		else if(gui_state=="show_menu")
 			OnGUIShowMenu();
 		
+		else if(gui_state=="show_info")
+			OnGUIShowInfo();
+
 		else if(gui_state=="show_options")
 			OnGUIShowOptions();
 		
@@ -251,8 +255,9 @@ public class GUIManager : MonoBehaviour
 		if(GUI.Button(new Rect(buttonSize3+marginButton,0,buttonSize3, buttonSize3), "", "help"))
 			gui_state = "show_tut_01";
 		
-		GUI.Button(new Rect(buttonSize3*2+marginButton*2,0,buttonSize3, buttonSize3), "", "info");
-		
+		if(GUI.Button(new Rect(buttonSize3*2+marginButton*2,0,buttonSize3, buttonSize3), "", "info"))
+			gui_state = "show_info";
+
 		GUI.EndGroup();
 		
 		if(GUI.Button(new Rect(20,Screen.height-buttonSize-20,buttonSize, buttonSize), "", "back"))
@@ -261,7 +266,7 @@ public class GUIManager : MonoBehaviour
 		if(bAudioFx != bAudioFxOld)
 		{
 			bAudioFxOld = bAudioFx;
-			PlayerPrefs.SetInt("musicFx", bAudioFx ? 1 : 0);
+			PlayerPrefs.SetInt("musicFx", bAudioFx ? 0 : 1); //0=ON, 1=OFF
 			gameManager.SendMessage("SetAudioFx", bAudioFx);
 		}
 	}
@@ -311,7 +316,19 @@ public class GUIManager : MonoBehaviour
 		//if(GUI.Button(new Rect(20,20,buttonSize, buttonSize), "", "back"))
 		//	gui_state = "show_options";
 	}
-	
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	void OnGUIShowInfo()
+	{
+		height = ratio_4_3/ratio;
+		offset = (1.0f-height)/2.0f;
+
+		GUI.DrawTextureWithTexCoords(new Rect(0,0,Screen.width,Screen.height), m_tex_info, new Rect(0,offset,1,height));
+		if(GUI.Button(new Rect(0,0,Screen.width,Screen.height), "", "dummy_style"))
+			gui_state = "show_options";
+	}
+
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//Message from GameManager
 	void LevelCompleted()

@@ -160,7 +160,8 @@ public class GameManager : MonoBehaviour
 			if(scoreManager!=null)
 				scoreManager.SendMessage("CheckBonus", m_level);
 			
-			audio_end.Play();
+			if(guiManager.bAudioFx)
+				audio_end.Play();
 		}
 	}
 	
