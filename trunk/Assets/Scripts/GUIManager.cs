@@ -26,7 +26,7 @@ public class GUIManager : MonoBehaviour
 	int frames = 0;  // Frames drawn over the interval
 	float timeleft;  // Left time for current interval
 	string sFPS;
-	public bool bFPS = true;
+	bool bFPS = false;
 	
 	GameManager gameManager;
 	ScoreManager scoreManager;
